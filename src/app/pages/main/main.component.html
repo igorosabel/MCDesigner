@@ -1,1 +1,16 @@
-<p>main works!</p>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>MCDesigner</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card class="center-card-big">
+	<mat-card-header>
+		<mat-card-title>Designs</mat-card-title>
+	</mat-card-header>
+	<mat-card-content class="center-card-fields">
+		<mat-nav-list>
+			<a mat-list-item *ngFor="let design of designList" href="..."> {{ design.name }} </a>
+		</mat-nav-list>
+	</mat-card-content>
+</mat-card>

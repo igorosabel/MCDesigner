@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../services/api.service';
+import { Design } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'mcd-main',
@@ -6,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  constructor() {}
-  ngOnInit() {}
+	designList: Design[] = [];
+
+	constructor(private as: ApiService) {}
+	ngOnInit() {
+		this.as.loadDesigns().subscribe(result => {
+			this.designList = result.list;
+		});
+	}
 }
