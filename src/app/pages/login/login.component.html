@@ -12,7 +12,7 @@
 		<mat-card-content class="center-card-fields">
 			<mat-form-field>
 				<mat-label>Email</mat-label>
-				<input matInput [(ngModel)]="loginData.email" [disabled]="loginSending" required name="email">
+				<input type="email" matInput [(ngModel)]="loginData.email" [disabled]="loginSending" required name="email">
 			</mat-form-field>
 			<mat-form-field>
 				<mat-label>Password</mat-label>

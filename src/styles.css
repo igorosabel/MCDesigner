@@ -1,7 +1,7 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 html, body { height: 100%; }
@@ -46,7 +46,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .center-card-buttons-end {
-  justify-content: flex-end;
+	justify-content: flex-end;
 }
 
 .center-card-error {
@@ -55,20 +55,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-color: #f44336;
     color: #f44336;
     border-width: 2px;
+	padding: 8px;
 }
 
 .flex-space{
-  flex: 1 1 auto;
+	flex: 1 1 auto;
 }
 
 .tab-icon {
-  margin-right: 8px;
+	margin-right: 8px;
 }
 
 .tab-top-margin {
-  margin-top: 20px;
+	margin-top: 20px;
 }
 
 .disabled-title {
-  color: #ccc;
+	color: #ccc;
+}
+
+.center{
+	text-align: center;
 }
