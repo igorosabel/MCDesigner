@@ -1,14 +1,16 @@
 /*
  * Páginas
  */
-import { LoginComponent }    from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { MainComponent }     from './pages/main/main.component';
+import { LoginComponent }     from './pages/login/login.component';
+import { RegisterComponent }  from './pages/register/register.component';
+import { MainComponent }      from './pages/main/main.component';
+import { NewDesignComponent } from './pages/new-design/new-design.component';
 
 export const PAGES: any[] = [
 	LoginComponent,
 	RegisterComponent,
-	MainComponent
+	MainComponent,
+	NewDesignComponent
 ];
 
 /*
