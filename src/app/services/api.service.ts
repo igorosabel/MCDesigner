@@ -7,7 +7,9 @@ import {
 	LoginData,
 	LoginResult,
 	RegisterData,
-	DesignResult
+	DesignResult,
+	Design,
+	StatusResult
 } from '../interfaces/interfaces';
 
 @Injectable({
@@ -28,5 +30,9 @@ export class ApiService {
 	
 	loadDesigns(): Observable<DesignResult> {
 		return this.http.post<DesignResult>(this.apiUrl + 'load-designs', {});
+	}
+	
+	saveDesign(newDesign: Design): Observable<StatusResult> {
+		return this.http.post<StatusResult>(this.apiUrl + 'save-design', newDesign);
 	}
 }

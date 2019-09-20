@@ -42,3 +42,7 @@ export interface DesignResult {
 	status: string;
 	list: Design[];
 }
+
+export interface StatusResult {
+  status: string;
+}
