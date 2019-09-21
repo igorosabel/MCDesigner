@@ -32,7 +32,7 @@ export class ApiService {
 		return this.http.post<DesignResult>(this.apiUrl + 'load-designs', {});
 	}
 	
-	saveDesign(newDesign: Design): Observable<StatusResult> {
-		return this.http.post<StatusResult>(this.apiUrl + 'save-design', newDesign);
+	newDesign(newDesign: Design): Observable<StatusResult> {
+		return this.http.post<StatusResult>(this.apiUrl + 'new-design', newDesign);
 	}
 }

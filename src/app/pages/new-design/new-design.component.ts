@@ -23,7 +23,7 @@ export class NewDesignComponent implements OnInit {
 	saveDesign(ev){
 		ev.preventDefault();
 		this.saveSending = true;
-		this.as.saveDesign(this.newDesign).subscribe(result => {
+		this.as.newDesign(this.newDesign).subscribe(result => {
 			
 		});
 	}
