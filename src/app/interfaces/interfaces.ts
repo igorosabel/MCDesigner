@@ -30,19 +30,38 @@ export interface RegisterData {
 	conf: string;
 }
 
+export interface Level {
+	id: number;
+	name: string;
+	height: number;
+	data: number[][];
+}
+
 export interface Design {
 	id: number;
 	name: string;
 	slug: string;
 	sizeX: number;
 	sizeY: number;
+	levels?: Level[];
 }
 
-export interface DesignResult {
+export interface DesignListResult {
 	status: string;
 	list: Design[];
 }
 
+export interface DesignResult {
+	status: string;
+	design: Design;
+}
+
 export interface StatusResult {
   status: string;
+}
+
+export interface Color {
+	id: number;
+	name: string;
+	color: string;
 }

@@ -7,9 +7,10 @@ import {
 	LoginData,
 	LoginResult,
 	RegisterData,
-	DesignResult,
+	DesignListResult,
 	Design,
-	StatusResult
+	StatusResult,
+	DesignResult
 } from '../interfaces/interfaces';
 
 @Injectable({
@@ -28,11 +29,15 @@ export class ApiService {
 		return this.http.post<LoginResult>(this.apiUrl + 'register', data);
 	}
 	
-	loadDesigns(): Observable<DesignResult> {
-		return this.http.post<DesignResult>(this.apiUrl + 'load-designs', {});
+	loadDesigns(): Observable<DesignListResult> {
+		return this.http.post<DesignListResult>(this.apiUrl + 'load-designs', {});
 	}
 	
 	newDesign(newDesign: Design): Observable<StatusResult> {
 		return this.http.post<StatusResult>(this.apiUrl + 'new-design', newDesign);
+	}
+	
+	loadDesign(id: number): Observable<DesignResult> {
+		return this.http.post<DesignResult>(this.apiUrl + 'design', {id});
 	}
 }

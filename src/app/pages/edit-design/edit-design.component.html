@@ -1,0 +1,61 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+	<button routerLink="/main" mat-icon-button>
+		<mat-icon>arrow_back</mat-icon>
+	</button>
+    <span>{{design.name}}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div *ngIf="designLoading" class="loading">
+	<img src="/assets/loading.svg">
+	<br>
+	Cargando...
+</div>
+
+<div class="main" *ngIf="design.id">
+  <div class="tools">
+	<div class="level-selector">
+		<div class="current-level" (click)="deployLevels()" [ngClass]="{'levels-deployed':levelsDeployed}">
+			{{design.levels[currentLevel].name}}
+			<mat-icon>expand_more</mat-icon>
+		</div>
+		<div class="level-list" *ngIf="levelsDeployed">
+			<div class="level-list-item" *ngFor="let level of design.levels">
+				<a href="#">{{level.name}}</a>
+				<div class="level-list-item-options">
+					<button mat-icon-button aria-label="Copy level" title="Copy level">
+						<mat-icon>file_copy</mat-icon>
+					</button>
+					<button mat-icon-button aria-label="Edit level name" title="Edit level name">
+						<mat-icon>edit</mat-icon>
+					</button>
+					<button mat-icon-button aria-label="Delete level" title="Delete level">
+						<mat-icon>delete</mat-icon>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="color-selector">
+			<span>Colors</span>
+			<div class="color-list">
+				<div class="color-list-item" *ngFor="let color of colorList" [title]="color.name" [ngStyle]="{'background-color': color.color}" [ngClass]="{'color-list-item-selected': color.id==selectedColor}" (click)="selectColor(color)"></div>
+			</div>
+		</div>
+		<div class="show-rulers">
+			<mat-slide-toggle [checked]="showRulers">Show rulers</mat-slide-toggle>
+		</div>
+		<div class="zoom-level">
+			<span>Zoom level</span>
+			<div class="zoom-controls">
+				<a href="#" class="zoom-control zoom-control-less" (click)="adjustZoom($event, 'l')">-</a>
+				<input type="number" min="10" step="10" [(ngModel)]="zoomLevel" class="zoom-number" readonly="readonly">
+				<a href="#" class="zoom-control zoom-control-more" (click)="adjustZoom($event, 'm')">+</a>
+			</div>
+		</div>
+	</div>
+  </div>
+  <div class="drawing-area">
+  
+  </div>
+</div>

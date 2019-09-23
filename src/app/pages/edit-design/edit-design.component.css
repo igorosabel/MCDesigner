@@ -1,0 +1,179 @@
+.loading{
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 3em;
+}
+
+.main{
+	height: calc(100% - 64px);
+    display: flex;
+    flex-direction: row;
+}
+
+.tools{
+	flex: 1;
+	border-right: 1px solid #ccc;
+}
+
+.drawing-area{
+	flex: 5;
+}
+
+.level-selector{
+	
+}
+
+.current-level{
+	border-bottom: 1px solid #ccc;
+    padding: 8px;
+    cursor: pointer;
+	font-weight: bold;
+}
+
+.current-level mat-icon{
+	vertical-align: bottom;
+	float: right;
+	transition: all .4s ease-in-out;
+}
+
+.current-level:hover{
+	background-color: #eee;
+}
+
+.levels-deployed mat-icon{
+	transform: rotate(180deg);
+}
+
+.level-list{
+	
+}
+
+.level-list-item{
+	height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+}
+
+.level-list-item a{
+	color: #000;
+	text-decoration: none;
+}
+
+.level-list-item a:hover{
+	font-weight: bold;
+}
+
+.level-list-item-options{
+	display: none;
+}
+
+.level-list-item:hover .level-list-item-options{
+	display: block;
+}
+
+.color-selector{
+	border-bottom: 1px solid #ccc;
+    padding: 8px;
+}
+
+.color-selector span{
+	display: block;
+	font-size: 0.8em;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+
+.color-list{
+    display: flex;
+	flex-wrap: wrap;
+}
+
+.color-list-item{
+	width: 40px;
+    height: 40px;
+    border: 2px solid #ccc;
+	margin-right: 8px;
+	cursor: pointer;
+}
+
+.color-list-item:hover{
+	border: 2px solid #000;
+}
+
+.color-list-item-selected{
+	border: 2px solid #000;
+}
+
+.show-rulers{
+	border-bottom: 1px solid #ccc;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.zoom-level{
+	padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+.zoom-level span{
+	display: block;
+	font-size: 0.8em;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+
+.zoom-controls{
+	border: 1px solid #ccc;
+    width: 50%;
+    margin: 8px auto 0;
+    position: relative;
+	height: 40px;
+}
+
+.zoom-control{
+	position: absolute;
+    top: 0;
+    width: 20px;
+    color: #000;
+    text-decoration: none;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+	transition: all .4s ease-in-out;
+}
+
+.zoom-control:hover{
+	background-color: #000;
+	color: #fff;
+}
+
+.zoom-control-less{
+	left: 0;
+}
+
+.zoom-number{
+	border: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.zoom-control-more{
+	right: 0;
+}
