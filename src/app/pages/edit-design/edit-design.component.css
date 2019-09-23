@@ -177,3 +177,14 @@
 .zoom-control-more{
 	right: 0;
 }
+
+.row{
+  display: flex;
+  flex-direction: row;
+}
+
+.cell{
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+}

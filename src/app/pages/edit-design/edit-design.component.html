@@ -56,6 +56,8 @@
 	</div>
   </div>
   <div class="drawing-area">
-  
+    <div class="row" *ngFor="let row of design.levels[currentLevel].data">
+      <div class="cell" *ngFor="let cell of row"></div>
+    </div>
   </div>
 </div>
