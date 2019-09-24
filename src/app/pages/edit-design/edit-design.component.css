@@ -28,6 +28,12 @@
 	flex: 5;
 }
 
+.drawing-container{
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+
 .level-selector{
 	
 }
@@ -179,12 +185,24 @@
 }
 
 .row{
-  display: flex;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
 .cell{
-  width: 20px;
-  height: 20px;
-  border: 1px solid #ccc;
+	width: 20px;
+	height: 20px;
+	border: 1px solid #ccc;
+}
+
+.save-box{
+	height: 80px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.saving-icon{
+	width: 20px;
+	height: 20px;
 }

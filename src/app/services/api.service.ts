@@ -40,4 +40,8 @@ export class ApiService {
 	loadDesign(id: number): Observable<DesignResult> {
 		return this.http.post<DesignResult>(this.apiUrl + 'design', {id});
 	}
+	
+	updateDesign(design: Design): Observable<StatusResult> {
+		return this.http.post<StatusResult>(this.apiUrl + 'update-design', design);
+	}
 }

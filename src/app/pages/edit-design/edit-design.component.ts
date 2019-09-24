@@ -31,6 +31,7 @@ export class EditDesignComponent implements OnInit {
 	selectedColor: number = 0;
 	showRulers: boolean = false;
 	zoomLevel: number = 100;
+	savingDesign: boolean = false;
 
 	constructor(private activatedRoute: ActivatedRoute, private as: ApiService, private cs: CommonService, private dialog: DialogService, private router: Router) {}
 	ngOnInit() {
@@ -80,10 +81,24 @@ export class EditDesignComponent implements OnInit {
 			this.zoomLevel -= 10;
 		}
 		if (mode=='m'){
-			if (this.zoomLevel==100){
+			if (this.zoomLevel==200){
 				return false;
 			}
 			this.zoomLevel += 10;
 		}
+	}
+	
+	selectCell(i: number, j: number) {
+		this.design.levels[this.currentLevel].data[i][j] = this.selectedColor;
+	}
+	
+	saveDesign() {
+		this.savingDesign = true;
+		this.as.updateDesign(this.design).subscribe(result => {
+			this.savingDesign = false;
+			if (result.status=='error'){
+				this.dialog.alert({title: 'Error', content: 'There was an error when saving the design. Please try again later.', ok: 'Continue'}).subscribe(result => {});
+			}
+		});
 	}
 }
