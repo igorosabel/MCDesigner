@@ -102,15 +102,16 @@
 }
 
 .color-list{
-    display: flex;
+  display: flex;
 	flex-wrap: wrap;
 }
 
 .color-list-item{
 	width: 40px;
-    height: 40px;
-    border: 2px solid #ccc;
+  height: 40px;
+  border: 2px solid #ccc;
 	margin-right: 8px;
+	margin-bottom: 8px;
 	cursor: pointer;
 }
 

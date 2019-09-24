@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params} from '@angular/router';
-import { Design, Color } from '../../interfaces/interfaces';
+import { Design } from '../../interfaces/interfaces';
 import { ApiService } from '../../services/api.service';
 import { CommonService } from '../../services/common.service';
 import { DialogService }     from '../../services/dialog.service';
@@ -22,12 +22,7 @@ export class EditDesignComponent implements OnInit {
 	};
 	currentLevel: number = 0;
 	levelsDeployed: boolean = false;
-	colorList: Color[] = [
-		{id: 0, name: 'White', color: '#fff'},
-		{id: 1, name: 'Black', color: '#000'},
-		{id: 2, name: 'Red',   color: '#f00'},
-		{id: 3, name: 'Blue',  color: '#00f'}
-	];
+	colorList: number[] = [...Array(44)].map((_, i) => i);
 	selectedColor: number = 0;
 	showRulers: boolean = false;
 	zoomLevel: number = 100;
@@ -68,8 +63,8 @@ export class EditDesignComponent implements OnInit {
 		this.levelsDeployed = !this.levelsDeployed;
 	}
 	
-	selectColor(color: Color) {
-		this.selectedColor = color.id;
+	selectColor(color: number) {
+		this.selectedColor = color;
 	}
 	
 	adjustZoom(ev: any, mode: string) {

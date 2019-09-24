@@ -39,7 +39,7 @@
 			<div class="color-selector">
 				<span>Colors</span>
 				<div class="color-list">
-					<div class="color-list-item" *ngFor="let color of colorList" [title]="color.name" [ngStyle]="{'background-color': color.color}" [ngClass]="{'color-list-item-selected': color.id==selectedColor}" (click)="selectColor(color)"></div>
+					<div class="color-list-item" *ngFor="let color of colorList" [class]="'texture_'+color" [ngClass]="{'color-list-item-selected': color==selectedColor}" (click)="selectColor(color)"></div>
 				</div>
 			</div>
 			<div class="show-rulers">
@@ -64,7 +64,7 @@
 	<div class="drawing-area">
 		<div class="drawing-container">
 			<div class="row" *ngFor="let row of design.levels[currentLevel].data; let i = index">
-				<div class="cell" *ngFor="let cell of row; let j = index" (click)="selectCell(i, j)" [ngStyle]="{'background-color': colorList[design.levels[currentLevel].data[i][j]].color, 'width': (zoomLevel*0.2)+'px', 'height': (zoomLevel*0.2)+'px'}"></div>
+				<div *ngFor="let cell of row; let j = index" (click)="selectCell(i, j)" [class]="'cell texture_'+design.levels[currentLevel].data[i][j]" [ngStyle]="{'width': (zoomLevel*0.2)+'px', 'height': (zoomLevel*0.2)+'px'}"></div>
 			</div>
 		</div>
 	</div>
