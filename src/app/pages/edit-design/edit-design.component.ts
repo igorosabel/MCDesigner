@@ -22,7 +22,7 @@ export class EditDesignComponent implements OnInit {
 	};
 	currentLevel: number = 0;
 	levelsDeployed: boolean = false;
-	colorList: number[] = [...Array(44)].map((_, i) => i);
+	colorList: number[] = [];
 	selectedColor: number = 0;
 	showRulers: boolean = false;
 	zoomLevel: number = 100;
@@ -30,6 +30,9 @@ export class EditDesignComponent implements OnInit {
 
 	constructor(private activatedRoute: ActivatedRoute, private as: ApiService, private cs: CommonService, private dialog: DialogService, private router: Router) {}
 	ngOnInit() {
+		for (let i=0; i<=44; i++){
+			this.colorList.push(i);
+		}
 		this.activatedRoute.params.subscribe((params: Params) => {
 			this.loadDesign(params.id);
 		});
