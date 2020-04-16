@@ -8,9 +8,9 @@ import { DataShareService }  from '../../services/data-share.service';
 import { AuthService }       from '../../services/auth.service';
 
 @Component({
-  selector: 'mcd-login',
-  templateUrl: './login.component.html',
-  styleUrls: []
+	selector: 'mcd-login',
+	templateUrl: './login.component.html',
+	styleUrls: []
 })
 export class LoginComponent implements OnInit {
 	loginData = {

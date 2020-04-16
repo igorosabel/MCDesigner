@@ -26,7 +26,7 @@
 		<mat-card-actions class="center-card-buttons">
 			<a routerLink="/register" mat-button [disabled]="loginSending">Register</a>
 			<button mat-raised-button color="primary" [disabled]="loginSending" type="submit">
-				<img *ngIf="loginSending" src="/assets/loading.svg">
+				<mcd-loading *ngIf="loginSending"></mcd-loading>
 				Continue
 			</button>
 		</mat-card-actions>
