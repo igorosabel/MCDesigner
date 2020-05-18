@@ -55,7 +55,7 @@
 			</div>
 			<div class="save-box">
 				<button mat-raised-button color="primary" [disabled]="savingDesign" (click)="saveDesign()">
-					<img class="saving-icon" src="/assets/loading.svg" *ngIf="savingDesign">
+					<mcd-loading *ngIf="savingDesign"></mcd-loading>
 					Save
 				</button>
 			</div>
