@@ -39,7 +39,6 @@ export class EditDesignComponent implements OnInit {
 	}
 	
 	loadDesign(id: number) {
-		console.log(id);
 		this.as.loadDesign(id).subscribe(result => {
 			this.designLoading = false;
 			if (result.status=='ok'){

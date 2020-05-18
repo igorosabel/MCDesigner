@@ -28,7 +28,7 @@
 		</mat-card-content>
 		<mat-card-actions class="center-card-buttons center-card-buttons-end">
 			<button mat-raised-button color="primary" [disabled]="saveSending" type="submit">
-				<img *ngIf="saveSending" src="/assets/loading.svg">
+				<mcd-loading *ngIf="saveSending"></mcd-loading>
 				Continue
 			</button>
 		</mat-card-actions>

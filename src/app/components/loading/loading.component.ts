@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'mcd-loading',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
 	styleUrls: ['./loading.component.css']
 })
 export class LoadingComponent {
+	@Input('big') big: boolean = false;
 	constructor() { }
 }
