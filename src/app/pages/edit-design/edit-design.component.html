@@ -42,7 +42,9 @@
 				<div class="tools-zoom-level" title="Reset zoom level">{{zoomLevel}}%</div>
 				<div class="tools-zoom-more" title="Increase zoom level">+</div>
 			</div>
-			<div class="tools-option" [ngClass]="{'tools-option-selected':showRulers}" title="Show rulers"><mat-icon>square_foot</mat-icon></div>
+			<div class="tools-option" [ngClass]="{'tools-option-on':showRulers}" title="Show rulers" (click)="changeRulers()">
+				<mat-icon>square_foot</mat-icon>
+			</div>
 		</div>
 	</div>
 	<div class="tools-textures">

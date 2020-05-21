@@ -126,7 +126,11 @@ export class EditDesignComponent implements OnInit {
 	deployLevels() {
 		this.showLevels = !this.showLevels;
 	}
-	
+
+	changeRulers() {
+		this.showRulers = !this.showRulers;
+	}
+
 	adjustZoom(ev: any, mode: string) {
 		ev.preventDefault();
 		if (mode=='l'){
