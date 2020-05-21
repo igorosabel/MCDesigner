@@ -59,3 +59,8 @@ export interface DesignResult {
 export interface StatusResult {
   status: string;
 }
+
+export interface Texture {
+	id: number;
+	name: string;
+}

@@ -76,6 +76,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule }    from '@angular/material/checkbox';
 import { MatRadioModule }       from '@angular/material/radio';
 import { MatDatepickerModule }  from '@angular/material/datepicker';
+import { DragDropModule }       from '@angular/cdk/drag-drop';
 
 export const MATERIAL: any[] = [
 	MatToolbarModule,
@@ -92,5 +93,6 @@ export const MATERIAL: any[] = [
 	MatSlideToggleModule,
 	MatCheckboxModule,
 	MatRadioModule,
-	MatDatepickerModule
+	MatDatepickerModule,
+	DragDropModule
 ];

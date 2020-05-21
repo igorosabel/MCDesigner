@@ -13,59 +13,80 @@
 	Cargando...
 </div>
 
-<div class="main" *ngIf="design.id">
-	<div class="tools">
-		<div class="level-selector">
-			<div class="current-level" (click)="deployLevels()" [ngClass]="{'levels-deployed':levelsDeployed}">
-				{{design.levels[currentLevel].name}}
-				<mat-icon>expand_more</mat-icon>
-			</div>
-			<div class="level-list" *ngIf="levelsDeployed">
-				<div class="level-list-item" *ngFor="let level of design.levels">
-					<a href="#">{{level.name}}</a>
-					<div class="level-list-item-options">
-						<button mat-icon-button aria-label="Copy level" title="Copy level">
-							<mat-icon>file_copy</mat-icon>
-						</button>
-						<button mat-icon-button aria-label="Edit level name" title="Edit level name">
-							<mat-icon>edit</mat-icon>
-						</button>
-						<button mat-icon-button aria-label="Delete level" title="Delete level">
-							<mat-icon>delete</mat-icon>
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="color-selector">
-				<span>Colors</span>
-				<div class="color-list">
-					<div class="color-list-item" *ngFor="let color of colorList" [class]="'texture_'+color" [ngClass]="{'color-list-item-selected': color==selectedColor}" (click)="selectColor(color)"></div>
-				</div>
-			</div>
-			<div class="show-rulers">
-				<mat-slide-toggle [checked]="showRulers">Show rulers</mat-slide-toggle>
-			</div>
-			<div class="zoom-level">
-				<span>Zoom level</span>
-				<div class="zoom-controls">
-					<a href="#" class="zoom-control zoom-control-less" (click)="adjustZoom($event, 'l')">-</a>
-					<input type="number" min="10" step="10" [(ngModel)]="zoomLevel" class="zoom-number" readonly="readonly">
-					<a href="#" class="zoom-control zoom-control-more" (click)="adjustZoom($event, 'm')">+</a>
-				</div>
-			</div>
-			<div class="save-box">
-				<button mat-raised-button color="primary" [disabled]="savingDesign" (click)="saveDesign()">
-					<mcd-loading *ngIf="savingDesign"></mcd-loading>
-					Save
-				</button>
-			</div>
+<div class="tools-box" *ngIf="design.id" cdkDrag>
+	<div class="tools-header">
+		<span>{{selectedTool.name}}</span>
+		<div cdkDragHandle>
+			<mat-icon class="tools-handler">zoom_out_map</mat-icon>
 		</div>
 	</div>
-	<div class="drawing-area">
-		<div class="drawing-container">
-			<div class="row" *ngFor="let row of design.levels[currentLevel].data; let i = index">
-				<div *ngFor="let cell of row; let j = index" (click)="selectCell(i, j)" [class]="'cell texture_'+design.levels[currentLevel].data[i][j]" [ngStyle]="{'width': (zoomLevel*0.2)+'px', 'height': (zoomLevel*0.2)+'px'}"></div>
+	<div class="tools-options">
+		<div class="tools-options-row">
+			<div class="tools-option" [ngClass]="{'tools-option-selected':selectedTool.option=='paint'}" title="Paint" (click)="selectOption('paint','Paint')">
+				<mat-icon>brush</mat-icon>
+			</div>
+			<div class="tools-option" [ngClass]="{'tools-option-selected':selectedTool.option=='picker'}" title="Texture picker" (click)="selectOption('picker','Texture picker')">
+				<mat-icon>colorize</mat-icon>
+			</div>
+			<div class="tools-option" [ngClass]="{'tools-option-selected':selectedTool.option=='fill'}" title="Fill with texture" (click)="selectOption('fill','Fill with texture')">
+				<mat-icon>opacity</mat-icon>
+			</div>
+			<div class="tools-option" [ngClass]="{'tools-option-selected':selectedTool.option=='line'}" title="Draw a line" (click)="selectOption('line','Draw a line')">
+				<mat-icon>sync_alt</mat-icon>
 			</div>
 		</div>
+		<div class="tools-options-row">
+			<div class="tools-option" title="Undo"><mat-icon>undo</mat-icon></div>
+			<div class="tools-zoom">
+				<div class="tools-zoom-less" title="Reduce zoom level">-</div>
+				<div class="tools-zoom-level" title="Reset zoom level">{{zoomLevel}}%</div>
+				<div class="tools-zoom-more" title="Increase zoom level">+</div>
+			</div>
+			<div class="tools-option" [ngClass]="{'tools-option-selected':showRulers}" title="Show rulers"><mat-icon>square_foot</mat-icon></div>
+		</div>
+	</div>
+	<div class="tools-textures">
+		<div class="tools-texture-selected">
+			<div [class]="'tools-option texture_'+textures[currentTexture].id" title="{{textures[currentTexture].name}}" (click)="openTextures()"></div>
+			<div class="tools-texture-name">{{textures[currentTexture].name}}</div>
+		</div>
+		<div class="tools-textures-list" *ngIf="showTextures">
+			<div *ngFor="let texture of textures" [class]="'tools-option texture_'+texture.id" title="{{texture.name}}" (click)="selectTexture(texture)"></div>
+		</div>
+	</div>
+	<div class="tools-level" *ngIf="design.levels.length>0">
+		<button mat-icon-button title="Show level list" class="levels-deploy-btn" [ngClass]="{'levels-deployed': showLevels}" (click)="deployLevels()">
+			<mat-icon>expand_more</mat-icon>
+		</button>
+		<span>{{design.levels[currentLevel].name}}</span>
+		<button mat-icon-button title="Add new level">
+			<mat-icon>add_circle_outline</mat-icon>
+		</button>
+	</div>
+	<div *ngIf="showLevels">
+		<div class="tools-level-item" *ngFor="let level of design.levels">
+			<span>{{level.name}}</span>
+			<button mat-icon-button title="Rename">
+				<mat-icon>create</mat-icon>
+			</button>
+			<button mat-icon-button title="Copy">
+				<mat-icon>file_copy</mat-icon>
+			</button>
+			<button mat-icon-button title="Delete" *ngIf="design.levels.length>1">
+				<mat-icon>delete_forever</mat-icon>
+			</button>
+		</div>
+	</div>
+	<div class="tools-footer">
+		<button mat-raised-button color="primary" [disabled]="savingDesign" (click)="saveDesign()">
+			<mcd-loading *ngIf="savingDesign"></mcd-loading>
+			Save
+		</button>
+	</div>
+</div>
+
+<div class="main" *ngIf="design.id">
+	<div class="row" *ngFor="let row of design.levels[currentLevel].data; let i = index">
+		<div *ngFor="let cell of row; let j = index" (click)="selectCell(i, j)" [class]="'cell texture_'+design.levels[currentLevel].data[i][j]" [ngStyle]="{'width': (zoomLevel*0.2)+'px', 'height': (zoomLevel*0.2)+'px'}"></div>
 	</div>
 </div>
