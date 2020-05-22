@@ -38,9 +38,9 @@
 		<div class="tools-options-row">
 			<div class="tools-option" title="Undo"><mat-icon>undo</mat-icon></div>
 			<div class="tools-zoom">
-				<div class="tools-zoom-less" title="Reduce zoom level">-</div>
-				<div class="tools-zoom-level" title="Reset zoom level">{{zoomLevel}}%</div>
-				<div class="tools-zoom-more" title="Increase zoom level">+</div>
+				<div class="tools-zoom-less" title="Reduce zoom level" (click)="adjustZoom('l')">-</div>
+				<div class="tools-zoom-level" title="Reset zoom level" (click)="adjustZoom('r')">{{zoomLevel}}%</div>
+				<div class="tools-zoom-more" title="Increase zoom level" (click)="adjustZoom('m')">+</div>
 			</div>
 			<div class="tools-option" [ngClass]="{'tools-option-on':showRulers}" title="Show rulers" (click)="changeRulers()">
 				<mat-icon>square_foot</mat-icon>

@@ -201,8 +201,7 @@
 .main {
 	height: calc(100% - 64px);
     display: flex;
-    flex-direction: row;
-	flex-wrap: wrap;
+    flex-direction: column;
 	overflow: auto;
 	width: 100%;
 }
