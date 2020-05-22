@@ -34,6 +34,7 @@ export class EditDesignComponent implements OnInit {
 		name: 'Paint'
 	};
 	zoomLevel: number = 100;
+	line = {start: {x: -1, y: -1}, end: {x: -1, y: -1}};
 	showRulers: boolean = false;
 	textures: Texture[] = [
 		{id: 0, name: 'Blank'},
@@ -142,6 +143,9 @@ export class EditDesignComponent implements OnInit {
 	}
 	
 	selectOption(option: string, name: string) {
+		if (this.selectedTool.option=='line' && option!='line') {
+			this.resetLine();
+		}
 		this.selectedTool.option = option;
 		this.selectedTool.name = name;
 	}
@@ -192,7 +196,28 @@ export class EditDesignComponent implements OnInit {
 				this.currentTexture = this.design.levels[this.currentLevel].data[i][j];
 			}
 			break;
+			case 'line': {
+				if (this.line.start.x==-1 && this.line.start.y==-1) {
+					this.line.start.x = i;
+					this.line.start.y = j;
+				}
+				else {
+					this.line.end.x = i;
+					this.line.end.y = j;
+					this.drawLine();
+				}
+			}
+			break;
 		}
+	}
+	
+	resetLine() {
+		this.line.start = {x: -1, y: -1};
+		this.line.end = {x: -1, y: -1};
+	}
+	
+	drawLine() {
+		console.log(this.line);
 	}
 	
 	saveDesign() {
