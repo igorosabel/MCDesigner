@@ -13,7 +13,7 @@
 	Cargando...
 </div>
 
-<div class="tools-box" *ngIf="design.id" cdkDrag>
+<div #toolBox class="tools-box" [ngClass]="{'tools-box-show':design.id}" cdkDrag (cdkDragEnded)="toolsDragEnd($event)" [style.top.px]="initialPosition.y" [style.left.px]="initialPosition.x">
 	<div class="tools-header">
 		<span>{{selectedTool.name}}</span>
 		<div cdkDragHandle>

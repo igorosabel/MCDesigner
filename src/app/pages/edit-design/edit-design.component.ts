@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params} from '@angular/router';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { Design, Texture } from '../../interfaces/interfaces';
 import { ApiService } from '../../services/api.service';
 import { CommonService } from '../../services/common.service';
@@ -20,6 +21,13 @@ export class EditDesignComponent implements OnInit {
 		sizeY: 0,
 		levels: []
 	};
+	
+	@ViewChild("toolBox", {static: true}) toolBox: ElementRef;
+	
+	initialPosition = { x: 100, y: 100 };
+	position = { ...this.initialPosition };
+	offset = { x: 0, y: 0 };
+	
 	selectedTool = {
 		option: 'paint',
 		name: 'Paint'
@@ -81,6 +89,10 @@ export class EditDesignComponent implements OnInit {
 
 	constructor(private activatedRoute: ActivatedRoute, private as: ApiService, private cs: CommonService, private dialog: DialogService, private router: Router) {}
 	ngOnInit() {
+		if (localStorage.getItem('position_x') && localStorage.getItem('position_y')){
+			this.initialPosition.x = parseInt(localStorage.getItem('position_x'));
+			this.initialPosition.y = parseInt(localStorage.getItem('position_y'));
+		}
 		this.activatedRoute.params.subscribe((params: Params) => {
 			this.loadDesign(params.id);
 		});
@@ -107,6 +119,20 @@ export class EditDesignComponent implements OnInit {
 				});
 			}
 		});
+	}
+	
+	toolsDragEnd(event: CdkDragEnd) {
+		const transform = this.toolBox.nativeElement.style.transform;
+		let regex = /translate3d\(\s?(?<x>[-]?\d*)px,\s?(?<y>[-]?\d*)px,\s?(?<z>[-]?\d*)px\)/;
+		const values = regex.exec(transform);
+
+		this.offset = { x: parseInt(values[1]), y: parseInt(values[2]) };
+
+		this.position.x = this.initialPosition.x + this.offset.x;
+		this.position.y = this.initialPosition.y + this.offset.y;
+		
+		localStorage.setItem('position_x', this.position.x.toString());
+		localStorage.setItem('position_y', this.position.y.toString());
 	}
 	
 	selectOption(option: string, name: string) {
