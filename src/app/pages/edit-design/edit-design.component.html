@@ -89,6 +89,8 @@
 
 <div class="main" *ngIf="design.id">
 	<div class="row" *ngFor="let row of design.levels[currentLevel].data; let i = index">
-		<div *ngFor="let cell of row; let j = index" (click)="selectCell(i, j)" [class]="'cell texture_'+design.levels[currentLevel].data[i][j]" [ngStyle]="{'width': (zoomLevel*0.2)+'px', 'height': (zoomLevel*0.2)+'px'}"></div>
+		<div *ngFor="let cell of row; let j = index" (click)="selectCell(i, j)" [class]="'cell texture_'+design.levels[currentLevel].data[i][j]" [ngStyle]="{'width': (zoomLevel*0.2)+'px', 'height': (zoomLevel*0.2)+'px'}">
+			<div class="ruler" *ngIf="showRulers && (i%5==0 || j%5==0)"></div>
+		</div>
 	</div>
 </div>
