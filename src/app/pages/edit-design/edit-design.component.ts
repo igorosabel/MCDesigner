@@ -21,6 +21,7 @@ export class EditDesignComponent implements OnInit {
 		sizeY: 0,
 		levels: []
 	};
+	rowWidth: number = 0;
 	
 	@ViewChild("toolBox", {static: true}) toolBox: ElementRef;
 	
@@ -112,6 +113,7 @@ export class EditDesignComponent implements OnInit {
 					level.name = this.cs.urldecode(level.name);
 					this.design.levels.push(level);
 				}
+				this.updateRowWidth();
 			}
 			else{
 				this.dialog.alert({title: 'Error', content: 'There was an error when loading the required design. Please try again later.', ok: 'Continue'}).subscribe(result => {
@@ -119,6 +121,10 @@ export class EditDesignComponent implements OnInit {
 				});
 			}
 		});
+	}
+	
+	updateRowWidth() {
+		this.rowWidth = this.design.levels[0].data[0].length * (this.zoomLevel * 0.2);
 	}
 	
 	toolsDragEnd(event: CdkDragEnd) {
@@ -173,6 +179,7 @@ export class EditDesignComponent implements OnInit {
 			}
 			this.zoomLevel += 10;
 		}
+		this.updateRowWidth();
 	}
 	
 	selectCell(i: number, j: number) {
