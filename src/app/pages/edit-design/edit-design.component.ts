@@ -28,7 +28,8 @@ export class EditDesignComponent implements OnInit {
 	initialPosition = { x: 100, y: 100 };
 	position = { ...this.initialPosition };
 	offset = { x: 0, y: 0 };
-	
+
+	toolsClosed: boolean = false;
 	selectedTool = {
 		option: 'paint',
 		name: 'Paint'
@@ -126,6 +127,10 @@ export class EditDesignComponent implements OnInit {
 	
 	updateRowWidth() {
 		this.rowWidth = this.design.levels[0].data[0].length * (this.zoomLevel * 0.2);
+	}
+	
+	closeTools() {
+		this.toolsClosed = !this.toolsClosed;
 	}
 	
 	toolsDragEnd(event: CdkDragEnd) {

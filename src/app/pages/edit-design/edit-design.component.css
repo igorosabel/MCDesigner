@@ -48,6 +48,18 @@
 	cursor: grab;
 }
 
+.tools-closed-btn {
+	transition: all .4s ease-in-out;
+}
+
+.tools-closed-btn-closed {
+	transform: rotate(180deg);
+}
+
+.tools-closed {
+	display: none;
+}
+
 .tools-options {
 	border-bottom: 1px solid #ccc;
 }
