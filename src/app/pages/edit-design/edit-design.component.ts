@@ -89,6 +89,7 @@ export class EditDesignComponent implements OnInit {
 	showLevels: boolean = false;
 	showTextures: boolean = false;
 	savingDesign: boolean = false;
+	saveTimer: number = null;
 
 	constructor(private activatedRoute: ActivatedRoute, private as: ApiService, private cs: CommonService, private dialog: DialogService, private router: Router) {}
 	ngOnInit() {
@@ -195,6 +196,7 @@ export class EditDesignComponent implements OnInit {
 		switch (this.selectedTool.option) {
 			case 'paint': {
 				this.design.levels[this.currentLevel].data[i][j] = this.currentTexture;
+				this.resetAutoSave();
 			}
 			break;
 			case 'picker': {
@@ -210,6 +212,7 @@ export class EditDesignComponent implements OnInit {
 					this.line.end.x = i;
 					this.line.end.y = j;
 					this.drawLine();
+					this.resetAutoSave();
 				}
 			}
 			break;
@@ -224,7 +227,12 @@ export class EditDesignComponent implements OnInit {
 	drawLine() {
 		console.log(this.line);
 	}
-	
+
+	resetAutoSave() {
+		clearTimeout(this.saveTimer);
+		this.saveTimer = window.setTimeout(() => { this.saveDesign(); }, 10000); 
+	}
+
 	saveDesign() {
 		this.savingDesign = true;
 		this.as.updateDesign(this.design).subscribe(result => {
