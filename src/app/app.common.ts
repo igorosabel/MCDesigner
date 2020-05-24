@@ -77,6 +77,7 @@ import { MatCheckboxModule }    from '@angular/material/checkbox';
 import { MatRadioModule }       from '@angular/material/radio';
 import { MatDatepickerModule }  from '@angular/material/datepicker';
 import { DragDropModule }       from '@angular/cdk/drag-drop';
+import { MatSnackBar }          from '@angular/material/snack-bar';
 
 export const MATERIAL: any[] = [
 	MatToolbarModule,
@@ -94,5 +95,6 @@ export const MATERIAL: any[] = [
 	MatCheckboxModule,
 	MatRadioModule,
 	MatDatepickerModule,
-	DragDropModule
+	DragDropModule,
+	MatSnackBar
 ];

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Design, Texture } from '../../interfaces/interfaces';
 import { ApiService } from '../../services/api.service';
 import { CommonService } from '../../services/common.service';
@@ -91,7 +92,7 @@ export class EditDesignComponent implements OnInit {
 	savingDesign: boolean = false;
 	saveTimer: number = null;
 
-	constructor(private activatedRoute: ActivatedRoute, private as: ApiService, private cs: CommonService, private dialog: DialogService, private router: Router) {}
+	constructor(private activatedRoute: ActivatedRoute, private as: ApiService, private cs: CommonService, private dialog: DialogService, private router: Router, private snack: MatSnackBar) {}
 	ngOnInit() {
 		if (localStorage.getItem('position_x') && localStorage.getItem('position_y')){
 			this.initialPosition.x = parseInt(localStorage.getItem('position_x'));
@@ -239,6 +240,9 @@ export class EditDesignComponent implements OnInit {
 			this.savingDesign = false;
 			if (result.status=='error'){
 				this.dialog.alert({title: 'Error', content: 'There was an error when saving the design. Please try again later.', ok: 'Continue'}).subscribe(result => {});
+			}
+			else {
+				this.snack.open('Design saved');
 			}
 		});
 	}
