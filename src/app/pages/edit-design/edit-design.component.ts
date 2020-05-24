@@ -235,6 +235,7 @@ export class EditDesignComponent implements OnInit {
 	}
 
 	saveDesign() {
+		clearTimeout(this.saveTimer);
 		this.savingDesign = true;
 		this.as.updateDesign(this.design).subscribe(result => {
 			this.savingDesign = false;
@@ -242,7 +243,9 @@ export class EditDesignComponent implements OnInit {
 				this.dialog.alert({title: 'Error', content: 'There was an error when saving the design. Please try again later.', ok: 'Continue'}).subscribe(result => {});
 			}
 			else {
-				this.snack.open('Design saved');
+				this.snack.open('Design saved', '', {
+					duration: 3000,
+				});
 			}
 		});
 	}
