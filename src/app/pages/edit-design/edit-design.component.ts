@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Design, Texture } from '../../interfaces/interfaces';
+import { Design, Texture, Point, Line } from '../../interfaces/interfaces';
 import { ApiService } from '../../services/api.service';
 import { CommonService } from '../../services/common.service';
 import { DialogService }     from '../../services/dialog.service';
@@ -26,7 +26,7 @@ export class EditDesignComponent implements OnInit {
 	
 	@ViewChild("toolBox", {static: true}) toolBox: ElementRef;
 	
-	initialPosition = { x: 100, y: 100 };
+	initialPosition: Point = { x: 100, y: 100 };
 	position = { ...this.initialPosition };
 	offset = { x: 0, y: 0 };
 
@@ -36,7 +36,7 @@ export class EditDesignComponent implements OnInit {
 		name: 'Paint'
 	};
 	zoomLevel: number = 100;
-	line = {start: {x: -1, y: -1}, end: {x: -1, y: -1}};
+	line: Line = {start: {x: -1, y: -1} as Point, end: {x: -1, y: -1} as Point};
 	showRulers: boolean = false;
 	textures: Texture[] = [
 		{id: 0, name: 'Blank'},
@@ -93,6 +93,7 @@ export class EditDesignComponent implements OnInit {
 	saveTimer: number = null;
 
 	constructor(private activatedRoute: ActivatedRoute, private as: ApiService, private cs: CommonService, private dialog: DialogService, private router: Router, private snack: MatSnackBar) {}
+
 	ngOnInit() {
 		if (localStorage.getItem('position_x') && localStorage.getItem('position_y')){
 			this.initialPosition.x = parseInt(localStorage.getItem('position_x'));
@@ -213,6 +214,7 @@ export class EditDesignComponent implements OnInit {
 					this.line.end.x = i;
 					this.line.end.y = j;
 					this.drawLine();
+					this.resetLine();
 					this.resetAutoSave();
 				}
 			}
@@ -224,9 +226,28 @@ export class EditDesignComponent implements OnInit {
 		this.line.start = {x: -1, y: -1};
 		this.line.end = {x: -1, y: -1};
 	}
-	
+
+	generatePath(p0: Point, p1: Point) {
+		const points: Point[] = [];
+		const dx = p1.x - p0.x;
+		const dy = p1.y - p0.y;
+		const N = Math.max(Math.abs(dx), Math.abs(dy));
+		const divN = (N == 0) ? 0 : 1 / N;
+		const xstep = dx * divN;
+		const ystep = dy * divN;
+		let x = p0.x;
+		let y = p0.y;
+		for (let step = 0; step <= N; step++, x += xstep, y += ystep) {
+			points.push({x: Math.round(x), y: Math.round(y)} as Point);
+		}
+		return points;
+	}
+
 	drawLine() {
-		console.log(this.line);
+		const coordinates: Point[] = this.generatePath(this.line.start, this.line.end);
+		for (let p of coordinates) {
+			this.design.levels[this.currentLevel].data[p.x][p.y] = this.currentTexture;
+		}
 	}
 
 	resetAutoSave() {
