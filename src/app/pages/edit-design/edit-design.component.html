@@ -53,11 +53,11 @@
 		</div>
 		<div class="tools-textures">
 			<div class="tools-texture-selected">
-				<div [class]="'tools-option texture_'+textures[currentTexture].id" title="{{textures[currentTexture].name}}" (click)="openTextures()"></div>
+				<div [class]="'texture-option texture_'+textures[currentTexture].id" title="{{textures[currentTexture].name}}" (click)="openTextures()"></div>
 				<div class="tools-texture-name">{{textures[currentTexture].name}}</div>
 			</div>
 			<div class="tools-textures-list" *ngIf="showTextures">
-				<div *ngFor="let texture of textures" [class]="'tools-option texture_'+texture.id" title="{{texture.name}}" (click)="selectTexture(texture)"></div>
+				<div *ngFor="let texture of textures" [class]="'texture-option texture_'+texture.id" title="{{texture.name}}" (click)="selectTexture(texture)"></div>
 			</div>
 		</div>
 		<div class="tools-level" *ngIf="design.levels.length>0">
@@ -71,7 +71,7 @@
 		</div>
 		<div *ngIf="showLevels">
 			<div class="tools-level-item" *ngFor="let level of design.levels">
-				<span>{{level.name}}</span>
+				<span (click)="selectLevel(level)">{{level.name}}</span>
 				<button mat-icon-button title="Rename">
 					<mat-icon>create</mat-icon>
 				</button>

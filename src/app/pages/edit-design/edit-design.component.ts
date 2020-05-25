@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Design, Texture, Point, Line, LevelData } from '../../interfaces/interfaces';
+import { Design, Texture, Point, Line, Level, LevelData } from '../../interfaces/interfaces';
 import { ApiService } from '../../services/api.service';
 import { CommonService } from '../../services/common.service';
 import { DialogService }     from '../../services/dialog.service';
@@ -203,6 +203,11 @@ export class EditDesignComponent implements OnInit {
 	
 	deployLevels() {
 		this.showLevels = !this.showLevels;
+	}
+
+	selectLevel(level: Level) {
+		this.currentLevel = this.design.levels.findIndex(x => x.id==level.id);
+		this.deployLevels();
 	}
 
 	changeRulers() {
