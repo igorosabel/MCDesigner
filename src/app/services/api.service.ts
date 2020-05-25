@@ -10,7 +10,9 @@ import {
 	DesignListResult,
 	Design,
 	StatusResult,
-	DesignResult
+	DesignResult,
+	LevelData,
+	LevelResult
 } from '../interfaces/interfaces';
 
 @Injectable({
@@ -43,5 +45,9 @@ export class ApiService {
 	
 	updateDesign(design: Design): Observable<StatusResult> {
 		return this.http.post<StatusResult>(this.apiUrl + 'update-design', design);
+	}
+	
+	addNewLevel(newLevel: LevelData): Observable<LevelResult> {
+		return this.http.post<LevelResult>(this.apiUrl + 'new-level', newLevel);
 	}
 }

@@ -60,6 +60,17 @@ export interface StatusResult {
   status: string;
 }
 
+export interface LevelData {
+	id: number;
+	idDesign: number;
+	name: string;
+}
+
+export interface LevelResult {
+	status: string;
+	level: Level;
+}
+
 export interface Texture {
 	id: number;
 	name: string;

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Design, Texture, Point, Line } from '../../interfaces/interfaces';
+import { Design, Texture, Point, Line, LevelData } from '../../interfaces/interfaces';
 import { ApiService } from '../../services/api.service';
 import { CommonService } from '../../services/common.service';
 import { DialogService }     from '../../services/dialog.service';
@@ -165,6 +165,40 @@ export class EditDesignComponent implements OnInit {
 	selectTexture(texture: Texture) {
 		this.currentTexture = this.textures.findIndex(x => x.id==texture.id);
 		this.openTextures();
+	}
+
+	addNewLevel() {
+		this.dialog.form({
+			title: 'Add new level',
+			content: 'Enter the name of the new level',
+			ok: 'Continue',
+			cancel: 'Cancel',
+			fields: [{
+				title: 'Name',
+				type: 'text',
+				value: ''
+			}]
+		}).subscribe(result => {
+			if (result) {
+				if (!result[0].value) {
+					this.dialog.alert({title:'Error', content:'Name of the new level is required.', ok:'Continue'}).subscribe(result => {});
+				}
+				else {
+					const newLevel: LevelData = {
+						id: null,
+						idDesign: this.design.id,
+						name: result[0].value
+					}
+					this.as.addNewLevel(newLevel).subscribe(result => {
+						if (result.status=='ok') {
+							this.dialog.alert({title:'Success', content:'New level "'+newLevel.name+'" has been added.', ok:'Continue'}).subscribe(result => {});
+							result.level.name = this.cs.urldecode(result.level.name);
+							this.design.levels.push(result.level);
+						}
+					});
+				}
+			}
+		});
 	}
 	
 	deployLevels() {
