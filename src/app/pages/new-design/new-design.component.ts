@@ -7,7 +7,7 @@ import { DialogService }     from '../../services/dialog.service';
 @Component({
   selector: 'mcd-new-design',
   templateUrl: './new-design.component.html',
-  styleUrls: ['./new-design.component.css']
+  styleUrls: []
 })
 export class NewDesignComponent implements OnInit {
 	newDesign = {

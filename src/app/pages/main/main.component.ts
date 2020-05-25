@@ -5,7 +5,7 @@ import { Design } from '../../interfaces/interfaces';
 @Component({
   selector: 'mcd-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  styleUrls: []
 })
 export class MainComponent implements OnInit {
 	designList: Design[] = [];

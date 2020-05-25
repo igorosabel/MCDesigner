@@ -10,7 +10,7 @@ import { DialogService }     from '../../services/dialog.service';
 @Component({
   selector: 'mcd-edit-design',
   templateUrl: './edit-design.component.html',
-  styleUrls: ['./edit-design.component.css']
+  styleUrls: ['./edit-design.component.scss']
 })
 export class EditDesignComponent implements OnInit {
 	designLoading: boolean = true;

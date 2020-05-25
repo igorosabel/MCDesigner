@@ -5,7 +5,7 @@ import { DialogField }  from '../../../interfaces/interfaces';
 @Component({
   selector: 'otpv-form-dialog',
   templateUrl: './form-dialog.component.html',
-  styleUrls: ['../css/dialog.component.css']
+  styleUrls: ['../styles/dialog.component.scss']
 })
 export class FormDialogComponent {
     public title: string;
