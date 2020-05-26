@@ -93,6 +93,15 @@
 			border: 2px solid #000 !important;
 		}
 
+		.tools-option-disabled {
+			background-color: #ccc;
+			
+			&:hover {
+				border: 1px solid #ccc !important;
+				cursor: default !important;
+			}
+		}
+
 		.tools-option-on {
 			border: 2px solid #d5cb15 !important;
 		}

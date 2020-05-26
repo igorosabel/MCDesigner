@@ -85,3 +85,9 @@ export interface Line {
 	start: Point;
 	end: Point;
 }
+
+export interface UndoAction {
+	x: number;
+	y: number;
+	previous: number;
+}

@@ -1,11 +1,19 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router, ActivatedRoute, Params} from '@angular/router';
-import { CdkDragEnd } from '@angular/cdk/drag-drop';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Design, Texture, Point, Line, Level, LevelData } from '../../interfaces/interfaces';
-import { ApiService } from '../../services/api.service';
-import { CommonService } from '../../services/common.service';
-import { DialogService }     from '../../services/dialog.service';
+import { Router, ActivatedRoute, Params}            from '@angular/router';
+import { CdkDragEnd }                               from '@angular/cdk/drag-drop';
+import { MatSnackBar }                              from '@angular/material/snack-bar';
+import { ApiService }                               from '../../services/api.service';
+import { CommonService }                            from '../../services/common.service';
+import { DialogService }                            from '../../services/dialog.service';
+import {
+	Design,
+	Texture,
+	Point,
+	Line,
+	Level,
+	LevelData,
+	UndoAction
+} from '../../interfaces/interfaces';
 
 @Component({
   selector: 'mcd-edit-design',
@@ -92,6 +100,8 @@ export class EditDesignComponent implements OnInit {
 	showTextures: boolean = false;
 	savingDesign: boolean = false;
 	saveTimer: number = null;
+	
+	undoList: UndoAction[] = [];
 
 	constructor(private activatedRoute: ActivatedRoute, private as: ApiService, private cs: CommonService, private dialog: DialogService, private router: Router, private snack: MatSnackBar) {}
 
@@ -335,8 +345,17 @@ export class EditDesignComponent implements OnInit {
 	selectCell(i: number, j: number) {
 		switch (this.selectedTool.option) {
 			case 'paint': {
-				this.design.levels[this.currentLevel].data[i][j] = this.currentTexture;
-				this.resetAutoSave();
+				if (this.design.levels[this.currentLevel].data[i][j] != this.currentTexture) {
+					const action: UndoAction = {
+						x: i,
+						y: j,
+						previous: this.design.levels[this.currentLevel].data[i][j]
+					};
+					this.undoList = [action];
+
+					this.design.levels[this.currentLevel].data[i][j] = this.currentTexture;
+					this.resetAutoSave();
+				}
 			}
 			break;
 			case 'picker': {
@@ -383,9 +402,30 @@ export class EditDesignComponent implements OnInit {
 
 	drawLine() {
 		const coordinates: Point[] = this.generatePath(this.line.start, this.line.end);
+		this.undoList = [];
 		for (let p of coordinates) {
-			this.design.levels[this.currentLevel].data[p.x][p.y] = this.currentTexture;
+			if (this.design.levels[this.currentLevel].data[p.x][p.y] != this.currentTexture) {
+				let action: UndoAction = {
+					x: p.x,
+					y: p.y,
+					previous: this.design.levels[this.currentLevel].data[p.x][p.y]
+				};
+				this.undoList.push(action);
+
+				this.design.levels[this.currentLevel].data[p.x][p.y] = this.currentTexture;
+			}
 		}
+	}
+
+	undo() {
+		if (this.undoList.length==0) {
+			return;
+		}
+		for (let action of this.undoList) {
+			this.design.levels[this.currentLevel].data[action.x][action.y] = action.previous;
+		}
+		this.undoList = [];
+		this.resetAutoSave();
 	}
 
 	resetAutoSave() {

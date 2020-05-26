@@ -43,7 +43,9 @@
 				</div>
 			</div>
 			<div class="tools-options-row">
-				<div class="tools-option" title="Undo"><mat-icon>undo</mat-icon></div>
+				<div class="tools-option" [ngClass]="{'tools-option-disabled':undoList.length==0}" title="Undo" (click)="undo()">
+					<mat-icon>undo</mat-icon>
+				</div>
 				<div class="tools-zoom">
 					<div class="tools-zoom-less" title="Reduce zoom level" (click)="adjustZoom('l')">-</div>
 					<div class="tools-zoom-level" title="Reset zoom level" (click)="adjustZoom('r')">{{zoomLevel}}%</div>
