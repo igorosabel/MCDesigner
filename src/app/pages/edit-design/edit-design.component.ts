@@ -103,8 +103,8 @@ export class EditDesignComponent implements OnInit {
 	
 	undoList: UndoAction[] = [];
 
+	fillTexture: number = null;
 	fillToBePainted: Point[] = [];
-	fillToBeChecked: Point[] = [];
 
 	constructor(private activatedRoute: ActivatedRoute, private as: ApiService, private cs: CommonService, private dialog: DialogService, private router: Router, private snack: MatSnackBar) {}
 
@@ -380,10 +380,13 @@ export class EditDesignComponent implements OnInit {
 			}
 			break;
 			case 'fill': {
+				this.fillTexture     = this.design.levels[this.currentLevel].data[i][j];
 				this.fillToBePainted = [];
-				this.fillToBeChecked = [];
+				this.undoList        = [];
 
-				this.fillAddCell(i, j);
+				const p: Point = {x: i, y: j};
+				this.fillAddCell(p);
+				this.paintToBeFilled();
 			}
 			break;
 		}
@@ -440,13 +443,31 @@ export class EditDesignComponent implements OnInit {
 		return surrounding;
 	}
 
-	fillAddCell(x: number, y: number) {
-		const p: Point = {x, y};
+	fillAddCell(p: Point) {
 		this.fillToBePainted.push(p);
-		
+
 		const surrounding = this.getSurroundingCells(p);
-		console.log(p);
-		console.log(surrounding);
+		for (let newP of surrounding) {
+			if (this.design.levels[this.currentLevel].data[newP.x][newP.y]==this.fillTexture) {
+				const ind = this.fillToBePainted.findIndex(e => e.x==newP.x && e.y==newP.y);
+				if (ind==-1) {
+					this.fillAddCell(newP);
+				}
+			}
+		}
+	}
+	
+	paintToBeFilled() {
+		for (let p of this.fillToBePainted) {
+			let action: UndoAction = {
+				x: p.x,
+				y: p.y,
+				previous: this.design.levels[this.currentLevel].data[p.x][p.y]
+			};
+			this.undoList.push(action);
+
+			this.design.levels[this.currentLevel].data[p.x][p.y] = this.currentTexture;
+		}
 	}
 
 	undo() {
