@@ -103,6 +103,9 @@ export class EditDesignComponent implements OnInit {
 	
 	undoList: UndoAction[] = [];
 
+	fillToBePainted: Point[] = [];
+	fillToBeChecked: Point[] = [];
+
 	constructor(private activatedRoute: ActivatedRoute, private as: ApiService, private cs: CommonService, private dialog: DialogService, private router: Router, private snack: MatSnackBar) {}
 
 	ngOnInit() {
@@ -376,6 +379,13 @@ export class EditDesignComponent implements OnInit {
 				}
 			}
 			break;
+			case 'fill': {
+				this.fillToBePainted = [];
+				this.fillToBeChecked = [];
+
+				this.fillAddCell(i, j);
+			}
+			break;
 		}
 	}
 	
@@ -415,6 +425,28 @@ export class EditDesignComponent implements OnInit {
 				this.design.levels[this.currentLevel].data[p.x][p.y] = this.currentTexture;
 			}
 		}
+	}
+
+	getSurroundingCells(p: Point) {
+		let surrounding = [];
+		for (let x=(p.x -1); x<=(p.x +1); x++) {
+			for (let y=(p.y -1); y<=(p.y +1); y++) {
+				if ( (x!=p.x || y!=p.y) && (x>=0) && (y>=0) && (x<this.design.sizeX) && (y<this.design.sizeY)) {
+					let point: Point = {x, y};
+					surrounding.push(point);
+				}
+			}
+		}
+		return surrounding;
+	}
+
+	fillAddCell(x: number, y: number) {
+		const p: Point = {x, y};
+		this.fillToBePainted.push(p);
+		
+		const surrounding = this.getSurroundingCells(p);
+		console.log(p);
+		console.log(surrounding);
 	}
 
 	undo() {
