@@ -50,4 +50,8 @@ export class ApiService {
 	addNewLevel(newLevel: LevelData): Observable<LevelResult> {
 		return this.http.post<LevelResult>(this.apiUrl + 'new-level', newLevel);
 	}
+	
+	renameLevel(levelData: LevelData): Observable<StatusResult> {
+		return this.http.post<StatusResult>(this.apiUrl + 'rename-level', levelData);
+	}
 }

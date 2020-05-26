@@ -210,6 +210,40 @@ export class EditDesignComponent implements OnInit {
 		this.deployLevels();
 	}
 
+	renameLevel(level: Level) {
+		this.dialog.form({
+			title: 'Rename level',
+			content: 'Enter the new name of this level',
+			ok: 'Continue',
+			cancel: 'Cancel',
+			fields: [{
+				title: 'Name',
+				type: 'text',
+				value: level.name
+			}]
+		}).subscribe(result => {
+			if (result) {
+				if (!result[0].value) {
+					this.dialog.alert({title:'Error', content:'Name of the new level is required.', ok:'Continue'}).subscribe(result => {});
+				}
+				else {
+					const levelData: LevelData = {
+						id: level.id,
+						idDesign: this.design.id,
+						name: result[0].value
+					}
+					this.as.renameLevel(levelData).subscribe(result => {
+						if (result.status=='ok') {
+							this.dialog.alert({title:'Success', content:'Level has been renamed to "'+levelData.name+'"', ok:'Continue'}).subscribe(result => {});
+							const ind = this.design.levels.findIndex(x => x.id==level.id);
+							this.design.levels[ind].name = levelData.name;
+						}
+					});
+				}
+			}
+		});
+	}
+
 	changeRulers() {
 		this.showRulers = !this.showRulers;
 	}
