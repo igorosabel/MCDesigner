@@ -3,7 +3,10 @@
 	<button routerLink="/main" mat-icon-button>
 		<mat-icon>arrow_back</mat-icon>
 	</button>
-    <span>{{design.name}}</span>
+    <span class="wide-toolbar">{{design.name}}</span>
+	<button class="mobile-menu" mat-icon-button (click)="mobileCloseTools()">
+		<mat-icon>menu</mat-icon>
+	</button>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -13,7 +16,7 @@
 	Cargando...
 </div>
 
-<div #toolBox class="tools-box" [ngClass]="{'tools-box-show':design.id}" cdkDrag (cdkDragEnded)="toolsDragEnd($event)" [style.top.px]="initialPosition.y" [style.left.px]="initialPosition.x">
+<div #toolBox class="tools-box" [ngClass]="{'tools-box-show':design.id, 'tools-box-hide':mobileToolsClosed}" cdkDrag (cdkDragEnded)="toolsDragEnd($event)" [style.top.px]="initialPosition.y" [style.left.px]="initialPosition.x">
 	<div class="tools-header">
 		<button mat-icon-button title="Close toolbar" class="tools-closed-btn" [ngClass]="{'tools-closed-btn-closed':toolsClosed}" (click)="closeTools()">
 			<mat-icon>expand_less</mat-icon>

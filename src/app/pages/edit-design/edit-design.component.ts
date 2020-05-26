@@ -26,11 +26,12 @@ export class EditDesignComponent implements OnInit {
 	
 	@ViewChild("toolBox", {static: true}) toolBox: ElementRef;
 	
-	initialPosition: Point = { x: 100, y: 100 };
+	initialPosition: Point = { x: 0, y: 0 };
 	position = { ...this.initialPosition };
 	offset = { x: 0, y: 0 };
 
 	toolsClosed: boolean = false;
+	mobileToolsClosed: boolean = false;
 	selectedTool = {
 		option: 'paint',
 		name: 'Paint'
@@ -95,9 +96,19 @@ export class EditDesignComponent implements OnInit {
 	constructor(private activatedRoute: ActivatedRoute, private as: ApiService, private cs: CommonService, private dialog: DialogService, private router: Router, private snack: MatSnackBar) {}
 
 	ngOnInit() {
-		if (localStorage.getItem('position_x') && localStorage.getItem('position_y')){
-			this.initialPosition.x = parseInt(localStorage.getItem('position_x'));
-			this.initialPosition.y = parseInt(localStorage.getItem('position_y'));
+		if (window.innerWidth<600) {
+			this.initialPosition.x = 0;
+			this.initialPosition.y = 64;
+		}
+		else {
+			if (localStorage.getItem('position_x') && localStorage.getItem('position_y')) {
+				this.initialPosition.x = parseInt(localStorage.getItem('position_x'));
+				this.initialPosition.y = parseInt(localStorage.getItem('position_y'));
+			}
+			else {
+				this.initialPosition.x = 100;
+				this.initialPosition.y = 100;
+			}
 		}
 		this.activatedRoute.params.subscribe((params: Params) => {
 			this.loadDesign(params.id);
@@ -132,13 +143,17 @@ export class EditDesignComponent implements OnInit {
 		this.rowWidth = this.design.levels[0].data[0].length * (this.zoomLevel * 0.2);
 	}
 	
+	mobileCloseTools() {
+		this.mobileToolsClosed = !this.mobileToolsClosed;
+	}
+	
 	closeTools() {
 		this.toolsClosed = !this.toolsClosed;
 	}
 	
 	toolsDragEnd(event: CdkDragEnd) {
 		const transform = this.toolBox.nativeElement.style.transform;
-		let regex = /translate3d\(\s?(?<x>[-]?\d*)px,\s?(?<y>[-]?\d*)px,\s?(?<z>[-]?\d*)px\)/;
+		const regex = /translate3d\(\s?(?<x>[-]?\d*)px,\s?(?<y>[-]?\d*)px,\s?(?<z>[-]?\d*)px\)/;
 		const values = regex.exec(transform);
 
 		this.offset = { x: parseInt(values[1]), y: parseInt(values[2]) };

@@ -1,3 +1,11 @@
+.wide-toolbar{
+	flex: 1;
+}
+
+.mobile-menu {
+	display: block;
+}
+
 .loading {
 	position: fixed;
     top: 0;
@@ -16,9 +24,9 @@
 .tools-box {
 	display: none;
 	position: fixed;
-    width: 300px;
-    top: 50px;
-    left: 50px;
+    width: 100%;
+    top: 64px;
+    left: 0;
     background-color: #fff;
     border-radius: 8px;
 	z-index: 10;
@@ -40,10 +48,12 @@
 
 		.tools-handler {
 			cursor: grab;
+			display: none;
 		}
 
 		.tools-closed-btn {
 			transition: all .4s ease-in-out;
+			display: none;
 		}
 
 		.tools-closed-btn-closed {
@@ -231,6 +241,10 @@
 	display: block;
 }
 
+.tools-box-hide {
+	display: none;
+}
+
 .main {
 	height: calc(100% - 64px);
     display: flex;
@@ -268,5 +282,27 @@
 				background-color: rgb(197,43,211);
 			}
 		}
+	}
+}
+
+@media only screen and (min-width: 600px) {
+	.tools-box {
+		width: 300px;
+		top: auto;
+		left: auto;
+		
+		.tools-header {
+			.tools-closed-btn {
+				display: block;
+			}
+
+			.tools-handler {
+				display: block;
+			}
+		}
+	}
+
+	.mobile-menu {
+		display: none;
 	}
 }
