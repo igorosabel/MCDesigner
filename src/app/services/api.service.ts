@@ -58,4 +58,8 @@ export class ApiService {
 	copyLevel(id: number): Observable<LevelResult> {
 		return this.http.post<LevelResult>(this.apiUrl + 'copy-level', {id});
 	}
+	
+	deleteLevel(id: number): Observable<StatusResult> {
+		return this.http.post<StatusResult>(this.apiUrl + 'delete-level', {id});
+	}
 }

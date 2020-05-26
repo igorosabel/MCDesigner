@@ -246,7 +246,7 @@ export class EditDesignComponent implements OnInit {
 			}
 		});
 	}
-	
+
 	copyLevel(level: Level) {
 		this.dialog.confirm({
 			title: 'Copy level',
@@ -263,6 +263,31 @@ export class EditDesignComponent implements OnInit {
 					}
 					else {
 						this.dialog.alert({title:'Error', content:'There was an error attempting to copy the level. Please try again.', ok:'Continue'}).subscribe(result => {});
+					}
+				});
+			}
+		});
+	}
+
+	deleteLevel(level: Level) {
+		this.dialog.confirm({
+			title: 'Delete level',
+			content: 'Are you sure you want to delete this level?',
+			ok: 'Continue',
+			cancel: 'Cancel'
+		}).subscribe(result => {
+			if (result===true) {
+				this.as.deleteLevel(level.id).subscribe(result => {
+					if (result.status=='ok') {
+						this.dialog.alert({title:'Success', content:'Level "'+level.name+'" has been deleted.', ok:'Continue'}).subscribe(result => {});
+						const ind = this.design.levels.findIndex(x => x.id==level.id);
+						if (ind==this.currentLevel) {
+							this.currentLevel = 0;
+						}
+						this.design.levels.splice(ind, 1);
+					}
+					else {
+						this.dialog.alert({title:'Error', content:'There was an error attempting to delete the level. Please try again.', ok:'Continue'}).subscribe(result => {});
 					}
 				});
 			}
