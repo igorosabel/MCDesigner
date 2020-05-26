@@ -30,28 +30,32 @@ export class ApiService {
 	register(data: RegisterData): Observable<LoginResult> {
 		return this.http.post<LoginResult>(this.apiUrl + 'register', data);
 	}
-	
+
 	loadDesigns(): Observable<DesignListResult> {
 		return this.http.post<DesignListResult>(this.apiUrl + 'load-designs', {});
 	}
-	
+
 	newDesign(newDesign: Design): Observable<StatusResult> {
 		return this.http.post<StatusResult>(this.apiUrl + 'new-design', newDesign);
 	}
-	
+
 	loadDesign(id: number): Observable<DesignResult> {
 		return this.http.post<DesignResult>(this.apiUrl + 'design', {id});
 	}
-	
+
 	updateDesign(design: Design): Observable<StatusResult> {
 		return this.http.post<StatusResult>(this.apiUrl + 'update-design', design);
 	}
-	
+
 	addNewLevel(newLevel: LevelData): Observable<LevelResult> {
 		return this.http.post<LevelResult>(this.apiUrl + 'new-level', newLevel);
 	}
-	
+
 	renameLevel(levelData: LevelData): Observable<StatusResult> {
 		return this.http.post<StatusResult>(this.apiUrl + 'rename-level', levelData);
+	}
+
+	copyLevel(id: number): Observable<LevelResult> {
+		return this.http.post<LevelResult>(this.apiUrl + 'copy-level', {id});
 	}
 }

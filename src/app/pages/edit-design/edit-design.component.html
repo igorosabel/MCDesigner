@@ -75,7 +75,7 @@
 				<button mat-icon-button title="Rename" (click)="renameLevel(level)">
 					<mat-icon>create</mat-icon>
 				</button>
-				<button mat-icon-button title="Copy">
+				<button mat-icon-button title="Copy" (click)="copyLevel(level)">
 					<mat-icon>file_copy</mat-icon>
 				</button>
 				<button mat-icon-button title="Delete" *ngIf="design.levels.length>1">

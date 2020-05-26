@@ -238,8 +238,33 @@ export class EditDesignComponent implements OnInit {
 							const ind = this.design.levels.findIndex(x => x.id==level.id);
 							this.design.levels[ind].name = levelData.name;
 						}
+						else {
+							this.dialog.alert({title:'Error', content:'There was an error attempting to change the name of the level. Please try again.', ok:'Continue'}).subscribe(result => {});
+						}
 					});
 				}
+			}
+		});
+	}
+	
+	copyLevel(level: Level) {
+		this.dialog.confirm({
+			title: 'Copy level',
+			content: 'Are you sure you want to copy this level?',
+			ok: 'Continue',
+			cancel: 'Cancel'
+		}).subscribe(result => {
+			if (result===true) {
+				this.as.copyLevel(level.id).subscribe(result => {
+					if (result.status=='ok') {
+						result.level.name = this.cs.urldecode(result.level.name);
+						this.dialog.alert({title:'Success', content:'New level "'+result.level.name+'" has been added.', ok:'Continue'}).subscribe(result => {});
+						this.design.levels.push(result.level);
+					}
+					else {
+						this.dialog.alert({title:'Error', content:'There was an error attempting to copy the level. Please try again.', ok:'Continue'}).subscribe(result => {});
+					}
+				});
 			}
 		});
 	}
