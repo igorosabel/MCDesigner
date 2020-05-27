@@ -31,6 +31,7 @@ export class EditDesignComponent implements OnInit {
 		levels: []
 	};
 	rowWidth: number = 0;
+	boardHeight: number = 0;
 	
 	@ViewChild("toolBox", {static: true}) toolBox: ElementRef;
 	
@@ -154,6 +155,7 @@ export class EditDesignComponent implements OnInit {
 	
 	updateRowWidth() {
 		this.rowWidth = this.design.levels[0].data[0].length * (this.zoomLevel * 0.2);
+		this.boardHeight = this.design.levels[0].data.length * (this.zoomLevel * 0.2);
 	}
 	
 	mobileCloseTools() {
