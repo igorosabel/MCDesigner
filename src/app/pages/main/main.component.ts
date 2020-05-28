@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router }            from '@angular/router';
 import { ApiService }        from '../../services/api.service';
 import { Design }            from '../../interfaces/interfaces';
 import { DialogService }     from '../../services/dialog.service';
+import { UserService }       from '../../services/user.service';
 
 @Component({
   selector: 'mcd-main',
@@ -12,12 +14,18 @@ export class MainComponent implements OnInit {
 	designList: Design[] = [];
 	designsEdit: boolean = false;
 
-	constructor(private as: ApiService, private dialog: DialogService) {}
+	constructor(private router: Router, private as: ApiService, private dialog: DialogService, private user: UserService) {}
 
 	ngOnInit() {
 		this.as.loadDesigns().subscribe(result => {
 			this.designList = result.list;
 		});
+	}
+
+	logout(ev) {
+		ev.preventDefault();
+		this.user.logout();
+		this.router.navigate(['/']);
 	}
 
 	editDesigns() {
