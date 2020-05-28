@@ -7,6 +7,7 @@ import { MainComponent }           from './pages/main/main.component';
 import { NewDesignComponent }      from './pages/new-design/new-design.component';
 import { EditDesignComponent }     from './pages/edit-design/edit-design.component';
 import { DesignSettingsComponent } from './pages/design-settings/design-settings.component';
+import { ProfileComponent }        from './pages/profile/profile.component';
 
 import { AuthGuard } from './guard/auth.guard';
 
@@ -17,6 +18,7 @@ const routes: Routes = [
 	{ path: 'new-design',                component: NewDesignComponent,      canActivate: [AuthGuard] },
 	{ path: 'edit-design/:id/:slug',     component: EditDesignComponent,     canActivate: [AuthGuard] },
 	{ path: 'design-settings/:id/:slug', component: DesignSettingsComponent, canActivate: [AuthGuard] },
+	{ path: 'profile',                   component: ProfileComponent,        canActivate: [AuthGuard] },
 	{ path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
 

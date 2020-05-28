@@ -7,6 +7,7 @@ import { MainComponent }           from './pages/main/main.component';
 import { NewDesignComponent }      from './pages/new-design/new-design.component';
 import { EditDesignComponent }     from './pages/edit-design/edit-design.component';
 import { DesignSettingsComponent } from './pages/design-settings/design-settings.component';
+import { ProfileComponent }        from './pages/profile/profile.component';
 
 export const PAGES: any[] = [
 	LoginComponent,
@@ -14,7 +15,8 @@ export const PAGES: any[] = [
 	MainComponent,
 	NewDesignComponent,
 	EditDesignComponent,
-	DesignSettingsComponent
+	DesignSettingsComponent,
+	ProfileComponent
 ];
 
 /*
