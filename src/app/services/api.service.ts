@@ -38,6 +38,10 @@ export class ApiService {
 	deleteDesign(id: number): Observable<StatusResult> {
 		return this.http.post<StatusResult>(this.apiUrl + 'delete-design', {id});
 	}
+	
+	updateDesignSettings(design: Design): Observable<StatusResult> {
+		return this.http.post<StatusResult>(this.apiUrl + 'update-design-settings', design);
+	}
 
 	newDesign(newDesign: Design): Observable<StatusResult> {
 		return this.http.post<StatusResult>(this.apiUrl + 'new-design', newDesign);
