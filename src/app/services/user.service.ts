@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { DataShareService } from './data-share.service';
-import { LoginResult } from '../interfaces/interfaces';
 
 @Injectable()
 export class UserService {
 	logged: boolean = false;
 	id: number = null;
 	token: string = null;
+	email: string = null;
 
 	constructor(private dss: DataShareService) {}
 
@@ -19,6 +19,7 @@ export class UserService {
 			this.logged = true;
 			this.id = loginObj.id;
 			this.token = loginObj.token;
+			this.email = loginObj.email;
 		}
 	}
   
@@ -26,8 +27,9 @@ export class UserService {
 		const loginObj = {
 			status: 'ok',
 			id: this.id,
-			token: this.token
-		} as LoginResult;
+			token: this.token,
+			email: this.email
+		};
 		this.dss.setGlobal('login', loginObj);
 	}
   
@@ -35,6 +37,7 @@ export class UserService {
 		this.logged = false;
 		this.id = null;
 		this.token = null;
+		this.email = null;
 		this.dss.removeGlobal('login');
 	}
 }

@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
 				this.user.logged = true;
 				this.user.id     = result.id;
 				this.user.token  = this.cs.urldecode(result.token);
+				this.user.email  = this.loginData.email;
 				this.user.saveLogin();
 
 				this.router.navigate(['/main']);

@@ -30,6 +30,13 @@ export interface RegisterData {
 	conf: string;
 }
 
+export interface Profile {
+	email: string;
+	oldPass: string;
+	newPass: string;
+	confPass: string;
+}
+
 export interface Level {
 	id: number;
 	name: string;

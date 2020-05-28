@@ -12,7 +12,8 @@ import {
 	StatusResult,
 	DesignResult,
 	LevelData,
-	LevelResult
+	LevelResult,
+	Profile
 } from '../interfaces/interfaces';
 
 @Injectable({
@@ -29,6 +30,10 @@ export class ApiService {
 
 	register(data: RegisterData): Observable<LoginResult> {
 		return this.http.post<LoginResult>(this.apiUrl + 'register', data);
+	}
+
+	updateProfile(profile: Profile): Observable<StatusResult> {
+		return this.http.post<StatusResult>(this.apiUrl + 'update-profile', profile);
 	}
 
 	loadDesigns(): Observable<DesignListResult> {
