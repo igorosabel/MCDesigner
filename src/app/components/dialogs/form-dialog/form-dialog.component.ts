@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { DialogField }  from '../../../interfaces/interfaces';
 
 @Component({
-  selector: 'otpv-form-dialog',
+  selector: 'mcd-form-dialog',
   templateUrl: './form-dialog.component.html',
   styleUrls: ['../styles/dialog.component.scss']
 })

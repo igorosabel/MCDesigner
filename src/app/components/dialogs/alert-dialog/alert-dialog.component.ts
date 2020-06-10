@@ -2,7 +2,7 @@ import { Component }    from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'otpv-alert-dialog',
+  selector: 'mcd-alert-dialog',
   templateUrl: './alert-dialog.component.html',
   styleUrls: ['../styles/dialog.component.scss']
 })
