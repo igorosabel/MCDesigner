@@ -118,7 +118,6 @@
       }
     }
   },
-  "defaultProject": "mcdesigner",
   "schematics": {
     "@schematics/angular:component": {
       "style": "scss"
