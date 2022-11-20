@@ -1,18 +1,18 @@
-import { Component }    from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { DialogField }  from '../../../interfaces/interfaces';
+import { Component } from "@angular/core";
+import { MatDialogRef } from "@angular/material/dialog";
+import { DialogField } from "src/app/interfaces/interfaces";
 
 @Component({
-  selector: 'mcd-form-dialog',
-  templateUrl: './form-dialog.component.html',
-  styleUrls: ['../styles/dialog.component.scss']
+  selector: "mcd-form-dialog",
+  templateUrl: "./form-dialog.component.html",
+  styleUrls: ["../styles/dialog.component.scss"],
 })
 export class FormDialogComponent {
-    public title: string;
-    public content: string;
-	public fields: DialogField[];
-    public ok: string;
-    public cancel: string;
+  public title: string;
+  public content: string;
+  public fields: DialogField[];
+  public ok: string;
+  public cancel: string;
 
-    constructor(public dialogRef: MatDialogRef<FormDialogComponent>) {}
+  constructor(public dialogRef: MatDialogRef<FormDialogComponent>) {}
 }
