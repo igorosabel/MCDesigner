@@ -15,7 +15,7 @@ import { UserService } from "src/app/services/user.service";
   templateUrl: "./register.component.html",
   imports: [CommonModule, MaterialModule, FormsModule, LoadingComponent],
 })
-export class RegisterComponent {
+export default class RegisterComponent {
   registerData: RegisterData = {
     email: "",
     pass: "",

@@ -24,7 +24,7 @@ import { DialogService } from "src/app/services/dialog.service";
   ],
   providers: [DialogService],
 })
-export class DesignSettingsComponent implements OnInit {
+export default class DesignSettingsComponent implements OnInit {
   designLoading: boolean = true;
   initialSizeX: number = 0;
   initialSizeY: number = 0;

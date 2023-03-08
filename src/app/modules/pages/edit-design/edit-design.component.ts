@@ -32,7 +32,7 @@ import { DialogService } from "src/app/services/dialog.service";
   imports: [CommonModule, MaterialModule, RouterModule, LoadingComponent],
   providers: [DialogService],
 })
-export class EditDesignComponent implements OnInit {
+export default class EditDesignComponent implements OnInit {
   designLoading: boolean = true;
   design: Design = new Design(null, "Cargando...", "cargando", 0, 0, []);
   rowWidth: number = 0;

@@ -23,7 +23,7 @@ import { UserService } from "src/app/services/user.service";
   ],
   providers: [DialogService],
 })
-export class ProfileComponent implements OnInit {
+export default class ProfileComponent implements OnInit {
   saveSending: boolean = false;
   profile: Profile = {
     email: "",

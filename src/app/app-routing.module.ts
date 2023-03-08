@@ -1,36 +1,46 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { DesignSettingsComponent } from "src/app/modules/pages/design-settings/design-settings.component";
-import { EditDesignComponent } from "src/app/modules/pages/edit-design/edit-design.component";
 import { LoginComponent } from "src/app/modules/pages/login/login.component";
-import { MainComponent } from "src/app/modules/pages/main/main.component";
-import { NewDesignComponent } from "src/app/modules/pages/new-design/new-design.component";
-import { ProfileComponent } from "src/app/modules/pages/profile/profile.component";
-import { RegisterComponent } from "src/app/modules/pages/register/register.component";
 
 import { AuthGuard } from "src/app/guard/auth.guard";
 
 const routes: Routes = [
   { path: "", component: LoginComponent },
-  { path: "register", component: RegisterComponent },
-  { path: "main", component: MainComponent, canActivate: [AuthGuard] },
+  {
+    path: "register",
+    loadComponent: () =>
+      import("src/app/modules/pages/register/register.component"),
+  },
+  {
+    path: "main",
+    loadComponent: () => import("src/app/modules/pages/main/main.component"),
+    canActivate: [AuthGuard],
+  },
   {
     path: "new-design",
-    component: NewDesignComponent,
+    loadComponent: () =>
+      import("src/app/modules/pages/new-design/new-design.component"),
     canActivate: [AuthGuard],
   },
   {
     path: "edit-design/:id/:slug",
-    component: EditDesignComponent,
+    loadComponent: () =>
+      import("src/app/modules/pages/edit-design/edit-design.component"),
     canActivate: [AuthGuard],
   },
   {
     path: "design-settings/:id/:slug",
-    component: DesignSettingsComponent,
+    loadComponent: () =>
+      import("src/app/modules/pages/design-settings/design-settings.component"),
     canActivate: [AuthGuard],
   },
-  { path: "profile", component: ProfileComponent, canActivate: [AuthGuard] },
+  {
+    path: "profile",
+    loadComponent: () =>
+      import("src/app/modules/pages/profile/profile.component"),
+    canActivate: [AuthGuard],
+  },
   { path: "**", redirectTo: "/", pathMatch: "full" },
 ];
 

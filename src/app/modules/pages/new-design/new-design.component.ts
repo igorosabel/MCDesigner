@@ -22,7 +22,7 @@ import { DialogService } from "src/app/services/dialog.service";
   ],
   providers: [DialogService],
 })
-export class NewDesignComponent {
+export default class NewDesignComponent {
   newDesign: Design = new Design();
   saveSending: boolean = false;
 

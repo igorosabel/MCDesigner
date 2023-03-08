@@ -17,7 +17,7 @@ import { UserService } from "src/app/services/user.service";
   imports: [CommonModule, MaterialModule, RouterModule],
   providers: [DialogService],
 })
-export class MainComponent implements OnInit {
+export default class MainComponent implements OnInit {
   designList: Design[] = [];
   designsEdit: boolean = false;
 
