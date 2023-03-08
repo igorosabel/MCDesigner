@@ -1,15 +1,15 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 
-import { LoginComponent } from "./pages/login/login.component";
-import { RegisterComponent } from "./pages/register/register.component";
-import { MainComponent } from "./pages/main/main.component";
-import { NewDesignComponent } from "./pages/new-design/new-design.component";
-import { EditDesignComponent } from "./pages/edit-design/edit-design.component";
-import { DesignSettingsComponent } from "./pages/design-settings/design-settings.component";
-import { ProfileComponent } from "./pages/profile/profile.component";
+import { DesignSettingsComponent } from "src/app/modules/pages/design-settings/design-settings.component";
+import { EditDesignComponent } from "src/app/modules/pages/edit-design/edit-design.component";
+import { LoginComponent } from "src/app/modules/pages/login/login.component";
+import { MainComponent } from "src/app/modules/pages/main/main.component";
+import { NewDesignComponent } from "src/app/modules/pages/new-design/new-design.component";
+import { ProfileComponent } from "src/app/modules/pages/profile/profile.component";
+import { RegisterComponent } from "src/app/modules/pages/register/register.component";
 
-import { AuthGuard } from "./guard/auth.guard";
+import { AuthGuard } from "src/app/guard/auth.guard";
 
 const routes: Routes = [
   { path: "", component: LoginComponent },

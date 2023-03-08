@@ -1,0 +1,64 @@
+<mat-toolbar color="primary">
+	<mat-toolbar-row>
+		<button routerLink="/main"
+				mat-icon-button>
+			<mat-icon>arrow_back</mat-icon>
+		</button>
+		<span>{{design.name}}</span>
+	</mat-toolbar-row>
+</mat-toolbar>
+
+<div *ngIf="designLoading"
+	 class="loading">
+	<mcd-loading [big]="true"></mcd-loading>
+	<br>
+	Cargando...
+</div>
+
+<form *ngIf="!designLoading"
+	  name="frm-new-design"
+	  (ngSubmit)="updateDesign($event)">
+	<mat-card class="center-card">
+		<mat-card-header>
+			<mat-card-title>Design settings</mat-card-title>
+		</mat-card-header>
+		<mat-card-content class="center-card-fields">
+			<mat-form-field>
+				<mat-label>Name</mat-label>
+				<input matInput
+					   [(ngModel)]="design.name"
+					   required
+					   name="name">
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Width</mat-label>
+				<input type="number"
+					   min="1"
+					   step="1"
+					   matInput
+					   [(ngModel)]="design.sizeX"
+					   required
+					   name="sizeX">
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Height</mat-label>
+				<input type="number"
+					   min="1"
+					   step="1"
+					   matInput
+					   [(ngModel)]="design.sizeY"
+					   required
+					   name="sizeY">
+			</mat-form-field>
+		</mat-card-content>
+		<mat-card-actions class="center-card-buttons center-card-buttons-end">
+			<button mat-raised-button
+					color="primary"
+					[disabled]="saveSending"
+					type="submit">
+				<mcd-loading *ngIf="saveSending"></mcd-loading>
+				Continue
+			</button>
+		</mat-card-actions>
+	</mat-card>
+</form>

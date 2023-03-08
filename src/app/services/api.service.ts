@@ -1,78 +1,87 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable }              from '@angular/core';
-import { Observable }              from 'rxjs';
-import { environment }             from '../../environments/environment';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
 
 import {
-	LoginData,
-	LoginResult,
-	RegisterData,
-	DesignListResult,
-	Design,
-	StatusResult,
-	DesignResult,
-	LevelData,
-	LevelResult,
-	Profile
-} from '../interfaces/interfaces';
+  DesignInterface,
+  DesignListResult,
+  DesignResult,
+  LevelData,
+  LevelResult,
+  LoginData,
+  LoginResult,
+  Profile,
+  RegisterData,
+  StatusResult,
+} from "src/app/interfaces/interfaces";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ApiService {
-	apiUrl = environment.apiUrl;
+  apiUrl: string = environment.apiUrl;
 
-	constructor(private http : HttpClient){}
+  constructor(private http: HttpClient) {}
 
-	login(data: LoginData): Observable<LoginResult> {
-		return this.http.post<LoginResult>(this.apiUrl + 'login', data);
-	}
+  login(data: LoginData): Observable<LoginResult> {
+    return this.http.post<LoginResult>(this.apiUrl + "login", data);
+  }
 
-	register(data: RegisterData): Observable<LoginResult> {
-		return this.http.post<LoginResult>(this.apiUrl + 'register', data);
-	}
+  register(data: RegisterData): Observable<LoginResult> {
+    return this.http.post<LoginResult>(this.apiUrl + "register", data);
+  }
 
-	updateProfile(profile: Profile): Observable<StatusResult> {
-		return this.http.post<StatusResult>(this.apiUrl + 'update-profile', profile);
-	}
+  updateProfile(profile: Profile): Observable<StatusResult> {
+    return this.http.post<StatusResult>(
+      this.apiUrl + "update-profile",
+      profile
+    );
+  }
 
-	loadDesigns(): Observable<DesignListResult> {
-		return this.http.post<DesignListResult>(this.apiUrl + 'load-designs', {});
-	}
+  loadDesigns(): Observable<DesignListResult> {
+    return this.http.post<DesignListResult>(this.apiUrl + "load-designs", {});
+  }
 
-	deleteDesign(id: number): Observable<StatusResult> {
-		return this.http.post<StatusResult>(this.apiUrl + 'delete-design', {id});
-	}
-	
-	updateDesignSettings(design: Design): Observable<StatusResult> {
-		return this.http.post<StatusResult>(this.apiUrl + 'update-design-settings', design);
-	}
+  deleteDesign(id: number): Observable<StatusResult> {
+    return this.http.post<StatusResult>(this.apiUrl + "delete-design", { id });
+  }
 
-	newDesign(newDesign: Design): Observable<StatusResult> {
-		return this.http.post<StatusResult>(this.apiUrl + 'new-design', newDesign);
-	}
+  updateDesignSettings(design: DesignInterface): Observable<StatusResult> {
+    return this.http.post<StatusResult>(
+      this.apiUrl + "update-design-settings",
+      design
+    );
+  }
 
-	loadDesign(id: number): Observable<DesignResult> {
-		return this.http.post<DesignResult>(this.apiUrl + 'design', {id});
-	}
+  newDesign(newDesign: DesignInterface): Observable<StatusResult> {
+    return this.http.post<StatusResult>(this.apiUrl + "new-design", newDesign);
+  }
 
-	updateDesign(design: Design): Observable<StatusResult> {
-		return this.http.post<StatusResult>(this.apiUrl + 'update-design', design);
-	}
+  loadDesign(id: number): Observable<DesignResult> {
+    return this.http.post<DesignResult>(this.apiUrl + "design", { id });
+  }
 
-	addNewLevel(newLevel: LevelData): Observable<LevelResult> {
-		return this.http.post<LevelResult>(this.apiUrl + 'new-level', newLevel);
-	}
+  updateDesign(design: DesignInterface): Observable<StatusResult> {
+    return this.http.post<StatusResult>(this.apiUrl + "update-design", design);
+  }
 
-	renameLevel(levelData: LevelData): Observable<StatusResult> {
-		return this.http.post<StatusResult>(this.apiUrl + 'rename-level', levelData);
-	}
+  addNewLevel(newLevel: LevelData): Observable<LevelResult> {
+    return this.http.post<LevelResult>(this.apiUrl + "new-level", newLevel);
+  }
 
-	copyLevel(id: number): Observable<LevelResult> {
-		return this.http.post<LevelResult>(this.apiUrl + 'copy-level', {id});
-	}
-	
-	deleteLevel(id: number): Observable<StatusResult> {
-		return this.http.post<StatusResult>(this.apiUrl + 'delete-level', {id});
-	}
+  renameLevel(levelData: LevelData): Observable<StatusResult> {
+    return this.http.post<StatusResult>(
+      this.apiUrl + "rename-level",
+      levelData
+    );
+  }
+
+  copyLevel(id: number): Observable<LevelResult> {
+    return this.http.post<LevelResult>(this.apiUrl + "copy-level", { id });
+  }
+
+  deleteLevel(id: number): Observable<StatusResult> {
+    return this.http.post<StatusResult>(this.apiUrl + "delete-level", { id });
+  }
 }

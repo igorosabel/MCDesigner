@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
-import { COMPONENTS, MATERIAL, PAGES, PIPES, SERVICES } from "./app.common";
+import { SERVICES } from "./app.common";
 
 import { TokenInterceptor } from "./interceptors/token.interceptor";
 
@@ -19,7 +19,7 @@ const appearance: MatFormFieldDefaultOptions = {
 };
 
 @NgModule({
-  declarations: [AppComponent, ...PAGES, ...COMPONENTS, ...PIPES],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,7 +27,6 @@ const appearance: MatFormFieldDefaultOptions = {
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ...MATERIAL,
   ],
   providers: [
     {

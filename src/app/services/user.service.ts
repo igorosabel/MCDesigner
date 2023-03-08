@@ -1,43 +1,32 @@
-import { Injectable } from '@angular/core';
-import { DataShareService } from './data-share.service';
+import { Injectable } from "@angular/core";
+import { UserInterface } from "src/app/interfaces/interfaces";
+import { User } from "src/app/model/user.model";
+import { DataShareService } from "src/app/services/data-share.service";
 
 @Injectable()
 export class UserService {
-	logged: boolean = false;
-	id: number = null;
-	token: string = null;
-	email: string = null;
+  logged: boolean = false;
+  user: User = null;
 
-	constructor(private dss: DataShareService) {}
+  constructor(private dss: DataShareService) {}
 
-	loadLogin() {
-		const loginObj = this.dss.getGlobal('login');
-		if (loginObj === null){
-			this.logout();
-		}
-		else{
-			this.logged = true;
-			this.id = loginObj.id;
-			this.token = loginObj.token;
-			this.email = loginObj.email;
-		}
-	}
-  
-	saveLogin() {
-		const loginObj = {
-			status: 'ok',
-			id: this.id,
-			token: this.token,
-			email: this.email
-		};
-		this.dss.setGlobal('login', loginObj);
-	}
-  
-	logout() {
-		this.logged = false;
-		this.id = null;
-		this.token = null;
-		this.email = null;
-		this.dss.removeGlobal('login');
-	}
+  loadLogin(): void {
+    const loginObj: UserInterface = this.dss.getGlobal("login");
+    if (loginObj === null) {
+      this.logout();
+    } else {
+      this.logged = true;
+      this.user = new User().fromInterface(loginObj);
+    }
+  }
+
+  saveLogin(): void {
+    this.dss.setGlobal("login", this.user.toInterface());
+  }
+
+  logout(): void {
+    this.logged = false;
+    this.user = null;
+    this.dss.removeGlobal("login");
+  }
 }

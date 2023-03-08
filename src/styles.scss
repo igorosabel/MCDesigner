@@ -1,11 +1,18 @@
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -14,296 +21,300 @@ input::-webkit-inner-spin-button {
 }
 
 input[type=number] {
-  -moz-appearance:textfield;
+  -moz-appearance: textfield;
 }
 
 .btn-bottom-right {
-	position: fixed !important;
-	bottom: 36px;
-	right: 36px;
+  position: fixed !important;
+  bottom: 36px;
+  right: 36px;
 }
 
 .sidebar {
-	min-width: 300px;
+  min-width: 300px;
 }
 
 .center-card {
-	max-width: 300px;
-	margin: 50px auto;
+  max-width: 300px;
+  margin: 50px auto;
 }
 
 .center-card-big {
-	width: 90%;
-	margin: 50px auto;
+  width: 90%;
+  margin: 50px auto;
 }
 
 .center-card-content {
-	width: 95%;
-	margin: 20px auto;
+  width: 95%;
+  margin: 20px auto;
 }
 
-.center-card-fields > * {
-	width: 100%;
+.center-card-fields>* {
+  width: 100%;
 }
 
 .center-card-buttons {
-	display: flex !important;
-	justify-content: space-between;
+  display: flex !important;
+  justify-content: space-between;
 }
 
 .center-card-buttons img {
-	width: 20px;
+  width: 20px;
 }
 
 .center-card-buttons-end {
-	justify-content: flex-end;
+  justify-content: flex-end;
 }
 
 .center-card-error {
-	border-radius: 6px;
-    box-sizing: border-box;
-    border-color: #f44336;
-    color: #f44336;
-    border-width: 2px;
-	padding: 8px;
+  border-radius: 6px;
+  box-sizing: border-box;
+  border-color: #f44336;
+  color: #f44336;
+  border-width: 2px;
+  padding: 8px;
 }
 
-.flex-space{
-	flex: 1 1 auto;
+.flex-space {
+  flex: 1 1 auto;
 }
 
 .tab-icon {
-	margin-right: 8px;
+  margin-right: 8px;
 }
 
 .tab-top-margin {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 
 .disabled-title {
-	color: #ccc;
+  color: #ccc;
 }
 
-.center{
-	text-align: center;
+.center {
+  text-align: center;
 }
 
-.texture_1{
+.full-width {
+  width: 100%;
+}
+
+.texture_1 {
   background: url(/assets/textures/1.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_2{
+.texture_2 {
   background: url(/assets/textures/2.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_3{
+.texture_3 {
   background: url(/assets/textures/3.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_4{
+.texture_4 {
   background: url(/assets/textures/4.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_5{
+.texture_5 {
   background: url(/assets/textures/5.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_6{
+.texture_6 {
   background: url(/assets/textures/6.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_7{
+.texture_7 {
   background: url(/assets/textures/7.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_8{
+.texture_8 {
   background: url(/assets/textures/8.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_9{
+.texture_9 {
   background: url(/assets/textures/9.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_10{
+.texture_10 {
   background: url(/assets/textures/10.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_11{
+.texture_11 {
   background: url(/assets/textures/11.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_12{
+.texture_12 {
   background: url(/assets/textures/12.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_13{
+.texture_13 {
   background: url(/assets/textures/13.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_14{
+.texture_14 {
   background: url(/assets/textures/14.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_15{
+.texture_15 {
   background: url(/assets/textures/15.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_16{
+.texture_16 {
   background: url(/assets/textures/16.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_17{
+.texture_17 {
   background: url(/assets/textures/17.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_18{
+.texture_18 {
   background: url(/assets/textures/18.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_19{
+.texture_19 {
   background: url(/assets/textures/19.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_20{
+.texture_20 {
   background: url(/assets/textures/20.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_21{
+.texture_21 {
   background: url(/assets/textures/21.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_22{
+.texture_22 {
   background: url(/assets/textures/22.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_23{
+.texture_23 {
   background: url(/assets/textures/23.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_24{
+.texture_24 {
   background: url(/assets/textures/24.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_25{
+.texture_25 {
   background: url(/assets/textures/25.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_26{
+.texture_26 {
   background: url(/assets/textures/26.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_27{
+.texture_27 {
   background: url(/assets/textures/27.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_28{
+.texture_28 {
   background: url(/assets/textures/28.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_29{
+.texture_29 {
   background: url(/assets/textures/29.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_30{
+.texture_30 {
   background: url(/assets/textures/30.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_31{
+.texture_31 {
   background: url(/assets/textures/31.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_32{
+.texture_32 {
   background: url(/assets/textures/32.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_33{
+.texture_33 {
   background: url(/assets/textures/33.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_34{
+.texture_34 {
   background: url(/assets/textures/34.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_35{
+.texture_35 {
   background: url(/assets/textures/35.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_36{
+.texture_36 {
   background: url(/assets/textures/36.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_37{
+.texture_37 {
   background: url(/assets/textures/37.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_38{
+.texture_38 {
   background: url(/assets/textures/38.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_39{
+.texture_39 {
   background: url(/assets/textures/39.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_40{
+.texture_40 {
   background: url(/assets/textures/40.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_41{
+.texture_41 {
   background: url(/assets/textures/41.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_42{
+.texture_42 {
   background: url(/assets/textures/42.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_43{
+.texture_43 {
   background: url(/assets/textures/43.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }
 
-.texture_44{
+.texture_44 {
   background: url(/assets/textures/44.png) no-repeat scroll center center;
   background-size: 100% 100%;
 }

@@ -1,66 +1,72 @@
 export interface DialogField {
-	title: string;
-	type: string;
-	value: string;
-	hint?: string;
+  title: string;
+  type: string;
+  value: string;
+  hint?: string;
 }
 
 export interface DialogOptions {
-	title: string;
-	content: string;
-	fields?: DialogField[];
-	ok: string;
-	cancel?: string;
+  title: string;
+  content: string;
+  fields?: DialogField[];
+  ok: string;
+  cancel?: string;
 }
 
 export interface LoginData {
-	email: string;
-	pass: string;
+  email: string;
+  pass: string;
+}
+
+export interface UserInterface {
+  id: number;
+  token: string;
+  email: string;
 }
 
 export interface LoginResult {
-	status: string;
-	id: number;
-	token: string;
+  status: string;
+  id: number;
+  token: string;
 }
 
 export interface RegisterData {
-	email: string;
-	pass: string;
-	conf: string;
+  email: string;
+  pass: string;
+  conf: string;
 }
 
 export interface Profile {
-	email: string;
-	oldPass: string;
-	newPass: string;
-	confPass: string;
+  email: string;
+  oldPass: string;
+  newPass: string;
+  confPass: string;
 }
 
-export interface Level {
-	id: number;
-	name: string;
-	height: number;
-	data: number[][];
+export interface LevelInterface {
+  id: number;
+  name: string;
+  height: number;
+  data: number[][];
 }
 
-export interface Design {
-	id: number;
-	name: string;
-	slug: string;
-	sizeX: number;
-	sizeY: number;
-	levels?: Level[];
+export interface DesignInterface {
+  id: number;
+  name: string;
+  slug: string;
+  sizeX: number;
+  sizeY: number;
+  levels?: LevelInterface[];
 }
 
 export interface DesignListResult {
-	status: string;
-	list: Design[];
+  status: string;
+  list: DesignInterface[];
 }
 
 export interface DesignResult {
-	status: string;
-	design: Design;
+  status: string;
+  design: DesignInterface;
 }
 
 export interface StatusResult {
@@ -68,33 +74,33 @@ export interface StatusResult {
 }
 
 export interface LevelData {
-	id: number;
-	idDesign: number;
-	name: string;
+  id: number;
+  idDesign: number;
+  name: string;
 }
 
 export interface LevelResult {
-	status: string;
-	level: Level;
+  status: string;
+  level: LevelInterface;
 }
 
-export interface Texture {
-	id: number;
-	name: string;
+export interface TextureInterface {
+  id: number;
+  name: string;
 }
 
-export interface Point {
-	x: number;
-	y: number;
+export interface PointInterface {
+  x: number;
+  y: number;
 }
 
-export interface Line {
-	start: Point;
-	end: Point;
+export interface LineInterface {
+  start: PointInterface;
+  end: PointInterface;
 }
 
 export interface UndoAction {
-	x: number;
-	y: number;
-	previous: number;
+  x: number;
+  y: number;
+  previous: number;
 }

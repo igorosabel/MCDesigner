@@ -1,23 +1,25 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
   HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
-import { CommonService } from '../services/common.service';
-import { UserService } from '../services/user.service';
-import { Observable } from 'rxjs';
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { UserService } from "src/app/services/user.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private cs: CommonService, public user: UserService) {}
-  
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  constructor(public us: UserService) {}
+
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     request = request.clone({
       setHeaders: {
-        Authorization: this.user.token ? this.cs.urldecode(this.user.token) : ''
-      }
+        Authorization: this.us.user ? this.us.user.token : "",
+      },
     });
     return next.handle(request);
   }
