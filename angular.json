@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mcdesigner:build"
+            "buildTarget": "mcdesigner:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mcdesigner:build:production"
+              "buildTarget": "mcdesigner:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mcdesigner:build"
+            "buildTarget": "mcdesigner:build"
           }
         },
         "test": {
