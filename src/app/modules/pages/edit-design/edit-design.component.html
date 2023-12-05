@@ -13,18 +13,19 @@
 	</mat-toolbar-row>
 </mat-toolbar>
 
-<div *ngIf="designLoading"
-	 class="loading">
-	<mcd-loading [big]="true"></mcd-loading>
+@if (designLoading) {
+<div class="loading">
+	<mcd-loading [big]="true" />
 	<br>
 	Cargando...
 </div>
+}
 
 <div #toolBox
 	 class="tools-box"
 	 [ngClass]="{'tools-box-show':design.id, 'tools-box-hide':mobileToolsClosed}"
 	 cdkDrag
-	 (cdkDragEnded)="toolsDragEnd($event)"
+	 (cdkDragEnded)="toolsDragEnd()"
 	 [style.top.px]="initialPosition.y"
 	 [style.left.px]="initialPosition.x">
 	<div class="tools-header">
@@ -44,25 +45,25 @@
 		<div class="tools-options">
 			<div class="tools-options-row">
 				<div class="tools-option"
-					 [ngClass]="{'tools-option-selected':selectedTool.option=='paint'}"
+					 [ngClass]="{'tools-option-selected': selectedTool.option === 'paint'}"
 					 title="Paint"
 					 (click)="selectOption('paint','Paint')">
 					<mat-icon>brush</mat-icon>
 				</div>
 				<div class="tools-option"
-					 [ngClass]="{'tools-option-selected':selectedTool.option=='picker'}"
+					 [ngClass]="{'tools-option-selected': selectedTool.option === 'picker'}"
 					 title="Texture picker"
 					 (click)="selectOption('picker','Texture picker')">
 					<mat-icon>colorize</mat-icon>
 				</div>
 				<div class="tools-option"
-					 [ngClass]="{'tools-option-selected':selectedTool.option=='fill'}"
+					 [ngClass]="{'tools-option-selected': selectedTool.option === 'fill'}"
 					 title="Fill with texture"
 					 (click)="selectOption('fill','Fill with texture')">
 					<mat-icon>opacity</mat-icon>
 				</div>
 				<div class="tools-option"
-					 [ngClass]="{'tools-option-selected':selectedTool.option=='line'}"
+					 [ngClass]="{'tools-option-selected': selectedTool.option === 'line'}"
 					 title="Draw a line"
 					 (click)="selectOption('line','Draw a line')">
 					<mat-icon>sync_alt</mat-icon>
@@ -70,7 +71,7 @@
 			</div>
 			<div class="tools-options-row">
 				<div class="tools-option"
-					 [ngClass]="{'tools-option-disabled':undoList.length==0}"
+					 [ngClass]="{'tools-option-disabled': undoList.length === 0}"
 					 title="Undo"
 					 (click)="undo()">
 					<mat-icon>undo</mat-icon>
@@ -101,16 +102,18 @@
 					 (click)="openTextures()"></div>
 				<div class="tools-texture-name">{{textures[currentTexture].name}}</div>
 			</div>
-			<div class="tools-textures-list"
-				 *ngIf="showTextures">
-				<div *ngFor="let texture of textures"
-					 [class]="'texture-option texture_'+texture.id"
+			@if (showTextures) {
+			<div class="tools-textures-list">
+				@for (texture of textures; track texture.id) {
+				<div [class]="'texture-option texture_'+texture.id"
 					 title="{{texture.name}}"
 					 (click)="selectTexture(texture)"></div>
+				}
 			</div>
+			}
 		</div>
-		<div class="tools-level"
-			 *ngIf="design.levels.length>0">
+		@if (design.levels.length>0) {
+		<div class="tools-level">
 			<button mat-icon-button
 					title="Show level list"
 					class="levels-deploy-btn"
@@ -125,9 +128,11 @@
 				<mat-icon>add_circle_outline</mat-icon>
 			</button>
 		</div>
-		<div *ngIf="showLevels">
-			<div class="tools-level-item"
-				 *ngFor="let level of design.levels">
+		}
+		@if (showLevels) {
+		<div>
+			@for (level of design.levels; track level.id) {
+			<div class="tools-level-item">
 				<span (click)="selectLevel(level)">{{level.name}}</span>
 				<button mat-icon-button
 						title="Rename"
@@ -146,33 +151,42 @@
 					<mat-icon>delete_forever</mat-icon>
 				</button>
 			</div>
+			}
 		</div>
+		}
 	</div>
 	<div class="tools-footer">
 		<button mat-raised-button
 				color="primary"
 				[disabled]="savingDesign"
 				(click)="saveDesign()">
-			<mcd-loading *ngIf="savingDesign"></mcd-loading>
+			@if (savingDesign) {
+			<mcd-loading />
+			}
 			Save
 		</button>
 	</div>
 </div>
 
+@if (design.id) {
 <div class="main"
-	 *ngIf="design.id"
 	 [ngStyle]="{'height': boardHeight+'px'}">
+	@for (row of design.levels[currentLevel].data; track row; let i = $index) {
 	<div class="row"
-		 *ngFor="let row of design.levels[currentLevel].data; let i = index"
 		 [ngStyle]="{'width': rowWidth+'px'}">
-		<div *ngFor="let cell of row; let j = index"
-			 (click)="selectCell(i, j)"
+		@for (cell of row; track cell; let j = $index) {
+		<div (click)="selectCell(i, j)"
 			 [class]="'cell texture_'+design.levels[currentLevel].data[i][j]"
 			 [ngStyle]="{'width': (zoomLevel*0.2)+'px', 'height': (zoomLevel*0.2)+'px'}">
-			<div class="ruler"
-				 *ngIf="showRulers && (i%5==0 || j%5==0)"></div>
-			<div class="line-start"
-				 *ngIf="line.start.x==i && line.start.y==j"></div>
+			@if (showRulers && (i%5===0 || j%5===0)) {
+			<div class="ruler"></div>
+			}
+			@if (line.start.x===i && line.start.y===j) {
+			<div class="line-start"></div>
+			}
 		</div>
+		}
 	</div>
+	}
 </div>
+}

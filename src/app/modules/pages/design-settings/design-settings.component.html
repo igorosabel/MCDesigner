@@ -8,15 +8,15 @@
 	</mat-toolbar-row>
 </mat-toolbar>
 
-<div *ngIf="designLoading"
-	 class="loading">
-	<mcd-loading [big]="true"></mcd-loading>
+@if (designLoading) {
+<div class="loading">
+	<mcd-loading [big]="true" />
 	<br>
 	Cargando...
 </div>
-
-<form *ngIf="!designLoading"
-	  name="frm-new-design"
+}
+@else {
+<form name="frm-new-design"
 	  (ngSubmit)="updateDesign($event)">
 	<mat-card class="center-card">
 		<mat-card-header>
@@ -56,9 +56,12 @@
 					color="primary"
 					[disabled]="saveSending"
 					type="submit">
-				<mcd-loading *ngIf="saveSending"></mcd-loading>
+				@if (saveSending) {
+				<mcd-loading />
+				}
 				Continue
 			</button>
 		</mat-card-actions>
 	</mat-card>
 </form>
+}

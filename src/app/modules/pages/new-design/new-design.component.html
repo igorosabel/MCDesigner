@@ -48,7 +48,9 @@
 					color="primary"
 					[disabled]="saveSending"
 					type="submit">
-				<mcd-loading *ngIf="saveSending"></mcd-loading>
+				@if (saveSending) {
+				<mcd-loading />
+				}
 				Continue
 			</button>
 		</mat-card-actions>

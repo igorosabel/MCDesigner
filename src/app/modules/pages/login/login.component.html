@@ -29,11 +29,12 @@
 					   required
 					   name="pass">
 			</mat-form-field>
-			<fieldset *ngIf="loginError"
-					  class="center-card-error">
+			@if (loginError) {
+			<fieldset class="center-card-error">
 				<legend>Error</legend>
 				Wrong email or password.
 			</fieldset>
+			}
 		</mat-card-content>
 		<mat-card-actions class="center-card-buttons">
 			<a routerLink="/register"
@@ -43,7 +44,9 @@
 					color="primary"
 					[disabled]="loginSending"
 					type="submit">
-				<mcd-loading *ngIf="loginSending"></mcd-loading>
+				@if (loginSending) {
+				<mcd-loading />
+				}
 				Continue
 			</button>
 		</mat-card-actions>

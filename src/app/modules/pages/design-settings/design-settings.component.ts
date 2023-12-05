@@ -1,10 +1,14 @@
-import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatToolbarModule } from "@angular/material/toolbar";
 import { ActivatedRoute, Params, Router, RouterModule } from "@angular/router";
 import { DesignResult, StatusResult } from "src/app/interfaces/interfaces";
 import { Design } from "src/app/model/design.model";
-import { MaterialModule } from "src/app/modules/material/material.module";
 import { LoadingComponent } from "src/app/modules/shared/components/loading/loading.component";
 import { Utils } from "src/app/modules/shared/utils.class";
 import { ApiService } from "src/app/services/api.service";
@@ -16,11 +20,15 @@ import { DialogService } from "src/app/services/dialog.service";
   templateUrl: "./design-settings.component.html",
   styleUrls: ["./design-settings.component.scss"],
   imports: [
-    CommonModule,
-    MaterialModule,
     FormsModule,
     RouterModule,
     LoadingComponent,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [DialogService],
 })
@@ -65,7 +73,7 @@ export default class DesignSettingsComponent implements OnInit {
               "There was an error when loading the required design. Please try again later.",
             ok: "Continue",
           })
-          .subscribe((result: boolean): void => {
+          .subscribe((): void => {
             this.router.navigate(["/main"]);
           });
       }
@@ -75,9 +83,11 @@ export default class DesignSettingsComponent implements OnInit {
   updateDesign(ev: MouseEvent): void {
     ev.preventDefault();
     if (this.design.name == "") {
-      this.dialog
-        .alert({ title: "Error", content: "Name is required.", ok: "Continue" })
-        .subscribe((result: boolean): void => {});
+      this.dialog.alert({
+        title: "Error",
+        content: "Name is required.",
+        ok: "Continue",
+      });
       return;
     }
     if (
@@ -86,9 +96,11 @@ export default class DesignSettingsComponent implements OnInit {
       isNaN(this.design.sizeY) ||
       this.design.sizeY == null
     ) {
-      this.dialog
-        .alert({ title: "Error", content: "Size is required.", ok: "Continue" })
-        .subscribe((result: boolean): void => {});
+      this.dialog.alert({
+        title: "Error",
+        content: "Size is required.",
+        ok: "Continue",
+      });
       return;
     }
     if (
@@ -120,22 +132,18 @@ export default class DesignSettingsComponent implements OnInit {
       .subscribe((result: StatusResult): void => {
         this.saveSending = false;
         if (result.status == "ok") {
-          this.dialog
-            .alert({
-              title: "Success",
-              content: "Design settings have been updated.",
-              ok: "Continue",
-            })
-            .subscribe((result: boolean): void => {});
+          this.dialog.alert({
+            title: "Success",
+            content: "Design settings have been updated.",
+            ok: "Continue",
+          });
         } else {
-          this.dialog
-            .alert({
-              title: "Error",
-              content:
-                "There was an error updating the design. Please try again later.",
-              ok: "Continue",
-            })
-            .subscribe((result: boolean): void => {});
+          this.dialog.alert({
+            title: "Error",
+            content:
+              "There was an error updating the design. Please try again later.",
+            ok: "Continue",
+          });
         }
       });
   }

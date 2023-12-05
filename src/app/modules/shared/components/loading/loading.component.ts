@@ -9,5 +9,5 @@ import { Component, Input } from "@angular/core";
   imports: [CommonModule],
 })
 export class LoadingComponent {
-  @Input("big") big: boolean = false;
+  @Input() big: boolean = false;
 }

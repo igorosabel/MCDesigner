@@ -1,10 +1,14 @@
-import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { Router } from "@angular/router";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { Router, RouterModule } from "@angular/router";
 import { LoginResult, RegisterData } from "src/app/interfaces/interfaces";
 import { User } from "src/app/model/user.model";
-import { MaterialModule } from "src/app/modules/material/material.module";
 import { LoadingComponent } from "src/app/modules/shared/components/loading/loading.component";
 import { ApiService } from "src/app/services/api.service";
 import { UserService } from "src/app/services/user.service";
@@ -13,7 +17,17 @@ import { UserService } from "src/app/services/user.service";
   standalone: true,
   selector: "mcd-register",
   templateUrl: "./register.component.html",
-  imports: [CommonModule, MaterialModule, FormsModule, LoadingComponent],
+  imports: [
+    FormsModule,
+    LoadingComponent,
+    RouterModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
 })
 export default class RegisterComponent {
   registerData: RegisterData = {

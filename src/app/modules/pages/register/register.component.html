@@ -42,23 +42,27 @@
 					   required
 					   name="conf">
 			</mat-form-field>
-			<fieldset *ngIf="registerEmailError"
-					  class="center-card-error">
+			@if (registerEmailError) {
+			<fieldset class="center-card-error">
 				<legend>Error</legend>
 				Email is alrady in use.
 			</fieldset>
-			<fieldset *ngIf="registerPassError"
-					  class="center-card-error">
+			}
+			@if (registerPassError) {
+			<fieldset class="center-card-error">
 				<legend>Error</legend>
 				Passwords don't match.
 			</fieldset>
+			}
 		</mat-card-content>
 		<mat-card-actions class="center-card-buttons center-card-buttons-end">
 			<button mat-raised-button
 					color="primary"
 					[disabled]="registerSending"
 					type="submit">
-				<mcd-loading *ngIf="registerSending"></mcd-loading>
+				@if (registerSending) {
+				<mcd-loading />
+				}
 				Continue
 			</button>
 		</mat-card-actions>
