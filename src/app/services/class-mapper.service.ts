@@ -1,7 +1,12 @@
 import { Injectable } from "@angular/core";
-import { DesignInterface, LevelInterface } from "@interfaces/interfaces";
+import {
+  DesignInterface,
+  LevelInterface,
+  UserInterface,
+} from "@interfaces/interfaces";
 import { Design } from "@model/design.model";
 import { Level } from "@model/level.model";
+import { User } from "@model/user.model";
 
 @Injectable({
   providedIn: "root",
@@ -25,5 +30,9 @@ export class ClassMapperService {
     return ds.map((d: DesignInterface): Design => {
       return this.getDesign(d);
     });
+  }
+
+  getUser(u: UserInterface): User {
+    return new User().fromInterface(u);
   }
 }

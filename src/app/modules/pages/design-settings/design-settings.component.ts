@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -33,18 +33,16 @@ import { Utils } from "@shared/utils.class";
   providers: [DialogService],
 })
 export default class DesignSettingsComponent implements OnInit {
+  private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  private router: Router = inject(Router);
+  private as: ApiService = inject(ApiService);
+  private dialog: DialogService = inject(DialogService);
+
   designLoading: boolean = true;
   initialSizeX: number = 0;
   initialSizeY: number = 0;
-  design: Design = new Design(null, "Loading...", "loading", 0, 0, []);
+  design: Design = new Design(0, "Loading...", "loading", 0, 0, []);
   saveSending: boolean = false;
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private as: ApiService,
-    private dialog: DialogService
-  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params): void => {

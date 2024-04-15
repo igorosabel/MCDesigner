@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
@@ -30,16 +30,14 @@ import { UserService } from "@services/user.service";
   providers: [DialogService],
 })
 export default class MainComponent implements OnInit {
+  private router: Router = inject(Router);
+  private as: ApiService = inject(ApiService);
+  private dialog: DialogService = inject(DialogService);
+  private user: UserService = inject(UserService);
+  private cms: ClassMapperService = inject(ClassMapperService);
+
   designList: Design[] = [];
   designsEdit: boolean = false;
-
-  constructor(
-    private router: Router,
-    private as: ApiService,
-    private dialog: DialogService,
-    private user: UserService,
-    private cms: ClassMapperService
-  ) {}
 
   ngOnInit(): void {
     this.as.loadDesigns().subscribe((result: DesignListResult): void => {

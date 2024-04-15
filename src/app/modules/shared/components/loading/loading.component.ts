@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, InputSignal, input } from "@angular/core";
 
 @Component({
   standalone: true,
@@ -9,5 +9,5 @@ import { Component, Input } from "@angular/core";
   imports: [CommonModule],
 })
 export class LoadingComponent {
-  @Input() big: boolean = false;
+  big: InputSignal<boolean> = input<boolean>(false);
 }

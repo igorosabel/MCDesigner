@@ -3,9 +3,9 @@ import { Utils } from "@shared/utils.class";
 
 export class Level {
   constructor(
-    public id: number | null = null,
-    public name: string | null = null,
-    public height: number | null = null,
+    public id: number = 0,
+    public name: string = "",
+    public height: number = 0,
     public data: number[][] = []
   ) {}
 

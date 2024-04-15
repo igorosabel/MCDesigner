@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -31,14 +31,12 @@ import { LoadingComponent } from "@shared/components/loading/loading.component";
   providers: [DialogService],
 })
 export default class NewDesignComponent {
+  private dialog: DialogService = inject(DialogService);
+  private as: ApiService = inject(ApiService);
+  private router: Router = inject(Router);
+
   newDesign: Design = new Design();
   saveSending: boolean = false;
-
-  constructor(
-    private dialog: DialogService,
-    private as: ApiService,
-    private router: Router
-  ) {}
 
   saveDesign(ev: MouseEvent): void {
     ev.preventDefault();

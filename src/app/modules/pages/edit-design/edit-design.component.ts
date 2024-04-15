@@ -1,5 +1,13 @@
+import { CdkDrag } from "@angular/cdk/drag-drop";
 import { CommonModule } from "@angular/common";
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  Signal,
+  inject,
+  viewChild,
+} from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -37,16 +45,24 @@ import { Utils } from "@shared/utils.class";
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    CdkDrag,
   ],
   providers: [DialogService],
 })
 export default class EditDesignComponent implements OnInit {
+  private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  private as: ApiService = inject(ApiService);
+  private dialog: DialogService = inject(DialogService);
+  private cms: ClassMapperService = inject(ClassMapperService);
+  private router: Router = inject(Router);
+  private snack: MatSnackBar = inject(MatSnackBar);
+
   designLoading: boolean = true;
-  design: Design = new Design(null, "Cargando...", "cargando", 0, 0, []);
+  design: Design = new Design(0, "Cargando...", "cargando", 0, 0, []);
   rowWidth: number = 0;
   boardHeight: number = 0;
 
-  @ViewChild("toolBox", { static: true }) toolBox: ElementRef;
+  toolBox: Signal<ElementRef> = viewChild.required("toolBox");
 
   initialPosition: Point = new Point(0, 0);
   position: Point = new Point(0, 0);
@@ -68,37 +84,22 @@ export default class EditDesignComponent implements OnInit {
   showLevels: boolean = false;
   showTextures: boolean = false;
   savingDesign: boolean = false;
-  saveTimer: number | null = null;
+  saveTimer: number = -1;
 
   undoList: UndoAction[] = [];
 
   fillTexture: number | null = null;
   fillToBePainted: Point[] = [];
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private as: ApiService,
-    private dialog: DialogService,
-    private cms: ClassMapperService,
-    private router: Router,
-    private snack: MatSnackBar
-  ) {}
-
   ngOnInit(): void {
     if (window.innerWidth < 600) {
       this.initialPosition.x = 0;
       this.initialPosition.y = 64;
     } else {
-      if (
-        localStorage.getItem("position_x") !== null &&
-        localStorage.getItem("position_y") !== null
-      ) {
-        this.initialPosition.x = parseInt(localStorage.getItem("position_x"));
-        this.initialPosition.y = parseInt(localStorage.getItem("position_y"));
-      } else {
-        this.initialPosition.x = 100;
-        this.initialPosition.y = 100;
-      }
+      const posX: string | null = localStorage.getItem("position_x");
+      const posY: string | null = localStorage.getItem("position_y");
+      this.initialPosition.x = posX !== null ? parseInt(posX) : 100;
+      this.initialPosition.y = posY !== null ? parseInt(posY) : 100;
     }
     this.activatedRoute.params.subscribe((params: Params): void => {
       this.loadDesign(params["id"]);
@@ -130,7 +131,7 @@ export default class EditDesignComponent implements OnInit {
     this.rowWidth =
       this.design.levels[0].data[0].length * (this.zoomLevel * 0.2);
     this.boardHeight =
-      this.design.levels[0].data.length * (this.zoomLevel * 0.2);
+      this.design.levels[0].data[0].length * (this.zoomLevel * 0.2);
   }
 
   mobileCloseTools(): void {
@@ -142,12 +143,16 @@ export default class EditDesignComponent implements OnInit {
   }
 
   toolsDragEnd(): void {
-    const transform: string = this.toolBox.nativeElement.style.transform;
+    const transform: string = this.toolBox().nativeElement.style.transform;
     const regex =
       /translate3d\(\s?(?<x>[-]?\d*)px,\s?(?<y>[-]?\d*)px,\s?(?<z>[-]?\d*)px\)/;
     const values: RegExpExecArray | null = regex.exec(transform);
 
-    this.offset = new Point(parseInt(values[1]), parseInt(values[2]));
+    this.offset = new Point(0, 0);
+    if (values !== null) {
+      this.offset.x = parseInt(values[1]);
+      this.offset.y = parseInt(values[2]);
+    }
 
     this.position.x = this.initialPosition.x + this.offset.x;
     this.position.y = this.initialPosition.y + this.offset.y;
@@ -191,8 +196,8 @@ export default class EditDesignComponent implements OnInit {
         ],
       })
       .subscribe((result: DialogOptions): void => {
-        if (result) {
-          if (!result[0].value) {
+        if (result && result.fields) {
+          if (!result.fields[0].value) {
             this.dialog.alert({
               title: "Error",
               content: "Name of the new level is required.",
@@ -200,9 +205,9 @@ export default class EditDesignComponent implements OnInit {
             });
           } else {
             const newLevel: LevelData = {
-              id: null,
+              id: 0,
               idDesign: this.design.id,
-              name: Utils.urlencode(result[0].value),
+              name: Utils.urlencode(result.fields[0].value),
             };
             this.as
               .addNewLevel(newLevel)
@@ -251,8 +256,8 @@ export default class EditDesignComponent implements OnInit {
         ],
       })
       .subscribe((result: DialogOptions): void => {
-        if (result) {
-          if (!result[0].value) {
+        if (result && result.fields) {
+          if (!result.fields[0].value) {
             this.dialog.alert({
               title: "Error",
               content: "Name of the new level is required.",
@@ -262,7 +267,7 @@ export default class EditDesignComponent implements OnInit {
             const levelData: LevelData = {
               id: level.id,
               idDesign: this.design.id,
-              name: result[0].value,
+              name: result.fields[0].value,
             };
             this.as
               .renameLevel(levelData)
@@ -301,7 +306,7 @@ export default class EditDesignComponent implements OnInit {
         cancel: "Cancel",
       })
       .subscribe((result: boolean): void => {
-        if (result === true) {
+        if (result === true && level.id !== null) {
           this.as.copyLevel(level.id).subscribe((result: LevelResult): void => {
             if (result.status == "ok") {
               const newLevelCopied: Level = this.cms.getLevel(result.level);
@@ -334,7 +339,7 @@ export default class EditDesignComponent implements OnInit {
         cancel: "Cancel",
       })
       .subscribe((result: boolean): void => {
-        if (result === true) {
+        if (result === true && level.id !== null) {
           this.as
             .deleteLevel(level.id)
             .subscribe((result: StatusResult): void => {
@@ -368,10 +373,10 @@ export default class EditDesignComponent implements OnInit {
     this.showRulers = !this.showRulers;
   }
 
-  adjustZoom(mode: string): boolean {
+  adjustZoom(mode: string): void {
     if (mode == "l") {
       if (this.zoomLevel == 10) {
-        return false;
+        return;
       }
       this.zoomLevel -= 10;
     }
@@ -380,7 +385,7 @@ export default class EditDesignComponent implements OnInit {
     }
     if (mode == "m") {
       if (this.zoomLevel == 200) {
-        return false;
+        return;
       }
       this.zoomLevel += 10;
     }

@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { environment } from "@env/environment";
 import { Observable } from "rxjs";
 
@@ -20,9 +20,9 @@ import {
   providedIn: "root",
 })
 export class ApiService {
-  apiUrl: string = environment.apiUrl;
+  private http: HttpClient = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  apiUrl: string = environment.apiUrl;
 
   login(data: LoginData): Observable<LoginResult> {
     return this.http.post<LoginResult>(this.apiUrl + "login", data);

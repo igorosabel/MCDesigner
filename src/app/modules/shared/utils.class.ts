@@ -1,7 +1,7 @@
 export class Utils {
-  static urldecode(str: string | null): string | null {
+  static urldecode(str: string | null): string {
     if (str === null) {
-      return null;
+      return "";
     }
     return decodeURIComponent(
       str
@@ -15,9 +15,9 @@ export class Utils {
     );
   }
 
-  static urlencode(str: string | null): string | null {
+  static urlencode(str: string | null): string {
     if (str === null) {
-      return null;
+      return "";
     }
     return encodeURIComponent(str)
       .replace(/%20/g, "+")

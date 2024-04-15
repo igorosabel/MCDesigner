@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -32,6 +32,10 @@ import { LoadingComponent } from "@shared/components/loading/loading.component";
   providers: [DialogService],
 })
 export default class ProfileComponent implements OnInit {
+  private us: UserService = inject(UserService);
+  private dialog: DialogService = inject(DialogService);
+  private as: ApiService = inject(ApiService);
+
   saveSending: boolean = false;
   profile: Profile = {
     email: "",
@@ -40,14 +44,10 @@ export default class ProfileComponent implements OnInit {
     confPass: "",
   };
 
-  constructor(
-    private us: UserService,
-    private dialog: DialogService,
-    private as: ApiService
-  ) {}
-
   ngOnInit(): void {
-    this.profile.email = this.us.user.email;
+    if (this.us.user !== null) {
+      this.profile.email = this.us.user.email;
+    }
   }
 
   updateProfile(ev: MouseEvent): void {
@@ -108,8 +108,10 @@ export default class ProfileComponent implements OnInit {
       .subscribe((result: StatusResult): void => {
         this.saveSending = false;
         if (result.status == "ok") {
-          this.us.user.email = this.profile.email;
-          this.us.saveLogin();
+          if (this.us.user !== null) {
+            this.us.user.email = this.profile.email;
+            this.us.saveLogin();
+          }
           this.profile.oldPass = "";
           this.profile.newPass = "";
           this.profile.confPass = "";

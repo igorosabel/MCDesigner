@@ -3,9 +3,9 @@ import { Utils } from "@shared/utils.class";
 
 export class User {
   constructor(
-    public id: number | null = null,
-    public token: string | null = null,
-    public email: string | null = null
+    public id: number = 0,
+    public token: string = "",
+    public email: string = ""
   ) {}
 
   fromInterface(u: UserInterface): User {

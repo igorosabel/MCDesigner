@@ -9,9 +9,9 @@ import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
   imports: [MatDialogModule, MatButtonModule],
 })
 export class AlertDialogComponent {
-  public title: string;
-  public content: string;
-  public ok: string;
+  public title: string = "";
+  public content: string = "";
+  public ok: string = "Continue";
 
   constructor(public dialogRef: MatDialogRef<AlertDialogComponent>) {}
 }

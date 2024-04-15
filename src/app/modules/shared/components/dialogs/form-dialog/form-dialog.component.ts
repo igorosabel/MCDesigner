@@ -21,11 +21,11 @@ import { DialogField } from "@interfaces/interfaces";
   ],
 })
 export class FormDialogComponent {
-  public title: string;
-  public content: string;
-  public fields: DialogField[];
-  public ok: string;
-  public cancel: string;
+  public title: string = "";
+  public content: string = "";
+  public fields: DialogField[] = [];
+  public ok: string = "Continue";
+  public cancel: string = "Cancel";
 
   constructor(public dialogRef: MatDialogRef<FormDialogComponent>) {}
 }

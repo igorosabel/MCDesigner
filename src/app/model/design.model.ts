@@ -4,12 +4,12 @@ import { Utils } from "@shared/utils.class";
 
 export class Design {
   constructor(
-    public id: number | null = null,
-    public name: string | null = "New design",
-    public slug: string | null = null,
+    public id: number = 0,
+    public name: string = "New design",
+    public slug: string = "new-design",
     public sizeX: number = 50,
     public sizeY: number = 50,
-    public levels: Level[] | null = []
+    public levels: Level[] = []
   ) {}
 
   fromInterface(d: DesignInterface): Design {
@@ -22,7 +22,7 @@ export class Design {
       ? d.levels.map((l: LevelInterface): Level => {
           return new Level().fromInterface(l);
         })
-      : null;
+      : [];
 
     return this;
   }
@@ -38,7 +38,7 @@ export class Design {
         ? this.levels.map((l: Level): LevelInterface => {
             return l.toInterface();
           })
-        : null,
+        : [],
     };
   }
 }

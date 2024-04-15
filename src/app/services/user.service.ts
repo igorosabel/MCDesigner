@@ -1,32 +1,41 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { UserInterface } from "@interfaces/interfaces";
 import { User } from "@model/user.model";
-import { DataShareService } from "@services/data-share.service";
+import { ClassMapperService } from "@services/class-mapper.service";
 
 @Injectable()
 export class UserService {
-  logged: boolean = false;
-  user: User = null;
+  private cms: ClassMapperService = inject(ClassMapperService);
 
-  constructor(private dss: DataShareService) {}
+  logged: boolean = false;
+  user: User | null = null;
 
   loadLogin(): void {
-    const loginObj: UserInterface = this.dss.getGlobal("login");
+    const loginStr: string | null = localStorage.getItem("login");
+    if (loginStr === null) {
+      this.logout();
+      return;
+    }
+    const loginObj: UserInterface = JSON.parse(loginStr);
     if (loginObj === null) {
       this.logout();
-    } else {
-      this.logged = true;
-      this.user = new User().fromInterface(loginObj);
+      return;
     }
+    this.logged = true;
+    this.user = this.cms.getUser(loginObj);
   }
 
   saveLogin(): void {
-    this.dss.setGlobal("login", this.user.toInterface());
+    if (this.user === null) {
+      return;
+    }
+    const loginObj: UserInterface = this.user.toInterface();
+    localStorage.setItem("login", JSON.stringify(loginObj));
   }
 
   logout(): void {
     this.logged = false;
     this.user = null;
-    this.dss.removeGlobal("login");
+    localStorage.removeItem("login");
   }
 }

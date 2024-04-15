@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -29,19 +29,17 @@ import { LoadingComponent } from "@shared/components/loading/loading.component";
   ],
 })
 export class LoginComponent implements OnInit {
+  private as: ApiService = inject(ApiService);
+  private us: UserService = inject(UserService);
+  private router: Router = inject(Router);
+  private auth: AuthService = inject(AuthService);
+
   loginData: LoginData = {
     email: "",
     pass: "",
   };
   loginError: boolean = false;
   loginSending: boolean = false;
-
-  constructor(
-    private as: ApiService,
-    private us: UserService,
-    private router: Router,
-    private auth: AuthService
-  ) {}
 
   ngOnInit(): void {
     if (this.auth.isAuthenticated()) {

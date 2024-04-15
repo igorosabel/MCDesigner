@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -30,6 +30,10 @@ import { LoadingComponent } from "@shared/components/loading/loading.component";
   ],
 })
 export default class RegisterComponent {
+  private as: ApiService = inject(ApiService);
+  private us: UserService = inject(UserService);
+  private router: Router = inject(Router);
+
   registerData: RegisterData = {
     email: "",
     pass: "",
@@ -39,13 +43,7 @@ export default class RegisterComponent {
   registerPassError: boolean = false;
   registerSending: boolean = false;
 
-  constructor(
-    private as: ApiService,
-    private us: UserService,
-    private router: Router
-  ) {}
-
-  doRegister(ev: Event): boolean {
+  doRegister(ev: Event): void {
     ev.preventDefault();
 
     if (
@@ -53,14 +51,14 @@ export default class RegisterComponent {
       this.registerData.pass === "" ||
       this.registerData.conf === ""
     ) {
-      return false;
+      return;
     }
 
     this.registerEmailError = false;
     this.registerPassError = false;
     if (this.registerData.pass !== this.registerData.conf) {
       this.registerPassError = true;
-      return false;
+      return;
     }
 
     this.registerSending = true;

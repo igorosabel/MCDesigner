@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { DialogOptions } from "@interfaces/interfaces";
 import { AlertDialogComponent } from "@shared/components/dialogs/alert-dialog/alert-dialog.component";
@@ -8,7 +8,7 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class DialogService {
-  constructor(private dialog: MatDialog) {}
+  private dialog: MatDialog = inject(MatDialog);
 
   public confirm(options: DialogOptions): Observable<boolean> {
     const dialogRef: MatDialogRef<ConfirmDialogComponent> = this.dialog.open(
@@ -18,7 +18,9 @@ export class DialogService {
     dialogRef.componentInstance.title = options.title;
     dialogRef.componentInstance.content = options.content;
     dialogRef.componentInstance.ok = options.ok;
-    dialogRef.componentInstance.cancel = options.cancel;
+    if (options.cancel !== undefined) {
+      dialogRef.componentInstance.cancel = options.cancel;
+    }
 
     return dialogRef.afterClosed();
   }
@@ -41,8 +43,12 @@ export class DialogService {
     dialogRef.componentInstance.title = options.title;
     dialogRef.componentInstance.content = options.content;
     dialogRef.componentInstance.ok = options.ok;
-    dialogRef.componentInstance.cancel = options.cancel;
-    dialogRef.componentInstance.fields = options.fields;
+    if (options.cancel !== undefined) {
+      dialogRef.componentInstance.cancel = options.cancel;
+    }
+    if (options.fields !== undefined) {
+      dialogRef.componentInstance.fields = options.fields;
+    }
 
     return dialogRef.afterClosed();
   }

@@ -9,10 +9,10 @@ import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
   imports: [MatDialogModule, MatButtonModule],
 })
 export class ConfirmDialogComponent {
-  public title: string;
-  public content: string;
-  public ok: string;
-  public cancel: string;
+  public title: string = "";
+  public content: string = "";
+  public ok: string = "Continue";
+  public cancel: string = "Cancel";
 
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>) {}
 }
