@@ -7,12 +7,12 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { ActivatedRoute, Params, Router, RouterModule } from "@angular/router";
-import { DesignResult, StatusResult } from "src/app/interfaces/interfaces";
-import { Design } from "src/app/model/design.model";
-import { LoadingComponent } from "src/app/modules/shared/components/loading/loading.component";
-import { Utils } from "src/app/modules/shared/utils.class";
-import { ApiService } from "src/app/services/api.service";
-import { DialogService } from "src/app/services/dialog.service";
+import { DesignResult, StatusResult } from "@interfaces/interfaces";
+import { Design } from "@model/design.model";
+import { ApiService } from "@services/api.service";
+import { DialogService } from "@services/dialog.service";
+import { LoadingComponent } from "@shared/components/loading/loading.component";
+import { Utils } from "@shared/utils.class";
 
 @Component({
   standalone: true,
@@ -48,7 +48,7 @@ export default class DesignSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params): void => {
-      this.loadDesign(params.id);
+      this.loadDesign(params["id"]);
     });
   }
 

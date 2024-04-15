@@ -6,12 +6,12 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { Router, RouterModule } from "@angular/router";
-import { LoginData, LoginResult } from "src/app/interfaces/interfaces";
-import { User } from "src/app/model/user.model";
-import { LoadingComponent } from "src/app/modules/shared/components/loading/loading.component";
-import { ApiService } from "src/app/services/api.service";
-import { AuthService } from "src/app/services/auth.service";
-import { UserService } from "src/app/services/user.service";
+import { LoginData, LoginResult } from "@interfaces/interfaces";
+import { User } from "@model/user.model";
+import { ApiService } from "@services/api.service";
+import { AuthService } from "@services/auth.service";
+import { UserService } from "@services/user.service";
+import { LoadingComponent } from "@shared/components/loading/loading.component";
 
 @Component({
   standalone: true,

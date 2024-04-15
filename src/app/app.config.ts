@@ -12,9 +12,9 @@ import {
   MatFormFieldDefaultOptions,
 } from "@angular/material/form-field";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { routes } from "src/app/app.routes";
-import { TokenInterceptor } from "src/app/interceptors/token.interceptor";
-import { provideCore } from "src/app/modules/core";
+import { routes } from "@app/app.routes";
+import { TokenInterceptor } from "@app/interceptors/token.interceptor";
+import { provideCore } from "@modules/core";
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: "top",

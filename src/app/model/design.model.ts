@@ -1,15 +1,15 @@
-import { DesignInterface, LevelInterface } from "src/app/interfaces/interfaces";
-import { Level } from "src/app/model/level.model";
-import { Utils } from "src/app/modules/shared/utils.class";
+import { DesignInterface, LevelInterface } from "@interfaces/interfaces";
+import { Level } from "@model/level.model";
+import { Utils } from "@shared/utils.class";
 
 export class Design {
   constructor(
-    public id: number = null,
-    public name: string = "New design",
-    public slug: string = null,
+    public id: number | null = null,
+    public name: string | null = "New design",
+    public slug: string | null = null,
     public sizeX: number = 50,
     public sizeY: number = 50,
-    public levels: Level[] = []
+    public levels: Level[] | null = []
   ) {}
 
   fromInterface(d: DesignInterface): Design {

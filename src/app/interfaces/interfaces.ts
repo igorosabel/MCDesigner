@@ -19,9 +19,9 @@ export interface LoginData {
 }
 
 export interface UserInterface {
-  id: number;
-  token: string;
-  email: string;
+  id: number | null;
+  token: string | null;
+  email: string | null;
 }
 
 export interface LoginResult {
@@ -44,19 +44,19 @@ export interface Profile {
 }
 
 export interface LevelInterface {
-  id: number;
-  name: string;
-  height: number;
+  id: number | null;
+  name: string | null;
+  height: number | null;
   data: number[][];
 }
 
 export interface DesignInterface {
-  id: number;
-  name: string;
-  slug: string;
+  id: number | null;
+  name: string | null;
+  slug: string | null;
   sizeX: number;
   sizeY: number;
-  levels?: LevelInterface[];
+  levels?: LevelInterface[] | null;
 }
 
 export interface DesignListResult {
@@ -85,18 +85,18 @@ export interface LevelResult {
 }
 
 export interface TextureInterface {
-  id: number;
-  name: string;
+  id: number | null;
+  name: string | null;
 }
 
 export interface PointInterface {
-  x: number;
-  y: number;
+  x: number | null;
+  y: number | null;
 }
 
 export interface LineInterface {
-  start: PointInterface;
-  end: PointInterface;
+  start: PointInterface | null;
+  end: PointInterface | null;
 }
 
 export interface UndoAction {

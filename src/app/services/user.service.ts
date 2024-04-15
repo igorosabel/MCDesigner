@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { UserInterface } from "src/app/interfaces/interfaces";
-import { User } from "src/app/model/user.model";
-import { DataShareService } from "src/app/services/data-share.service";
+import { UserInterface } from "@interfaces/interfaces";
+import { User } from "@model/user.model";
+import { DataShareService } from "@services/data-share.service";
 
 @Injectable()
 export class UserService {

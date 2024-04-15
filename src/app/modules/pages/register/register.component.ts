@@ -7,11 +7,11 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { Router, RouterModule } from "@angular/router";
-import { LoginResult, RegisterData } from "src/app/interfaces/interfaces";
-import { User } from "src/app/model/user.model";
-import { LoadingComponent } from "src/app/modules/shared/components/loading/loading.component";
-import { ApiService } from "src/app/services/api.service";
-import { UserService } from "src/app/services/user.service";
+import { LoginResult, RegisterData } from "@interfaces/interfaces";
+import { User } from "@model/user.model";
+import { ApiService } from "@services/api.service";
+import { UserService } from "@services/user.service";
+import { LoadingComponent } from "@shared/components/loading/loading.component";
 
 @Component({
   standalone: true,

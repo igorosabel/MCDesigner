@@ -1,7 +1,7 @@
-import { PointInterface } from "src/app/interfaces/interfaces";
+import { PointInterface } from "@interfaces/interfaces";
 
 export class Point {
-  constructor(public x: number = null, public y: number = null) {}
+  constructor(public x: number | null = null, public y: number | null = null) {}
 
   fromInterface(p: PointInterface): Point {
     this.x = p.x;

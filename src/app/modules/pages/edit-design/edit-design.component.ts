@@ -12,18 +12,18 @@ import {
   LevelResult,
   StatusResult,
   UndoAction,
-} from "src/app/interfaces/interfaces";
-import { Design } from "src/app/model/design.model";
-import { Level } from "src/app/model/level.model";
-import { Line } from "src/app/model/line.model";
-import { Point } from "src/app/model/point.model";
-import { Texture } from "src/app/model/texture.model";
-import { LoadingComponent } from "src/app/modules/shared/components/loading/loading.component";
-import { TEXTURES } from "src/app/modules/shared/textures.class";
-import { Utils } from "src/app/modules/shared/utils.class";
-import { ApiService } from "src/app/services/api.service";
-import { ClassMapperService } from "src/app/services/class-mapper.service";
-import { DialogService } from "src/app/services/dialog.service";
+} from "@interfaces/interfaces";
+import { Design } from "@model/design.model";
+import { Level } from "@model/level.model";
+import { Line } from "@model/line.model";
+import { Point } from "@model/point.model";
+import { Texture } from "@model/texture.model";
+import { ApiService } from "@services/api.service";
+import { ClassMapperService } from "@services/class-mapper.service";
+import { DialogService } from "@services/dialog.service";
+import { LoadingComponent } from "@shared/components/loading/loading.component";
+import { TEXTURES } from "@shared/textures.class";
+import { Utils } from "@shared/utils.class";
 
 @Component({
   standalone: true,
@@ -68,11 +68,11 @@ export default class EditDesignComponent implements OnInit {
   showLevels: boolean = false;
   showTextures: boolean = false;
   savingDesign: boolean = false;
-  saveTimer: number = null;
+  saveTimer: number | null = null;
 
   undoList: UndoAction[] = [];
 
-  fillTexture: number = null;
+  fillTexture: number | null = null;
   fillToBePainted: Point[] = [];
 
   constructor(
@@ -90,8 +90,8 @@ export default class EditDesignComponent implements OnInit {
       this.initialPosition.y = 64;
     } else {
       if (
-        localStorage.getItem("position_x") &&
-        localStorage.getItem("position_y")
+        localStorage.getItem("position_x") !== null &&
+        localStorage.getItem("position_y") !== null
       ) {
         this.initialPosition.x = parseInt(localStorage.getItem("position_x"));
         this.initialPosition.y = parseInt(localStorage.getItem("position_y"));
@@ -101,7 +101,7 @@ export default class EditDesignComponent implements OnInit {
       }
     }
     this.activatedRoute.params.subscribe((params: Params): void => {
-      this.loadDesign(params.id);
+      this.loadDesign(params["id"]);
     });
   }
 
@@ -145,7 +145,7 @@ export default class EditDesignComponent implements OnInit {
     const transform: string = this.toolBox.nativeElement.style.transform;
     const regex =
       /translate3d\(\s?(?<x>[-]?\d*)px,\s?(?<y>[-]?\d*)px,\s?(?<z>[-]?\d*)px\)/;
-    const values: RegExpExecArray = regex.exec(transform);
+    const values: RegExpExecArray | null = regex.exec(transform);
 
     this.offset = new Point(parseInt(values[1]), parseInt(values[2]));
 
@@ -552,14 +552,14 @@ export default class EditDesignComponent implements OnInit {
   }
 
   resetAutoSave(): void {
-    clearTimeout(this.saveTimer);
+    window.clearTimeout(this.saveTimer);
     this.saveTimer = window.setTimeout((): void => {
       this.saveDesign();
     }, 10000);
   }
 
   saveDesign(): void {
-    clearTimeout(this.saveTimer);
+    window.clearTimeout(this.saveTimer);
     this.savingDesign = true;
     this.as
       .updateDesign(this.design.toInterface())

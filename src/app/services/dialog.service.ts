@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { DialogOptions } from "@interfaces/interfaces";
+import { AlertDialogComponent } from "@shared/components/dialogs/alert-dialog/alert-dialog.component";
+import { ConfirmDialogComponent } from "@shared/components/dialogs/confirm-dialog/confirm-dialog.component";
+import { FormDialogComponent } from "@shared/components/dialogs/form-dialog/form-dialog.component";
 import { Observable } from "rxjs";
-import { DialogOptions } from "src/app/interfaces/interfaces";
-import { AlertDialogComponent } from "src/app/modules/shared/components/dialogs/alert-dialog/alert-dialog.component";
-import { ConfirmDialogComponent } from "src/app/modules/shared/components/dialogs/confirm-dialog/confirm-dialog.component";
-import { FormDialogComponent } from "src/app/modules/shared/components/dialogs/form-dialog/form-dialog.component";
 
 @Injectable()
 export class DialogService {

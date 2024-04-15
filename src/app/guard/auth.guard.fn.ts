@@ -1,16 +1,18 @@
 import { inject } from "@angular/core";
 import { CanActivateFn, Router } from "@angular/router";
-import { Observable, tap } from "rxjs";
-import { AuthService } from "src/app/services/auth.service";
+import { AuthService } from "@services/auth.service";
+import { Observable, map } from "rxjs";
 
 export const isLoggedGuardFn: CanActivateFn = (): Observable<boolean> => {
   const router = inject(Router);
   return inject(AuthService)
     .isAuthenticated()
     .pipe(
-      tap(
-        (isLoggedIn: boolean): Promise<boolean> =>
-          !isLoggedIn && router.navigate(["/"])
-      )
+      map((isLoggedIn: boolean): boolean => {
+        if (!isLoggedIn) {
+          router.navigate(["/"]);
+        }
+        return isLoggedIn;
+      })
     );
 };

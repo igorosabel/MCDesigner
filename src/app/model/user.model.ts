@@ -1,11 +1,11 @@
-import { UserInterface } from "src/app/interfaces/interfaces";
-import { Utils } from "src/app/modules/shared/utils.class";
+import { UserInterface } from "@interfaces/interfaces";
+import { Utils } from "@shared/utils.class";
 
 export class User {
   constructor(
-    public id: number = null,
-    public token: string = null,
-    public email: string = null
+    public id: number | null = null,
+    public token: string | null = null,
+    public email: string | null = null
   ) {}
 
   fromInterface(u: UserInterface): User {

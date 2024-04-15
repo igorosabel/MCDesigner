@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { DesignInterface, LevelInterface } from "src/app/interfaces/interfaces";
-import { Design } from "src/app/model/design.model";
-import { Level } from "src/app/model/level.model";
+import { DesignInterface, LevelInterface } from "@interfaces/interfaces";
+import { Design } from "@model/design.model";
+import { Level } from "@model/level.model";
 
 @Injectable({
   providedIn: "root",

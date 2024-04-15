@@ -1,7 +1,10 @@
-import { TextureInterface } from "src/app/interfaces/interfaces";
+import { TextureInterface } from "@interfaces/interfaces";
 
 export class Texture {
-  constructor(public id: number = null, public name: string = null) {}
+  constructor(
+    public id: number | null = null,
+    public name: string | null = null
+  ) {}
 
   fromInterface(t: TextureInterface): Texture {
     this.id = t.id;
