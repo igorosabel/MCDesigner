@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  WritableSignal,
+  inject,
+  signal,
+} from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -36,7 +42,7 @@ export default class ProfileComponent implements OnInit {
   private dialog: DialogService = inject(DialogService);
   private as: ApiService = inject(ApiService);
 
-  saveSending: boolean = false;
+  saveSending: WritableSignal<boolean> = signal<boolean>(false);
   profile: Profile = {
     email: "",
     oldPass: "",
@@ -102,11 +108,11 @@ export default class ProfileComponent implements OnInit {
       }
     }
 
-    this.saveSending = true;
+    this.saveSending.set(true);
     this.as
       .updateProfile(this.profile)
       .subscribe((result: StatusResult): void => {
-        this.saveSending = false;
+        this.saveSending.set(false);
         if (result.status == "ok") {
           if (this.us.user !== null) {
             this.us.user.email = this.profile.email;

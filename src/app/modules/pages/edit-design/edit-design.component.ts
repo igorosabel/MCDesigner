@@ -5,7 +5,9 @@ import {
   ElementRef,
   OnInit,
   Signal,
+  WritableSignal,
   inject,
+  signal,
   viewChild,
 } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
@@ -19,6 +21,7 @@ import {
   LevelData,
   LevelResult,
   StatusResult,
+  ToolInterface,
   UndoAction,
 } from "@interfaces/interfaces";
 import { Design } from "@model/design.model";
@@ -57,10 +60,10 @@ export default class EditDesignComponent implements OnInit {
   private router: Router = inject(Router);
   private snack: MatSnackBar = inject(MatSnackBar);
 
-  designLoading: boolean = true;
+  designLoading: WritableSignal<boolean> = signal<boolean>(true);
   design: Design = new Design(0, "Cargando...", "cargando", 0, 0, []);
-  rowWidth: number = 0;
-  boardHeight: number = 0;
+  rowWidth: WritableSignal<number> = signal<number>(0);
+  boardHeight: WritableSignal<number> = signal<number>(0);
 
   toolBox: Signal<ElementRef> = viewChild.required("toolBox");
 
@@ -68,22 +71,22 @@ export default class EditDesignComponent implements OnInit {
   position: Point = new Point(0, 0);
   offset: Point = new Point(0, 0);
 
-  toolsClosed: boolean = false;
-  mobileToolsClosed: boolean = false;
-  selectedTool = {
+  toolsClosed: WritableSignal<boolean> = signal<boolean>(false);
+  mobileToolsClosed: WritableSignal<boolean> = signal<boolean>(false);
+  selectedTool: ToolInterface = {
     option: "paint",
     name: "Paint",
   };
-  zoomLevel: number = 100;
+  zoomLevel: WritableSignal<number> = signal<number>(100);
   line: Line = new Line(new Point(-1, -1), new Point(-1, -1));
-  showRulers: boolean = false;
+  showRulers: WritableSignal<boolean> = signal<boolean>(false);
 
   textures: Texture[] = TEXTURES;
-  currentTexture: number = 0;
-  currentLevel: number = 0;
-  showLevels: boolean = false;
-  showTextures: boolean = false;
-  savingDesign: boolean = false;
+  currentTexture: WritableSignal<number> = signal<number>(0);
+  currentLevel: WritableSignal<number> = signal<number>(0);
+  showLevels: WritableSignal<boolean> = signal<boolean>(false);
+  showTextures: WritableSignal<boolean> = signal<boolean>(false);
+  savingDesign: WritableSignal<boolean> = signal<boolean>(false);
   saveTimer: number = -1;
 
   undoList: UndoAction[] = [];
@@ -108,7 +111,7 @@ export default class EditDesignComponent implements OnInit {
 
   loadDesign(id: number): void {
     this.as.loadDesign(id).subscribe((result: DesignResult): void => {
-      this.designLoading = false;
+      this.designLoading.set(false);
       if (result.status == "ok") {
         this.design = this.cms.getDesign(result.design);
         this.updateRowWidth();
@@ -128,18 +131,20 @@ export default class EditDesignComponent implements OnInit {
   }
 
   updateRowWidth(): void {
-    this.rowWidth =
-      this.design.levels[0].data[0].length * (this.zoomLevel * 0.2);
-    this.boardHeight =
-      this.design.levels[0].data[0].length * (this.zoomLevel * 0.2);
+    this.rowWidth.set(
+      this.design.levels[0].data[0].length * (this.zoomLevel() * 0.2)
+    );
+    this.boardHeight.set(
+      this.design.levels[0].data[0].length * (this.zoomLevel() * 0.2)
+    );
   }
 
   mobileCloseTools(): void {
-    this.mobileToolsClosed = !this.mobileToolsClosed;
+    this.mobileToolsClosed.update((value: boolean): boolean => !value);
   }
 
   closeTools(): void {
-    this.toolsClosed = !this.toolsClosed;
+    this.toolsClosed.update((value: boolean): boolean => !value);
   }
 
   toolsDragEnd(): void {
@@ -170,12 +175,12 @@ export default class EditDesignComponent implements OnInit {
   }
 
   openTextures(): void {
-    this.showTextures = !this.showTextures;
+    this.showTextures.update((value: boolean): boolean => !value);
   }
 
   selectTexture(texture: Texture): void {
-    this.currentTexture = this.textures.findIndex(
-      (x: Texture): boolean => x.id == texture.id
+    this.currentTexture.set(
+      this.textures.findIndex((x: Texture): boolean => x.id == texture.id)
     );
     this.openTextures();
   }
@@ -230,12 +235,12 @@ export default class EditDesignComponent implements OnInit {
   }
 
   deployLevels(): void {
-    this.showLevels = !this.showLevels;
+    this.showLevels.update((value: boolean): boolean => !value);
   }
 
   selectLevel(level: Level): void {
-    this.currentLevel = this.design.levels.findIndex(
-      (x: Level): boolean => x.id == level.id
+    this.currentLevel.set(
+      this.design.levels.findIndex((x: Level): boolean => x.id == level.id)
     );
     this.deployLevels();
   }
@@ -352,8 +357,8 @@ export default class EditDesignComponent implements OnInit {
                 const ind: number = this.design.levels.findIndex(
                   (x: Level): boolean => x.id == level.id
                 );
-                if (ind == this.currentLevel) {
-                  this.currentLevel = 0;
+                if (ind == this.currentLevel()) {
+                  this.currentLevel.set(0);
                 }
                 this.design.levels.splice(ind, 1);
               } else {
@@ -370,24 +375,24 @@ export default class EditDesignComponent implements OnInit {
   }
 
   changeRulers(): void {
-    this.showRulers = !this.showRulers;
+    this.showRulers.update((value: boolean): boolean => !value);
   }
 
   adjustZoom(mode: string): void {
     if (mode == "l") {
-      if (this.zoomLevel == 10) {
+      if (this.zoomLevel() == 10) {
         return;
       }
-      this.zoomLevel -= 10;
+      this.zoomLevel.update((value: number): number => (value -= 10));
     }
     if (mode == "r") {
-      this.zoomLevel = 100;
+      this.zoomLevel.set(100);
     }
     if (mode == "m") {
-      if (this.zoomLevel == 200) {
+      if (this.zoomLevel() == 200) {
         return;
       }
-      this.zoomLevel += 10;
+      this.zoomLevel.update((value: number): number => (value += 10));
     }
     this.updateRowWidth();
   }
@@ -397,26 +402,27 @@ export default class EditDesignComponent implements OnInit {
       case "paint":
         {
           if (
-            this.design.levels[this.currentLevel].data[i][j] !=
-            this.currentTexture
+            this.design.levels[this.currentLevel()].data[i][j] !=
+            this.currentTexture()
           ) {
             const action: UndoAction = {
               x: i,
               y: j,
-              previous: this.design.levels[this.currentLevel].data[i][j],
+              previous: this.design.levels[this.currentLevel()].data[i][j],
             };
             this.undoList = [action];
 
-            this.design.levels[this.currentLevel].data[i][j] =
-              this.currentTexture;
+            this.design.levels[this.currentLevel()].data[i][j] =
+              this.currentTexture();
             this.resetAutoSave();
           }
         }
         break;
       case "picker":
         {
-          this.currentTexture =
-            this.design.levels[this.currentLevel].data[i][j];
+          this.currentTexture.set(
+            this.design.levels[this.currentLevel()].data[i][j]
+          );
         }
         break;
       case "line":
@@ -435,7 +441,7 @@ export default class EditDesignComponent implements OnInit {
         break;
       case "fill":
         {
-          this.fillTexture = this.design.levels[this.currentLevel].data[i][j];
+          this.fillTexture = this.design.levels[this.currentLevel()].data[i][j];
           this.fillToBePainted = [];
           this.undoList = [];
 
@@ -476,18 +482,18 @@ export default class EditDesignComponent implements OnInit {
     this.undoList = [];
     for (const p of coordinates) {
       if (
-        this.design.levels[this.currentLevel].data[p.x][p.y] !=
-        this.currentTexture
+        this.design.levels[this.currentLevel()].data[p.x][p.y] !=
+        this.currentTexture()
       ) {
         const action: UndoAction = {
           x: p.x,
           y: p.y,
-          previous: this.design.levels[this.currentLevel].data[p.x][p.y],
+          previous: this.design.levels[this.currentLevel()].data[p.x][p.y],
         };
         this.undoList.push(action);
 
-        this.design.levels[this.currentLevel].data[p.x][p.y] =
-          this.currentTexture;
+        this.design.levels[this.currentLevel()].data[p.x][p.y] =
+          this.currentTexture();
       }
     }
   }
@@ -517,7 +523,7 @@ export default class EditDesignComponent implements OnInit {
     const surrounding: Point[] = this.getSurroundingCells(p);
     for (const newP of surrounding) {
       if (
-        this.design.levels[this.currentLevel].data[newP.x][newP.y] ==
+        this.design.levels[this.currentLevel()].data[newP.x][newP.y] ==
         this.fillTexture
       ) {
         const ind: number = this.fillToBePainted.findIndex(
@@ -535,12 +541,12 @@ export default class EditDesignComponent implements OnInit {
       const action: UndoAction = {
         x: p.x,
         y: p.y,
-        previous: this.design.levels[this.currentLevel].data[p.x][p.y],
+        previous: this.design.levels[this.currentLevel()].data[p.x][p.y],
       };
       this.undoList.push(action);
 
-      this.design.levels[this.currentLevel].data[p.x][p.y] =
-        this.currentTexture;
+      this.design.levels[this.currentLevel()].data[p.x][p.y] =
+        this.currentTexture();
     }
   }
 
@@ -549,7 +555,7 @@ export default class EditDesignComponent implements OnInit {
       return;
     }
     for (const action of this.undoList) {
-      this.design.levels[this.currentLevel].data[action.x][action.y] =
+      this.design.levels[this.currentLevel()].data[action.x][action.y] =
         action.previous;
     }
     this.undoList = [];
@@ -565,11 +571,11 @@ export default class EditDesignComponent implements OnInit {
 
   saveDesign(): void {
     window.clearTimeout(this.saveTimer);
-    this.savingDesign = true;
+    this.savingDesign.set(true);
     this.as
       .updateDesign(this.design.toInterface())
       .subscribe((result: StatusResult): void => {
-        this.savingDesign = false;
+        this.savingDesign.set(false);
         if (result.status == "error") {
           this.dialog.alert({
             title: "Error",

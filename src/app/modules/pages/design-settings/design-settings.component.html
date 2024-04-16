@@ -8,7 +8,7 @@
 	</mat-toolbar-row>
 </mat-toolbar>
 
-@if (designLoading) {
+@if (designLoading()) {
 <div class="loading">
 	<mcd-loading [big]="true" />
 	<br>
@@ -54,9 +54,9 @@
 		<mat-card-actions class="center-card-buttons center-card-buttons-end">
 			<button mat-raised-button
 					color="primary"
-					[disabled]="saveSending"
+					[disabled]="saveSending()"
 					type="submit">
-				@if (saveSending) {
+				@if (saveSending()) {
 				<mcd-loading />
 				}
 				Continue

@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  WritableSignal,
+  inject,
+  signal,
+} from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -38,11 +44,11 @@ export default class DesignSettingsComponent implements OnInit {
   private as: ApiService = inject(ApiService);
   private dialog: DialogService = inject(DialogService);
 
-  designLoading: boolean = true;
+  designLoading: WritableSignal<boolean> = signal<boolean>(true);
   initialSizeX: number = 0;
   initialSizeY: number = 0;
   design: Design = new Design(0, "Loading...", "loading", 0, 0, []);
-  saveSending: boolean = false;
+  saveSending: WritableSignal<boolean> = signal<boolean>(false);
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params): void => {
@@ -52,7 +58,7 @@ export default class DesignSettingsComponent implements OnInit {
 
   loadDesign(id: number): void {
     this.as.loadDesign(id).subscribe((result: DesignResult): void => {
-      this.designLoading = false;
+      this.designLoading.set(false);
       if (result.status == "ok") {
         this.design.id = result.design.id;
         this.design.name = Utils.urldecode(result.design.name);
@@ -124,11 +130,11 @@ export default class DesignSettingsComponent implements OnInit {
   }
 
   confirmUpdate(): void {
-    this.saveSending = true;
+    this.saveSending.set(true);
     this.as
       .updateDesignSettings(this.design.toInterface())
       .subscribe((result: StatusResult): void => {
-        this.saveSending = false;
+        this.saveSending.set(false);
         if (result.status == "ok") {
           this.dialog.alert({
             title: "Success",

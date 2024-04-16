@@ -9,12 +9,12 @@ export class AuthService {
 
   public isAuthenticated(): Observable<boolean> {
     this.us.loadLogin();
-    if (!this.us.logged) {
+    if (!this.us.logged()) {
       this.us.logout();
     }
     const helper = new JwtHelperService();
     return of(
-      this.us.logged &&
+      this.us.logged() &&
         this.us.user !== null &&
         !helper.isTokenExpired(this.us.user.token)
     );

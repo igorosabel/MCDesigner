@@ -31,7 +31,7 @@
 				<button mat-icon-button
 						aria-label="Edit designs"
 						(click)="editDesigns()">
-					@if (!designsEdit) {
+					@if (!designsEdit()) {
 					<mat-icon>create</mat-icon>
 					}
 					@else {
@@ -46,7 +46,7 @@
 				<mat-card-title>Designs</mat-card-title>
 			</mat-card-header>
 			<mat-card-content class="center-card-fields">
-				@if (designList.length>0 && !designsEdit) {
+				@if (designList.length>0 && !designsEdit()) {
 				<mat-nav-list>
 					@for (design of designList; track design.id) {
 					<a mat-list-item
@@ -54,7 +54,7 @@
 					}
 				</mat-nav-list>
 				}
-				@if (designList.length>0 && designsEdit) {
+				@if (designList.length>0 && designsEdit()) {
 				<mat-list>
 					@for (design of designList; track design.id) {
 					<mat-list-item role="listitem">
@@ -75,13 +75,13 @@
 					}
 				</mat-list>
 				}
-				@if (designList.length==0) {
+				@if (designList.length === 0) {
 				<h3 class="center">There is no design yet.</h3>
 				}
 			</mat-card-content>
 		</mat-card>
 
-		@if (!designsEdit) {
+		@if (!designsEdit()) {
 		<button class="fab-button"
 				mat-fab
 				color="primary"

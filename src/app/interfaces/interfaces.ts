@@ -104,3 +104,8 @@ export interface UndoAction {
   y: number;
   previous: number;
 }
+
+export interface ToolInterface {
+  option: string;
+  name: string;
+}

@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  WritableSignal,
+  inject,
+  signal,
+} from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -38,8 +44,8 @@ export class LoginComponent implements OnInit {
     email: "",
     pass: "",
   };
-  loginError: boolean = false;
-  loginSending: boolean = false;
+  loginError: WritableSignal<boolean> = signal<boolean>(false);
+  loginSending: WritableSignal<boolean> = signal<boolean>(false);
 
   ngOnInit(): void {
     if (this.auth.isAuthenticated()) {
@@ -54,11 +60,11 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loginSending = true;
+    this.loginSending.set(true);
     this.as.login(this.loginData).subscribe((result: LoginResult): void => {
-      this.loginSending = false;
+      this.loginSending.set(false);
       if (result.status === "ok") {
-        this.us.logged = true;
+        this.us.logged.set(true);
         this.us.user = new User().fromInterface({
           id: result.id,
           token: result.token,
@@ -68,7 +74,7 @@ export class LoginComponent implements OnInit {
 
         this.router.navigate(["/main"]);
       } else {
-        this.loginError = true;
+        this.loginError.set(true);
       }
     });
   }

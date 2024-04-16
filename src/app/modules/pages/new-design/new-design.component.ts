@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, WritableSignal, inject, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -36,14 +36,15 @@ export default class NewDesignComponent {
   private router: Router = inject(Router);
 
   newDesign: Design = new Design();
-  saveSending: boolean = false;
+  saveSending: WritableSignal<boolean> = signal<boolean>(false);
 
   saveDesign(ev: MouseEvent): void {
     ev.preventDefault();
-    this.saveSending = true;
+    this.saveSending.set(true);
     this.as
       .newDesign(this.newDesign.toInterface())
       .subscribe((result: StatusResult): void => {
+        this.saveSending.set(false);
         if (result.status == "ok") {
           this.dialog
             .alert({

@@ -20,7 +20,7 @@
 				<input type="email"
 					   matInput
 					   [(ngModel)]="registerData.email"
-					   [disabled]="registerSending"
+					   [disabled]="registerSending()"
 					   required
 					   name="email">
 			</mat-form-field>
@@ -29,7 +29,7 @@
 				<input matInput
 					   type="password"
 					   [(ngModel)]="registerData.pass"
-					   [disabled]="registerSending"
+					   [disabled]="registerSending()"
 					   required
 					   name="pass">
 			</mat-form-field>
@@ -38,17 +38,17 @@
 				<input matInput
 					   type="password"
 					   [(ngModel)]="registerData.conf"
-					   [disabled]="registerSending"
+					   [disabled]="registerSending()"
 					   required
 					   name="conf">
 			</mat-form-field>
-			@if (registerEmailError) {
+			@if (registerEmailError()) {
 			<fieldset class="center-card-error">
 				<legend>Error</legend>
 				Email is alrady in use.
 			</fieldset>
 			}
-			@if (registerPassError) {
+			@if (registerPassError()) {
 			<fieldset class="center-card-error">
 				<legend>Error</legend>
 				Passwords don't match.
@@ -58,9 +58,9 @@
 		<mat-card-actions class="center-card-buttons center-card-buttons-end">
 			<button mat-raised-button
 					color="primary"
-					[disabled]="registerSending"
+					[disabled]="registerSending()"
 					type="submit">
-				@if (registerSending) {
+				@if (registerSending()) {
 				<mcd-loading />
 				}
 				Continue

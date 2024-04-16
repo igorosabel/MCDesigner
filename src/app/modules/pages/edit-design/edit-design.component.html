@@ -13,7 +13,7 @@
 	</mat-toolbar-row>
 </mat-toolbar>
 
-@if (designLoading) {
+@if (designLoading()) {
 <div class="loading">
 	<mcd-loading [big]="true" />
 	<br>
@@ -23,7 +23,7 @@
 
 <div #toolBox
 	 class="tools-box"
-	 [ngClass]="{'tools-box-show':design.id, 'tools-box-hide':mobileToolsClosed}"
+	 [ngClass]="{'tools-box-show':design.id, 'tools-box-hide':mobileToolsClosed()}"
 	 cdkDrag
 	 (cdkDragEnded)="toolsDragEnd()"
 	 [style.top.px]="initialPosition.y"
@@ -32,7 +32,7 @@
 		<button mat-icon-button
 				title="Close toolbar"
 				class="tools-closed-btn"
-				[ngClass]="{'tools-closed-btn-closed':toolsClosed}"
+				[ngClass]="{'tools-closed-btn-closed':toolsClosed()}"
 				(click)="closeTools()">
 			<mat-icon>expand_less</mat-icon>
 		</button>
@@ -41,7 +41,7 @@
 			<mat-icon class="tools-handler">zoom_out_map</mat-icon>
 		</div>
 	</div>
-	<div [ngClass]="{'tools-closed':toolsClosed}">
+	<div [ngClass]="{'tools-closed':toolsClosed()}">
 		<div class="tools-options">
 			<div class="tools-options-row">
 				<div class="tools-option"
@@ -82,13 +82,13 @@
 						 (click)="adjustZoom('l')">-</div>
 					<div class="tools-zoom-level"
 						 title="Reset zoom level"
-						 (click)="adjustZoom('r')">{{zoomLevel}}%</div>
+						 (click)="adjustZoom('r')">{{zoomLevel()}}%</div>
 					<div class="tools-zoom-more"
 						 title="Increase zoom level"
 						 (click)="adjustZoom('m')">+</div>
 				</div>
 				<div class="tools-option"
-					 [ngClass]="{'tools-option-on':showRulers}"
+					 [ngClass]="{'tools-option-on':showRulers()}"
 					 title="Show rulers"
 					 (click)="changeRulers()">
 					<mat-icon>square_foot</mat-icon>
@@ -97,12 +97,12 @@
 		</div>
 		<div class="tools-textures">
 			<div class="tools-texture-selected">
-				<div [class]="'texture-option texture_'+textures[currentTexture].id"
-					 title="{{textures[currentTexture].name}}"
+				<div [class]="'texture-option texture_'+textures[currentTexture()].id"
+					 title="{{textures[currentTexture()].name}}"
 					 (click)="openTextures()"></div>
-				<div class="tools-texture-name">{{textures[currentTexture].name}}</div>
+				<div class="tools-texture-name">{{textures[currentTexture()].name}}</div>
 			</div>
-			@if (showTextures) {
+			@if (showTextures()) {
 			<div class="tools-textures-list">
 				@for (texture of textures; track texture.id) {
 				<div [class]="'texture-option texture_'+texture.id"
@@ -117,11 +117,11 @@
 			<button mat-icon-button
 					title="Show level list"
 					class="levels-deploy-btn"
-					[ngClass]="{'levels-deployed': showLevels}"
+					[ngClass]="{'levels-deployed': showLevels()}"
 					(click)="deployLevels()">
 				<mat-icon>expand_more</mat-icon>
 			</button>
-			<span>{{design.levels[currentLevel].name}}</span>
+			<span>{{design.levels[currentLevel()].name}}</span>
 			<button mat-icon-button
 					title="Add new level"
 					(click)="addNewLevel()">
@@ -129,7 +129,7 @@
 			</button>
 		</div>
 		}
-		@if (showLevels) {
+		@if (showLevels()) {
 		<div>
 			@for (level of design.levels; track level.id) {
 			<div class="tools-level-item">
@@ -158,9 +158,9 @@
 	<div class="tools-footer">
 		<button mat-raised-button
 				color="primary"
-				[disabled]="savingDesign"
+				[disabled]="savingDesign()"
 				(click)="saveDesign()">
-			@if (savingDesign) {
+			@if (savingDesign()) {
 			<mcd-loading />
 			}
 			Save
@@ -170,15 +170,15 @@
 
 @if (design.id) {
 <div class="main"
-	 [ngStyle]="{'height': boardHeight+'px'}">
-	@for (row of design.levels[currentLevel].data; track row; let i = $index) {
+	 [ngStyle]="{'height': boardHeight()+'px'}">
+	@for (row of design.levels[currentLevel()].data; track row; let i = $index) {
 	<div class="row"
-		 [ngStyle]="{'width': rowWidth+'px'}">
+		 [ngStyle]="{'width': rowWidth()+'px'}">
 		@for (cell of row; track cell; let j = $index) {
 		<div (click)="selectCell(i, j)"
-			 [class]="'cell texture_'+design.levels[currentLevel].data[i][j]"
-			 [ngStyle]="{'width': (zoomLevel*0.2)+'px', 'height': (zoomLevel*0.2)+'px'}">
-			@if (showRulers && (i%5===0 || j%5===0)) {
+			 [class]="'cell texture_'+design.levels[currentLevel()].data[i][j]"
+			 [ngStyle]="{'width': (zoomLevel()*0.2)+'px', 'height': (zoomLevel()*0.2)+'px'}">
+			@if ((showRulers()) && (i%5===0 || j%5===0)) {
 			<div class="ruler"></div>
 			}
 			@if (line.start.x===i && line.start.y===j) {

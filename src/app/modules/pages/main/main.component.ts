@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  WritableSignal,
+  inject,
+  signal,
+} from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
@@ -37,7 +43,7 @@ export default class MainComponent implements OnInit {
   private cms: ClassMapperService = inject(ClassMapperService);
 
   designList: Design[] = [];
-  designsEdit: boolean = false;
+  designsEdit: WritableSignal<boolean> = signal<boolean>(false);
 
   ngOnInit(): void {
     this.as.loadDesigns().subscribe((result: DesignListResult): void => {
@@ -52,7 +58,7 @@ export default class MainComponent implements OnInit {
   }
 
   editDesigns(): void {
-    this.designsEdit = !this.designsEdit;
+    this.designsEdit.update((value: boolean): boolean => !value);
   }
 
   deleteDesign(design: Design): void {

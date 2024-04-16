@@ -15,11 +15,11 @@ export class DialogService {
       ConfirmDialogComponent
     );
 
-    dialogRef.componentInstance.title = options.title;
-    dialogRef.componentInstance.content = options.content;
-    dialogRef.componentInstance.ok = options.ok;
+    dialogRef.componentInstance.title.set(options.title);
+    dialogRef.componentInstance.content.set(options.content);
+    dialogRef.componentInstance.ok.set(options.ok);
     if (options.cancel !== undefined) {
-      dialogRef.componentInstance.cancel = options.cancel;
+      dialogRef.componentInstance.cancel.set(options.cancel);
     }
 
     return dialogRef.afterClosed();
@@ -29,9 +29,9 @@ export class DialogService {
     const dialogRef: MatDialogRef<AlertDialogComponent> =
       this.dialog.open(AlertDialogComponent);
 
-    dialogRef.componentInstance.title = options.title;
-    dialogRef.componentInstance.content = options.content;
-    dialogRef.componentInstance.ok = options.ok;
+    dialogRef.componentInstance.title.set(options.title);
+    dialogRef.componentInstance.content.set(options.content);
+    dialogRef.componentInstance.ok.set(options.ok);
 
     return dialogRef.afterClosed();
   }
@@ -40,14 +40,14 @@ export class DialogService {
     const dialogRef: MatDialogRef<FormDialogComponent> =
       this.dialog.open(FormDialogComponent);
 
-    dialogRef.componentInstance.title = options.title;
-    dialogRef.componentInstance.content = options.content;
-    dialogRef.componentInstance.ok = options.ok;
+    dialogRef.componentInstance.title.set(options.title);
+    dialogRef.componentInstance.content.set(options.content);
+    dialogRef.componentInstance.ok.set(options.ok);
     if (options.cancel !== undefined) {
-      dialogRef.componentInstance.cancel = options.cancel;
+      dialogRef.componentInstance.cancel.set(options.cancel);
     }
     if (options.fields !== undefined) {
-      dialogRef.componentInstance.fields = options.fields;
+      dialogRef.componentInstance.fields.set(options.fields);
     }
 
     return dialogRef.afterClosed();

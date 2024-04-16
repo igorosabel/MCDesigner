@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, WritableSignal, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
@@ -21,11 +21,11 @@ import { DialogField } from "@interfaces/interfaces";
   ],
 })
 export class FormDialogComponent {
-  public title: string = "";
-  public content: string = "";
-  public fields: DialogField[] = [];
-  public ok: string = "Continue";
-  public cancel: string = "Cancel";
+  public title: WritableSignal<string> = signal<string>("");
+  public content: WritableSignal<string> = signal<string>("");
+  public fields: WritableSignal<DialogField[]> = signal<DialogField[]>([]);
+  public ok: WritableSignal<string> = signal<string>("Continue");
+  public cancel: WritableSignal<string> = signal<string>("Cancel");
 
   constructor(public dialogRef: MatDialogRef<FormDialogComponent>) {}
 }

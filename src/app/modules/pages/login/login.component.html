@@ -16,7 +16,7 @@
 				<input type="email"
 					   matInput
 					   [(ngModel)]="loginData.email"
-					   [disabled]="loginSending"
+					   [disabled]="loginSending()"
 					   required
 					   name="email">
 			</mat-form-field>
@@ -25,11 +25,11 @@
 				<input matInput
 					   type="password"
 					   [(ngModel)]="loginData.pass"
-					   [disabled]="loginSending"
+					   [disabled]="loginSending()"
 					   required
 					   name="pass">
 			</mat-form-field>
-			@if (loginError) {
+			@if (loginError()) {
 			<fieldset class="center-card-error">
 				<legend>Error</legend>
 				Wrong email or password.
@@ -44,7 +44,7 @@
 					color="primary"
 					[disabled]="loginSending"
 					type="submit">
-				@if (loginSending) {
+				@if (loginSending()) {
 				<mcd-loading />
 				}
 				Continue

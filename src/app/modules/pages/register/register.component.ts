@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, WritableSignal, inject, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -39,9 +39,9 @@ export default class RegisterComponent {
     pass: "",
     conf: "",
   };
-  registerEmailError: boolean = false;
-  registerPassError: boolean = false;
-  registerSending: boolean = false;
+  registerEmailError: WritableSignal<boolean> = signal<boolean>(false);
+  registerPassError: WritableSignal<boolean> = signal<boolean>(false);
+  registerSending: WritableSignal<boolean> = signal<boolean>(false);
 
   doRegister(ev: Event): void {
     ev.preventDefault();
@@ -54,20 +54,20 @@ export default class RegisterComponent {
       return;
     }
 
-    this.registerEmailError = false;
-    this.registerPassError = false;
+    this.registerEmailError.set(false);
+    this.registerPassError.set(false);
     if (this.registerData.pass !== this.registerData.conf) {
-      this.registerPassError = true;
+      this.registerPassError.set(true);
       return;
     }
 
-    this.registerSending = true;
+    this.registerSending.set(true);
     this.as
       .register(this.registerData)
       .subscribe((result: LoginResult): void => {
-        this.registerSending = false;
+        this.registerSending.set(false);
         if (result.status === "ok") {
-          this.us.logged = true;
+          this.us.logged.set(true);
           this.us.user = new User().fromInterface({
             id: result.id,
             token: result.token,
@@ -77,7 +77,7 @@ export default class RegisterComponent {
 
           this.router.navigate(["/main"]);
         } else {
-          this.registerEmailError = true;
+          this.registerEmailError.set(true);
         }
       });
   }

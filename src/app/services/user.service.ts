@@ -1,4 +1,4 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable, WritableSignal, inject, signal } from "@angular/core";
 import { UserInterface } from "@interfaces/interfaces";
 import { User } from "@model/user.model";
 import { ClassMapperService } from "@services/class-mapper.service";
@@ -7,7 +7,7 @@ import { ClassMapperService } from "@services/class-mapper.service";
 export class UserService {
   private cms: ClassMapperService = inject(ClassMapperService);
 
-  logged: boolean = false;
+  logged: WritableSignal<boolean> = signal<boolean>(false);
   user: User | null = null;
 
   loadLogin(): void {
@@ -21,7 +21,7 @@ export class UserService {
       this.logout();
       return;
     }
-    this.logged = true;
+    this.logged.set(true);
     this.user = this.cms.getUser(loginObj);
   }
 
@@ -34,7 +34,7 @@ export class UserService {
   }
 
   logout(): void {
-    this.logged = false;
+    this.logged.set(false);
     this.user = null;
     localStorage.removeItem("login");
   }
