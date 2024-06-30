@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="toolbar">
 	<mat-toolbar-row>
 		<span>MCDesigner</span>
 	</mat-toolbar-row>
@@ -39,10 +39,10 @@
 		<mat-card-actions class="center-card-buttons">
 			<a routerLink="/register"
 			   mat-button
-			   [disabled]="loginSending">Register</a>
-			<button mat-raised-button
+			   [disabled]="loginSending()">Register</a>
+			<button mat-flat-button
 					color="primary"
-					[disabled]="loginSending"
+					[disabled]="loginSending()"
 					type="submit">
 				@if (loginSending()) {
 				<mcd-loading />

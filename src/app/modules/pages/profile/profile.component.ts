@@ -4,26 +4,26 @@ import {
   WritableSignal,
   inject,
   signal,
-} from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { RouterModule } from "@angular/router";
-import { Profile, StatusResult } from "@interfaces/interfaces";
-import { ApiService } from "@services/api.service";
-import { DialogService } from "@services/dialog.service";
-import { UserService } from "@services/user.service";
-import { LoadingComponent } from "@shared/components/loading/loading.component";
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterModule } from '@angular/router';
+import { Profile, StatusResult } from '@interfaces/interfaces';
+import ApiService from '@services/api.service';
+import DialogService from '@services/dialog.service';
+import UserService from '@services/user.service';
+import LoadingComponent from '@shared/components/loading/loading.component';
 
 @Component({
   standalone: true,
-  selector: "mcd-profile",
-  templateUrl: "./profile.component.html",
-  styleUrls: ["./profile.component.scss"],
+  selector: 'mcd-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss'],
   imports: [
     FormsModule,
     RouterModule,
@@ -44,10 +44,10 @@ export default class ProfileComponent implements OnInit {
 
   saveSending: WritableSignal<boolean> = signal<boolean>(false);
   profile: Profile = {
-    email: "",
-    oldPass: "",
-    newPass: "",
-    confPass: "",
+    email: '',
+    oldPass: '',
+    newPass: '',
+    confPass: '',
   };
 
   ngOnInit(): void {
@@ -58,51 +58,51 @@ export default class ProfileComponent implements OnInit {
 
   updateProfile(ev: MouseEvent): void {
     ev.preventDefault();
-    if (this.profile.email == "") {
+    if (this.profile.email == '') {
       this.dialog.alert({
-        title: "Error",
-        content: "Email field is required.",
-        ok: "Continue",
+        title: 'Error',
+        content: 'Email field is required.',
+        ok: 'Continue',
       });
       return;
     }
     if (
-      this.profile.oldPass != "" ||
-      this.profile.newPass != "" ||
-      this.profile.confPass != ""
+      this.profile.oldPass != '' ||
+      this.profile.newPass != '' ||
+      this.profile.confPass != ''
     ) {
-      if (this.profile.oldPass == "") {
+      if (this.profile.oldPass == '') {
         this.dialog.alert({
-          title: "Error",
+          title: 'Error',
           content:
-            "If you want to change your password, the current password is required.",
-          ok: "Continue",
+            'If you want to change your password, the current password is required.',
+          ok: 'Continue',
         });
         return;
       }
-      if (this.profile.newPass == "") {
+      if (this.profile.newPass == '') {
         this.dialog.alert({
-          title: "Error",
+          title: 'Error',
           content:
-            "If you want to change your password, the new password is required.",
-          ok: "Continue",
+            'If you want to change your password, the new password is required.',
+          ok: 'Continue',
         });
         return;
       }
-      if (this.profile.confPass == "") {
+      if (this.profile.confPass == '') {
         this.dialog.alert({
-          title: "Error",
+          title: 'Error',
           content:
-            "If you want to change your password, you have to confirm the new password.",
-          ok: "Continue",
+            'If you want to change your password, you have to confirm the new password.',
+          ok: 'Continue',
         });
         return;
       }
       if (this.profile.newPass != this.profile.confPass) {
         this.dialog.alert({
-          title: "Error",
+          title: 'Error',
           content: "New password and its confirmation don't match.",
-          ok: "Continue",
+          ok: 'Continue',
         });
         return;
       }
@@ -113,34 +113,34 @@ export default class ProfileComponent implements OnInit {
       .updateProfile(this.profile)
       .subscribe((result: StatusResult): void => {
         this.saveSending.set(false);
-        if (result.status == "ok") {
+        if (result.status == 'ok') {
           if (this.us.user !== null) {
             this.us.user.email = this.profile.email;
             this.us.saveLogin();
           }
-          this.profile.oldPass = "";
-          this.profile.newPass = "";
-          this.profile.confPass = "";
+          this.profile.oldPass = '';
+          this.profile.newPass = '';
+          this.profile.confPass = '';
 
           this.dialog.alert({
-            title: "Success",
-            content: "Profile information was successfully updated.",
-            ok: "Continue",
+            title: 'Success',
+            content: 'Profile information was successfully updated.',
+            ok: 'Continue',
           });
         }
-        if (result.status == "pass-error") {
+        if (result.status == 'pass-error') {
           this.dialog.alert({
-            title: "Error",
-            content: "Current password is wrong.",
-            ok: "Continue",
+            title: 'Error',
+            content: 'Current password is wrong.',
+            ok: 'Continue',
           });
         }
-        if (result.status == "error") {
+        if (result.status == 'error') {
           this.dialog.alert({
-            title: "Error",
+            title: 'Error',
             content:
-              "There was an error updating your user profile. Please try again later.",
-            ok: "Continue",
+              'There was an error updating your user profile. Please try again later.',
+            ok: 'Continue',
           });
         }
       });

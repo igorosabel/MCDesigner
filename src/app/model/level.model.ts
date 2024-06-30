@@ -1,10 +1,10 @@
-import { LevelInterface } from "@interfaces/interfaces";
-import { Utils } from "@shared/utils.class";
+import { LevelInterface } from '@interfaces/interfaces';
+import Utils from '@shared/utils.class';
 
-export class Level {
+export default class Level {
   constructor(
     public id: number = 0,
-    public name: string = "",
+    public name: string = '',
     public height: number = 0,
     public data: number[][] = []
   ) {}

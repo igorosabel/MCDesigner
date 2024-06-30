@@ -1,11 +1,11 @@
-import { UserInterface } from "@interfaces/interfaces";
-import { Utils } from "@shared/utils.class";
+import { UserInterface } from '@interfaces/interfaces';
+import Utils from '@shared/utils.class';
 
-export class User {
+export default class User {
   constructor(
     public id: number = 0,
-    public token: string = "",
-    public email: string = ""
+    public token: string = '',
+    public email: string = ''
   ) {}
 
   fromInterface(u: UserInterface): User {

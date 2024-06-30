@@ -1,11 +1,12 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="toolbar">
 	<mat-toolbar-row>
 		<button routerLink="/main"
+				class="header-button"
 				mat-icon-button>
 			<mat-icon>arrow_back</mat-icon>
 		</button>
 		<span class="wide-toolbar">{{design.name}}</span>
-		<button class="mobile-menu"
+		<button class="mobile-menu header-button"
 				mat-icon-button
 				(click)="mobileCloseTools()">
 			<mat-icon>menu</mat-icon>
@@ -156,7 +157,7 @@
 		}
 	</div>
 	<div class="tools-footer">
-		<button mat-raised-button
+		<button mat-flat-button
 				color="primary"
 				[disabled]="savingDesign()"
 				(click)="saveDesign()">

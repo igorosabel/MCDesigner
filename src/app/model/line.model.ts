@@ -1,7 +1,7 @@
-import { LineInterface } from "@interfaces/interfaces";
-import { Point } from "@model/point.model";
+import { LineInterface } from '@interfaces/interfaces';
+import Point from '@model/point.model';
 
-export class Line {
+export default class Line {
   constructor(
     public start: Point = new Point(),
     public end: Point = new Point()

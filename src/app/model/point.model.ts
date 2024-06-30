@@ -1,6 +1,6 @@
-import { PointInterface } from "@interfaces/interfaces";
+import { PointInterface } from '@interfaces/interfaces';
 
-export class Point {
+export default class Point {
   constructor(public x: number = 0, public y: number = 0) {}
 
   fromInterface(p: PointInterface): Point {

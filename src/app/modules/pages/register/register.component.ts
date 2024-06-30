@@ -1,22 +1,22 @@
-import { Component, WritableSignal, inject, signal } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { Router, RouterModule } from "@angular/router";
-import { LoginResult, RegisterData } from "@interfaces/interfaces";
-import { User } from "@model/user.model";
-import { ApiService } from "@services/api.service";
-import { UserService } from "@services/user.service";
-import { LoadingComponent } from "@shared/components/loading/loading.component";
+import { Component, WritableSignal, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { Router, RouterModule } from '@angular/router';
+import { LoginResult, RegisterData } from '@interfaces/interfaces';
+import User from '@model/user.model';
+import ApiService from '@services/api.service';
+import UserService from '@services/user.service';
+import LoadingComponent from '@shared/components/loading/loading.component';
 
 @Component({
   standalone: true,
-  selector: "mcd-register",
-  templateUrl: "./register.component.html",
+  selector: 'mcd-register',
+  templateUrl: './register.component.html',
   imports: [
     FormsModule,
     LoadingComponent,
@@ -35,9 +35,9 @@ export default class RegisterComponent {
   private router: Router = inject(Router);
 
   registerData: RegisterData = {
-    email: "",
-    pass: "",
-    conf: "",
+    email: '',
+    pass: '',
+    conf: '',
   };
   registerEmailError: WritableSignal<boolean> = signal<boolean>(false);
   registerPassError: WritableSignal<boolean> = signal<boolean>(false);
@@ -47,9 +47,9 @@ export default class RegisterComponent {
     ev.preventDefault();
 
     if (
-      this.registerData.email === "" ||
-      this.registerData.pass === "" ||
-      this.registerData.conf === ""
+      this.registerData.email === '' ||
+      this.registerData.pass === '' ||
+      this.registerData.conf === ''
     ) {
       return;
     }
@@ -66,7 +66,7 @@ export default class RegisterComponent {
       .register(this.registerData)
       .subscribe((result: LoginResult): void => {
         this.registerSending.set(false);
-        if (result.status === "ok") {
+        if (result.status === 'ok') {
           this.us.logged.set(true);
           this.us.user = new User().fromInterface({
             id: result.id,
@@ -75,7 +75,7 @@ export default class RegisterComponent {
           });
           this.us.saveLogin();
 
-          this.router.navigate(["/main"]);
+          this.router.navigate(['/main']);
         } else {
           this.registerEmailError.set(true);
         }

@@ -1,32 +1,32 @@
-import { ApplicationConfig } from "@angular/core";
+import { ApplicationConfig } from '@angular/core';
 import {
   InMemoryScrollingFeature,
   InMemoryScrollingOptions,
   provideRouter,
   withInMemoryScrolling,
-} from "@angular/router";
+} from '@angular/router';
 
-import { provideHttpClient, withInterceptors } from "@angular/common/http";
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
   MatFormFieldDefaultOptions,
-} from "@angular/material/form-field";
-import { provideAnimations } from "@angular/platform-browser/animations";
-import { routes } from "@app/app.routes";
-import { TokenInterceptor } from "@app/interceptors/token.interceptor";
-import { provideCore } from "@modules/core";
+} from '@angular/material/form-field';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import routes from '@app/app.routes';
+import TokenInterceptor from '@app/interceptors/token.interceptor';
+import provideCore from '@modules/core';
 
 const scrollConfig: InMemoryScrollingOptions = {
-  scrollPositionRestoration: "top",
-  anchorScrolling: "enabled",
+  scrollPositionRestoration: 'top',
+  anchorScrolling: 'enabled',
 };
 const inMemoryScrollingFeature: InMemoryScrollingFeature =
   withInMemoryScrolling(scrollConfig);
 const appearance: MatFormFieldDefaultOptions = {
-  appearance: "outline",
+  appearance: 'outline',
 };
 
-export const appConfig: ApplicationConfig = {
+const appConfig: ApplicationConfig = {
   providers: [
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
@@ -38,3 +38,4 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
   ],
 };
+export default appConfig;

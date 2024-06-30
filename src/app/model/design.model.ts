@@ -1,12 +1,12 @@
-import { DesignInterface, LevelInterface } from "@interfaces/interfaces";
-import { Level } from "@model/level.model";
-import { Utils } from "@shared/utils.class";
+import { DesignInterface, LevelInterface } from '@interfaces/interfaces';
+import Level from '@model/level.model';
+import Utils from '@shared/utils.class';
 
-export class Design {
+export default class Design {
   constructor(
     public id: number = 0,
-    public name: string = "New design",
-    public slug: string = "new-design",
+    public name: string = 'New design',
+    public slug: string = 'new-design',
     public sizeX: number = 50,
     public sizeY: number = 50,
     public levels: Level[] = []
