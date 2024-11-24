@@ -20,8 +20,8 @@ export interface LoginData {
 
 export interface UserInterface {
   id: number;
-  token: string;
-  email: string;
+  token: string | null;
+  email: string | null;
 }
 
 export interface LoginResult {
@@ -45,14 +45,14 @@ export interface Profile {
 
 export interface LevelInterface {
   id: number;
-  name: string;
+  name: string | null;
   height: number;
   data: number[][];
 }
 
 export interface DesignInterface {
   id: number;
-  name: string;
+  name: string | null;
   slug: string;
   sizeX: number;
   sizeY: number;
@@ -76,7 +76,7 @@ export interface StatusResult {
 export interface LevelData {
   id: number;
   idDesign: number;
-  name: string;
+  name: string | null;
 }
 
 export interface LevelResult {

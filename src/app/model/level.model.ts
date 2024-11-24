@@ -1,17 +1,17 @@
 import { LevelInterface } from '@interfaces/interfaces';
-import Utils from '@shared/utils.class';
+import { urldecode, urlencode } from '@osumi/tools';
 
 export default class Level {
   constructor(
     public id: number = 0,
-    public name: string = '',
+    public name: string | null = '',
     public height: number = 0,
     public data: number[][] = []
   ) {}
 
   fromInterface(l: LevelInterface): Level {
     this.id = l.id;
-    this.name = Utils.urldecode(l.name);
+    this.name = urldecode(l.name);
     this.height = l.height;
     this.data = l.data;
 
@@ -21,7 +21,7 @@ export default class Level {
   toInterface(): LevelInterface {
     return {
       id: this.id,
-      name: Utils.urlencode(this.name),
+      name: urlencode(this.name),
       height: this.height,
       data: this.data,
     };

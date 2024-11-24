@@ -1,6 +1,6 @@
 import { DesignInterface, LevelInterface } from '@interfaces/interfaces';
 import Level from '@model/level.model';
-import Utils from '@shared/utils.class';
+import { urldecode, urlencode } from '@osumi/tools';
 
 export default class Design {
   constructor(
@@ -14,7 +14,7 @@ export default class Design {
 
   fromInterface(d: DesignInterface): Design {
     this.id = d.id;
-    this.name = Utils.urldecode(d.name);
+    this.name = urldecode(d.name);
     this.slug = d.slug;
     this.sizeX = d.sizeX;
     this.sizeY = d.sizeY;
@@ -30,7 +30,7 @@ export default class Design {
   toInterface(): DesignInterface {
     return {
       id: this.id,
-      name: Utils.urlencode(this.name),
+      name: urlencode(this.name),
       slug: this.slug,
       sizeX: this.sizeX,
       sizeY: this.sizeY,

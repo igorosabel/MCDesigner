@@ -15,10 +15,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { DesignResult, StatusResult } from '@interfaces/interfaces';
 import Design from '@model/design.model';
+import { urldecode } from '@osumi/tools';
 import ApiService from '@services/api.service';
 import DialogService from '@services/dialog.service';
 import LoadingComponent from '@shared/components/loading/loading.component';
-import Utils from '@shared/utils.class';
 
 @Component({
   selector: 'mcd-design-settings',
@@ -60,7 +60,7 @@ export default class DesignSettingsComponent implements OnInit {
       this.designLoading.set(false);
       if (result.status == 'ok') {
         this.design.id = result.design.id;
-        this.design.name = Utils.urldecode(result.design.name);
+        this.design.name = urldecode(result.design.name);
         this.design.slug = result.design.slug;
         this.design.sizeX = result.design.sizeX;
         this.design.sizeY = result.design.sizeY;

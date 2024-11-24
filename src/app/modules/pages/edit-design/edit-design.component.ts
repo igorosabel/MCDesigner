@@ -29,12 +29,12 @@ import Level from '@model/level.model';
 import Line from '@model/line.model';
 import Point from '@model/point.model';
 import Texture from '@model/texture.model';
+import { urldecode, urlencode } from '@osumi/tools';
 import ApiService from '@services/api.service';
 import ClassMapperService from '@services/class-mapper.service';
 import DialogService from '@services/dialog.service';
 import LoadingComponent from '@shared/components/loading/loading.component';
 import TEXTURES from '@shared/textures.class';
-import Utils from '@shared/utils.class';
 
 @Component({
   selector: 'mcd-edit-design',
@@ -211,7 +211,7 @@ export default class EditDesignComponent implements OnInit {
             const newLevel: LevelData = {
               id: 0,
               idDesign: this.design.id,
-              name: Utils.urlencode(result.fields[0].value),
+              name: urlencode(result.fields[0].value),
             };
             this.as
               .addNewLevel(newLevel)
@@ -221,7 +221,7 @@ export default class EditDesignComponent implements OnInit {
                     title: 'Success',
                     content:
                       'New level "' +
-                      Utils.urldecode(newLevel.name) +
+                      urldecode(newLevel.name) +
                       '" has been added.',
                     ok: 'Continue',
                   });
@@ -255,7 +255,7 @@ export default class EditDesignComponent implements OnInit {
           {
             title: 'Name',
             type: 'text',
-            value: level.name,
+            value: level.name !== null ? level.name : '',
           },
         ],
       })
