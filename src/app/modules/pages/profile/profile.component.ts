@@ -20,7 +20,6 @@ import UserService from '@services/user.service';
 import LoadingComponent from '@shared/components/loading/loading.component';
 
 @Component({
-  standalone: true,
   selector: 'mcd-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],

@@ -37,7 +37,6 @@ import TEXTURES from '@shared/textures.class';
 import Utils from '@shared/utils.class';
 
 @Component({
-  standalone: true,
   selector: 'mcd-edit-design',
   templateUrl: './edit-design.component.html',
   styleUrls: ['./edit-design.component.scss'],

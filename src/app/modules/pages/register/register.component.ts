@@ -14,7 +14,6 @@ import UserService from '@services/user.service';
 import LoadingComponent from '@shared/components/loading/loading.component';
 
 @Component({
-  standalone: true,
   selector: 'mcd-register',
   templateUrl: './register.component.html',
   imports: [

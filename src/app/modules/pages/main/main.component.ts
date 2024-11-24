@@ -20,7 +20,6 @@ import DialogService from '@services/dialog.service';
 import UserService from '@services/user.service';
 
 @Component({
-  standalone: true,
   selector: 'mcd-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],

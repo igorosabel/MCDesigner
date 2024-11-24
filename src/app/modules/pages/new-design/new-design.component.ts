@@ -14,7 +14,6 @@ import DialogService from '@services/dialog.service';
 import LoadingComponent from '@shared/components/loading/loading.component';
 
 @Component({
-  standalone: true,
   selector: 'mcd-new-design',
   templateUrl: './new-design.component.html',
   imports: [

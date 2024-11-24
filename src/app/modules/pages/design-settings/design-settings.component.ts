@@ -21,7 +21,6 @@ import LoadingComponent from '@shared/components/loading/loading.component';
 import Utils from '@shared/utils.class';
 
 @Component({
-  standalone: true,
   selector: 'mcd-design-settings',
   templateUrl: './design-settings.component.html',
   styleUrls: ['./design-settings.component.scss'],
