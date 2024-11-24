@@ -14,9 +14,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterModule } from '@angular/router';
 import { DesignListResult, StatusResult } from '@interfaces/interfaces';
 import Design from '@model/design.model';
+import { DialogService } from '@osumi/angular-tools';
 import ApiService from '@services/api.service';
 import ClassMapperService from '@services/class-mapper.service';
-import DialogService from '@services/dialog.service';
 import UserService from '@services/user.service';
 
 @Component({
@@ -32,7 +32,6 @@ import UserService from '@services/user.service';
     MatCardModule,
     MatSidenavModule,
   ],
-  providers: [DialogService],
 })
 export default class MainComponent implements OnInit {
   private router: Router = inject(Router);

@@ -14,8 +14,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { Profile, StatusResult } from '@interfaces/interfaces';
+import { DialogService } from '@osumi/angular-tools';
 import ApiService from '@services/api.service';
-import DialogService from '@services/dialog.service';
 import UserService from '@services/user.service';
 import LoadingComponent from '@shared/components/loading/loading.component';
 
@@ -34,7 +34,6 @@ import LoadingComponent from '@shared/components/loading/loading.component';
     MatFormFieldModule,
     MatInputModule,
   ],
-  providers: [DialogService],
 })
 export default class ProfileComponent implements OnInit {
   private us: UserService = inject(UserService);

@@ -15,9 +15,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { DesignResult, StatusResult } from '@interfaces/interfaces';
 import Design from '@model/design.model';
+import { DialogService } from '@osumi/angular-tools';
 import { urldecode } from '@osumi/tools';
 import ApiService from '@services/api.service';
-import DialogService from '@services/dialog.service';
 import LoadingComponent from '@shared/components/loading/loading.component';
 
 @Component({
@@ -35,7 +35,6 @@ import LoadingComponent from '@shared/components/loading/loading.component';
     MatFormFieldModule,
     MatInputModule,
   ],
-  providers: [DialogService],
 })
 export default class DesignSettingsComponent implements OnInit {
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);

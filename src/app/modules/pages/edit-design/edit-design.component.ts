@@ -17,7 +17,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import {
   DesignResult,
-  DialogOptions,
   LevelData,
   LevelResult,
   StatusResult,
@@ -29,10 +28,10 @@ import Level from '@model/level.model';
 import Line from '@model/line.model';
 import Point from '@model/point.model';
 import Texture from '@model/texture.model';
+import { DialogOptions, DialogService } from '@osumi/angular-tools';
 import { urldecode, urlencode } from '@osumi/tools';
 import ApiService from '@services/api.service';
 import ClassMapperService from '@services/class-mapper.service';
-import DialogService from '@services/dialog.service';
 import LoadingComponent from '@shared/components/loading/loading.component';
 import TEXTURES from '@shared/textures.class';
 
@@ -49,7 +48,6 @@ import TEXTURES from '@shared/textures.class';
     MatIconModule,
     CdkDrag,
   ],
-  providers: [DialogService],
 })
 export default class EditDesignComponent implements OnInit {
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
