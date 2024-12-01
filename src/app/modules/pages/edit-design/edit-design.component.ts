@@ -1,5 +1,4 @@
 import { CdkDrag } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -40,7 +39,6 @@ import TEXTURES from '@shared/textures.class';
   templateUrl: './edit-design.component.html',
   styleUrls: ['./edit-design.component.scss'],
   imports: [
-    CommonModule,
     RouterModule,
     LoadingComponent,
     MatToolbarModule,
