@@ -145,12 +145,13 @@
 						(click)="copyLevel(level)">
 					<mat-icon>file_copy</mat-icon>
 				</button>
+				@if (design.levels.length > 1) {
 				<button mat-icon-button
 						title="Delete"
-						*ngIf="design.levels.length>1"
 						(click)="deleteLevel(level)">
 					<mat-icon>delete_forever</mat-icon>
 				</button>
+				}
 			</div>
 			}
 		</div>
