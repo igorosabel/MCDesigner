@@ -19,18 +19,15 @@
 	</mat-drawer>
 	<mat-drawer-content>
 
-		<mat-toolbar class="toolbar">
+		<mat-toolbar>
 			<mat-toolbar-row>
 				<button mat-icon-button
-						class="header-button"
 						aria-label="Open menu"
 						(click)="drawer.toggle()">
 					<mat-icon>menu</mat-icon>
 				</button>
-				<span>MCDesigner</span>
-				<span class="flex-space"></span>
+				<span class="flex-space">MCDesigner</span>
 				<button mat-icon-button
-						class="header-button"
 						aria-label="Edit designs"
 						(click)="editDesigns()">
 					@if (!designsEdit()) {

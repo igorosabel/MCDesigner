@@ -2,10 +2,13 @@ import { CdkDrag } from '@angular/cdk/drag-drop';
 import {
   Component,
   ElementRef,
+  InputSignalWithTransform,
   OnInit,
   Signal,
   WritableSignal,
   inject,
+  input,
+  numberAttribute,
   signal,
   viewChild,
 } from '@angular/core';
@@ -13,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {
   DesignResult,
   LevelData,
@@ -48,13 +51,15 @@ import TEXTURES from '@shared/textures.class';
   ],
 })
 export default class EditDesignComponent implements OnInit {
-  private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private as: ApiService = inject(ApiService);
   private dialog: DialogService = inject(DialogService);
   private cms: ClassMapperService = inject(ClassMapperService);
   private router: Router = inject(Router);
   private snack: MatSnackBar = inject(MatSnackBar);
 
+  id: InputSignalWithTransform<number, unknown> = input.required({
+    transform: numberAttribute,
+  });
   designLoading: WritableSignal<boolean> = signal<boolean>(true);
   design: Design = new Design(0, 'Cargando...', 'cargando', 0, 0, []);
   rowWidth: WritableSignal<number> = signal<number>(0);
@@ -99,9 +104,7 @@ export default class EditDesignComponent implements OnInit {
       this.initialPosition.x = posX !== null ? parseInt(posX) : 100;
       this.initialPosition.y = posY !== null ? parseInt(posY) : 100;
     }
-    this.activatedRoute.params.subscribe((params: Params): void => {
-      this.loadDesign(params['id']);
-    });
+    this.loadDesign(this.id());
   }
 
   loadDesign(id: number): void {

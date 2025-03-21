@@ -1,8 +1,11 @@
 import {
   Component,
+  InputSignalWithTransform,
   OnInit,
   WritableSignal,
   inject,
+  input,
+  numberAttribute,
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { DesignResult, StatusResult } from '@interfaces/interfaces';
 import Design from '@model/design.model';
 import { DialogService } from '@osumi/angular-tools';
@@ -37,11 +40,13 @@ import LoadingComponent from '@shared/components/loading/loading.component';
   ],
 })
 export default class DesignSettingsComponent implements OnInit {
-  private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private router: Router = inject(Router);
   private as: ApiService = inject(ApiService);
   private dialog: DialogService = inject(DialogService);
 
+  id: InputSignalWithTransform<number, unknown> = input.required({
+    transform: numberAttribute,
+  });
   designLoading: WritableSignal<boolean> = signal<boolean>(true);
   initialSizeX: number = 0;
   initialSizeY: number = 0;
@@ -49,9 +54,7 @@ export default class DesignSettingsComponent implements OnInit {
   saveSending: WritableSignal<boolean> = signal<boolean>(false);
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params: Params): void => {
-      this.loadDesign(params['id']);
-    });
+    this.loadDesign(this.id());
   }
 
   loadDesign(id: number): void {

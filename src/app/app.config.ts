@@ -3,7 +3,9 @@ import {
   InMemoryScrollingFeature,
   InMemoryScrollingOptions,
   provideRouter,
+  withComponentInputBinding,
   withInMemoryScrolling,
+  withViewTransitions,
 } from '@angular/router';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -32,7 +34,12 @@ const appConfig: ApplicationConfig = {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: appearance,
     },
-    provideRouter(routes, inMemoryScrollingFeature),
+    provideRouter(
+      routes,
+      withViewTransitions(),
+      inMemoryScrollingFeature,
+      withComponentInputBinding()
+    ),
     provideHttpClient(withInterceptors([TokenInterceptor])),
     provideCore(),
     provideAnimations(),

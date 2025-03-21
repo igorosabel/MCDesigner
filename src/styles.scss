@@ -1,6 +1,12 @@
+@use '@angular/material' as mat;
+
 :root {
   --main-color: #3f51b5;
   --color-white: #fff;
+
+  @include mat.toolbar-overrides((container-background-color: var(--main-color),
+      container-text-color: var(--color-white),
+    ));
 }
 
 * {
@@ -31,8 +37,6 @@ input[type=number] {
 
 .toolbar {
   display: flex;
-  background-color: var(--main-color) !important;
-  color: var(--color-white) !important;
 
   span {
     flex: 1;
@@ -40,10 +44,6 @@ input[type=number] {
 
   button {
     margin-left: 8px;
-  }
-
-  .header-button {
-    color: var(--color-white);
   }
 }
 
@@ -120,6 +120,19 @@ input[type=number] {
 
 .full-width {
   width: 100%;
+}
+
+.mat-toolbar {
+
+  .mat-mdc-icon-button,
+  .mat-icon,
+  .material-icons {
+    color: var(--color-white) !important;
+  }
+
+  svg {
+    fill: var(--color-white);
+  }
 }
 
 .texture_1 {
