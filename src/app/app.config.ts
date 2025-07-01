@@ -13,7 +13,6 @@ import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
   MatFormFieldDefaultOptions,
 } from '@angular/material/form-field';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import routes from '@app/app.routes';
 import TokenInterceptor from '@app/interceptors/token.interceptor';
 import provideCore from '@modules/core';
@@ -42,7 +41,6 @@ const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withInterceptors([TokenInterceptor])),
     provideCore(),
-    provideAnimations(),
   ],
 };
 export default appConfig;
