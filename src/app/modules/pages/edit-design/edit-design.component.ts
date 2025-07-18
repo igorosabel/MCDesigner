@@ -30,7 +30,7 @@ import Level from '@model/level.model';
 import Line from '@model/line.model';
 import Point from '@model/point.model';
 import Texture from '@model/texture.model';
-import { DialogOptions, DialogService } from '@osumi/angular-tools';
+import { DialogField, DialogService } from '@osumi/angular-tools';
 import { urldecode, urlencode } from '@osumi/tools';
 import ApiService from '@services/api.service';
 import ClassMapperService from '@services/class-mapper.service';
@@ -198,9 +198,9 @@ export default class EditDesignComponent implements OnInit {
           },
         ],
       })
-      .subscribe((result: DialogOptions): void => {
-        if (result && result.fields) {
-          if (!result.fields[0].value) {
+      .subscribe((result: DialogField[]): void => {
+        if (result && result.length > 0) {
+          if (!result[0].value) {
             this.dialog.alert({
               title: 'Error',
               content: 'Name of the new level is required.',
@@ -210,7 +210,7 @@ export default class EditDesignComponent implements OnInit {
             const newLevel: LevelData = {
               id: 0,
               idDesign: this.design.id,
-              name: urlencode(result.fields[0].value),
+              name: urlencode(result[0].value),
             };
             this.as
               .addNewLevel(newLevel)
@@ -258,9 +258,9 @@ export default class EditDesignComponent implements OnInit {
           },
         ],
       })
-      .subscribe((result: DialogOptions): void => {
-        if (result && result.fields) {
-          if (!result.fields[0].value) {
+      .subscribe((result: DialogField[]): void => {
+        if (result && result.length > 0) {
+          if (!result[0].value) {
             this.dialog.alert({
               title: 'Error',
               content: 'Name of the new level is required.',
@@ -270,7 +270,7 @@ export default class EditDesignComponent implements OnInit {
             const levelData: LevelData = {
               id: level.id,
               idDesign: this.design.id,
-              name: result.fields[0].value,
+              name: result[0].value,
             };
             this.as
               .renameLevel(levelData)
