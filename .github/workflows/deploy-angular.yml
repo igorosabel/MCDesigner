@@ -58,8 +58,6 @@ jobs:
 
       - name: Deploy on server (clean & extract)
         uses: appleboy/ssh-action@v1.1.0
-        env:
-          REMOTE_PUBLIC_DIR: ${{ secrets.REMOTE_PUBLIC_DIR }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -68,7 +66,7 @@ jobs:
             set -euo pipefail
 
             TAR=~/deploy_tmp/dist-browser.tar.gz
-            DEST="${REMOTE_PUBLIC_DIR}"
+            DEST="${{ secrets.REMOTE_PUBLIC_DIR }}"
 
             # Validaciones de seguridad
             if [ ! -f "$TAR" ]; then
