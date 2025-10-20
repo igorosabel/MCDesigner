@@ -7,7 +7,6 @@ on:
 
 env:
   BUILD_DIR: dist/browser
-  REMOTE_PUBLIC_DIR: /var/www/vhosts/osumi.es/mcdesigner.osumi.es/public
 
 jobs:
   build-and-deploy:
@@ -41,8 +40,7 @@ jobs:
       - name: Validate build output
         run: |
           if [ ! -f "${{ env.BUILD_DIR }}/index.html" ]; then
-            echo "ERROR: No se encontró index.html en ${{ env.BUILD_DIR }}"
-            exit 1
+            echo "ERROR: No se encontró index.html en ${{ env.BUILD_DIR }}"; exit 1
           fi
           echo "Build OK: index.html encontrado."
 
@@ -58,16 +56,19 @@ jobs:
           source: "dist-browser.tar.gz"
           target: "~/deploy_tmp"
 
-      - name: Deploy on server
+      - name: Deploy on server (clean & extract)
         uses: appleboy/ssh-action@v1.1.0
+        env:
+          REMOTE_PUBLIC_DIR: ${{ secrets.REMOTE_PUBLIC_DIR }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
             set -euo pipefail
+
             TAR=~/deploy_tmp/dist-browser.tar.gz
-            DEST="${{ env.REMOTE_PUBLIC_DIR }}"
+            DEST="${REMOTE_PUBLIC_DIR}"
 
             # Validaciones de seguridad
             if [ ! -f "$TAR" ]; then
@@ -80,7 +81,7 @@ jobs:
               /|/root|/home|/var|/var/www|/var/www/vhosts) echo "ERROR: Destino demasiado genérico. Abortando." >&2; exit 1 ;;
             esac
 
-            # Extrae en carpeta temporal para validar index.html
+            # Extrae en carpeta temporal y valida index.html ANTES de borrar
             TMP_DIR=$(mktemp -d)
             tar -xzf "$TAR" -C "$TMP_DIR"
             if [ ! -f "$TMP_DIR/index.html" ]; then
@@ -89,9 +90,11 @@ jobs:
               exit 1
             fi
 
-            # Si todo OK, borra contenido actual y despliega
+            # Borrar contenido actual (solo nivel superior de la carpeta pública)
             cd "$DEST"
             find . -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+
+            # Publicar nuevo build
             cp -r "$TMP_DIR"/* "$DEST"/
             rm -rf "$TMP_DIR" "$TAR"
 
