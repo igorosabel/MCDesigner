@@ -1,0 +1,103 @@
+name: Deploy Angular App to Plesk
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  BUILD_DIR: dist/browser
+  REMOTE_PUBLIC_DIR: /var/www/vhosts/osumi.es/mcdesigner.osumi.es/public
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-angular
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: npm-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular (production)
+        run: npm run build -- --configuration production
+
+      - name: Validate build output
+        run: |
+          if [ ! -f "${{ env.BUILD_DIR }}/index.html" ]; then
+            echo "ERROR: No se encontró index.html en ${{ env.BUILD_DIR }}"
+            exit 1
+          fi
+          echo "Build OK: index.html encontrado."
+
+      - name: Compress build
+        run: tar -czf dist-browser.tar.gz -C "${{ env.BUILD_DIR }}" .
+
+      - name: Upload tar to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "dist-browser.tar.gz"
+          target: "~/deploy_tmp"
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            set -euo pipefail
+            TAR=~/deploy_tmp/dist-browser.tar.gz
+            DEST="${{ env.REMOTE_PUBLIC_DIR }}"
+
+            # Validaciones de seguridad
+            if [ ! -f "$TAR" ]; then
+              echo "ERROR: No se encontró el artefacto $TAR" >&2; exit 1
+            fi
+            if [ ! -d "$DEST" ]; then
+              echo "ERROR: El destino $DEST no existe" >&2; exit 1
+            fi
+            case "$DEST" in
+              /|/root|/home|/var|/var/www|/var/www/vhosts) echo "ERROR: Destino demasiado genérico. Abortando." >&2; exit 1 ;;
+            esac
+
+            # Extrae en carpeta temporal para validar index.html
+            TMP_DIR=$(mktemp -d)
+            tar -xzf "$TAR" -C "$TMP_DIR"
+            if [ ! -f "$TMP_DIR/index.html" ]; then
+              echo "ERROR: index.html no encontrado en el artefacto. Abortando." >&2
+              rm -rf "$TMP_DIR"
+              exit 1
+            fi
+
+            # Si todo OK, borra contenido actual y despliega
+            cd "$DEST"
+            find . -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+            cp -r "$TMP_DIR"/* "$DEST"/
+            rm -rf "$TMP_DIR" "$TAR"
+
+            # Ajusta permisos al propietario actual del docroot
+            OWNER="$(stat -c '%U' "$DEST")"
+            GROUP="$(stat -c '%G' "$DEST")"
+            chown -R "$OWNER":"$GROUP" "$DEST"
+
+            echo "Despliegue completado en $DEST"
