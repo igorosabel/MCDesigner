@@ -45,17 +45,18 @@
 				<mat-card-title>Designs</mat-card-title>
 			</mat-card-header>
 			<mat-card-content class="center-card-fields">
-				@if (designList.length>0 && !designsEdit()) {
+				@if (designList().length > 0) {
+				@if (!designsEdit()) {
 				<mat-nav-list>
-					@for (design of designList; track design.id) {
+					@for (design of designList(); track design.id) {
 					<a mat-list-item
 					   [routerLink]="['/edit-design', design.id, design.slug]"> {{ design.name }} </a>
 					}
 				</mat-nav-list>
 				}
-				@if (designList.length>0 && designsEdit()) {
+				@else {
 				<mat-list>
-					@for (design of designList; track design.id) {
+					@for (design of designList(); track design.id) {
 					<mat-list-item role="listitem">
 						<div class="design-data">
 							<span class="design-name">{{ design.name }}</span>
@@ -74,8 +75,9 @@
 					}
 				</mat-list>
 				}
-				@if (designList.length === 0) {
-				<h3 class="center">There is no design yet.</h3>
+				}
+				@else {
+				<h3 class="center">There are no designs yet.</h3>
 				}
 			</mat-card-content>
 		</mat-card>

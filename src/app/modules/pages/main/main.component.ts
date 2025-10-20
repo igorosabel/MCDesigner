@@ -40,12 +40,12 @@ export default class MainComponent implements OnInit {
   private user: UserService = inject(UserService);
   private cms: ClassMapperService = inject(ClassMapperService);
 
-  designList: Design[] = [];
+  designList: WritableSignal<Design[]> = signal<Design[]>([]);
   designsEdit: WritableSignal<boolean> = signal<boolean>(false);
 
   ngOnInit(): void {
     this.as.loadDesigns().subscribe((result: DesignListResult): void => {
-      this.designList = this.cms.getDesigns(result.list);
+      this.designList.set(this.cms.getDesigns(result.list));
     });
   }
 
@@ -78,10 +78,11 @@ export default class MainComponent implements OnInit {
                   content: 'Design "' + design.name + '" has been deleted.',
                   ok: 'Continue',
                 });
-                const ind: number = this.designList.findIndex(
-                  (x: Design): boolean => x.id == design.id
-                );
-                this.designList.splice(ind, 1);
+                this.designList.update((designs: Design[]): Design[] => {
+                  return designs.filter(
+                    (d: Design): boolean => d.id !== design.id
+                  );
+                });
               } else {
                 this.dialog.alert({
                   title: 'Error',
