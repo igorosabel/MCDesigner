@@ -95,9 +95,4 @@ jobs:
             cp -r "$TMP_DIR"/* "$DEST"/
             rm -rf "$TMP_DIR" "$TAR"
 
-            # Ajusta permisos al propietario actual del docroot
-            OWNER="$(stat -c '%U' "$DEST")"
-            GROUP="$(stat -c '%G' "$DEST")"
-            chown -R "$OWNER":"$GROUP" "$DEST"
-
             echo "Despliegue completado en $DEST"
