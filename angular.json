@@ -32,8 +32,7 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss",
               "node_modules/@osumi/angular-tools/styles/dialogs.scss"
-            ],
-            "scripts": []
+            ]
           },
           "configurations": {
             "production": {
@@ -71,7 +70,8 @@
             "development": {
               "buildTarget": "mcdesigner:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular/build:unit-test"
