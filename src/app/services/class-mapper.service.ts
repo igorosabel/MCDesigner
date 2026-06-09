@@ -1,16 +1,10 @@
-import { Injectable } from '@angular/core';
-import {
-  DesignInterface,
-  LevelInterface,
-  UserInterface,
-} from '@interfaces/interfaces';
+import { Service } from '@angular/core';
+import { DesignInterface, LevelInterface, UserInterface } from '@interfaces/interfaces';
 import Design from '@model/design.model';
 import Level from '@model/level.model';
 import User from '@model/user.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export default class ClassMapperService {
   getLevel(l: LevelInterface): Level {
     return new Level().fromInterface(l);

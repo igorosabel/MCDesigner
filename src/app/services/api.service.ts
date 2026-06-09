@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Service, inject } from '@angular/core';
 import { environment } from '@env/environment';
-import { Observable } from 'rxjs';
-
 import {
   DesignInterface,
   DesignListResult,
@@ -15,10 +13,9 @@ import {
   RegisterData,
   StatusResult,
 } from '@interfaces/interfaces';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export default class ApiService {
   private http: HttpClient = inject(HttpClient);
 
@@ -33,10 +30,7 @@ export default class ApiService {
   }
 
   updateProfile(profile: Profile): Observable<StatusResult> {
-    return this.http.post<StatusResult>(
-      this.apiUrl + 'update-profile',
-      profile
-    );
+    return this.http.post<StatusResult>(this.apiUrl + 'update-profile', profile);
   }
 
   loadDesigns(): Observable<DesignListResult> {
@@ -48,10 +42,7 @@ export default class ApiService {
   }
 
   updateDesignSettings(design: DesignInterface): Observable<StatusResult> {
-    return this.http.post<StatusResult>(
-      this.apiUrl + 'update-design-settings',
-      design
-    );
+    return this.http.post<StatusResult>(this.apiUrl + 'update-design-settings', design);
   }
 
   newDesign(newDesign: DesignInterface): Observable<StatusResult> {
@@ -71,10 +62,7 @@ export default class ApiService {
   }
 
   renameLevel(levelData: LevelData): Observable<StatusResult> {
-    return this.http.post<StatusResult>(
-      this.apiUrl + 'rename-level',
-      levelData
-    );
+    return this.http.post<StatusResult>(this.apiUrl + 'rename-level', levelData);
   }
 
   copyLevel(id: number): Observable<LevelResult> {

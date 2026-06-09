@@ -61,23 +61,21 @@ export default class RegisterComponent {
     }
 
     this.registerSending.set(true);
-    this.as
-      .register(this.registerData)
-      .subscribe((result: LoginResult): void => {
-        this.registerSending.set(false);
-        if (result.status === 'ok') {
-          this.us.logged.set(true);
-          this.us.user = new User().fromInterface({
-            id: result.id,
-            token: result.token,
-            email: this.registerData.email,
-          });
-          this.us.saveLogin();
+    this.as.register(this.registerData).subscribe((result: LoginResult): void => {
+      this.registerSending.set(false);
+      if (result.status === 'ok') {
+        this.us.logged.set(true);
+        this.us.user = new User().fromInterface({
+          id: result.id,
+          token: result.token,
+          email: this.registerData.email,
+        });
+        this.us.saveLogin();
 
-          this.router.navigate(['/main']);
-        } else {
-          this.registerEmailError.set(true);
-        }
-      });
+        this.router.navigate(['/main']);
+      } else {
+        this.registerEmailError.set(true);
+      }
+    });
   }
 }

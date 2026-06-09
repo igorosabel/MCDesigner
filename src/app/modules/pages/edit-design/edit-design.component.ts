@@ -117,8 +117,7 @@ export default class EditDesignComponent implements OnInit {
         this.dialog
           .alert({
             title: 'Error',
-            content:
-              'There was an error when loading the required design. Please try again later.',
+            content: 'There was an error when loading the required design. Please try again later.',
             ok: 'Continue',
           })
           .subscribe((): void => {
@@ -129,12 +128,8 @@ export default class EditDesignComponent implements OnInit {
   }
 
   updateRowWidth(): void {
-    this.rowWidth.set(
-      this.design.levels[0].data[0].length * (this.zoomLevel() * 0.2)
-    );
-    this.boardHeight.set(
-      this.design.levels[0].data[0].length * (this.zoomLevel() * 0.2)
-    );
+    this.rowWidth.set(this.design.levels[0].data[0].length * (this.zoomLevel() * 0.2));
+    this.boardHeight.set(this.design.levels[0].data[0].length * (this.zoomLevel() * 0.2));
   }
 
   mobileCloseTools(): void {
@@ -147,8 +142,7 @@ export default class EditDesignComponent implements OnInit {
 
   toolsDragEnd(): void {
     const transform: string = this.toolBox().nativeElement.style.transform;
-    const regex =
-      /translate3d\(\s?(?<x>[-]?\d*)px,\s?(?<y>[-]?\d*)px,\s?(?<z>[-]?\d*)px\)/;
+    const regex = /translate3d\(\s?(?<x>[-]?\d*)px,\s?(?<y>[-]?\d*)px,\s?(?<z>[-]?\d*)px\)/;
     const values: RegExpExecArray | null = regex.exec(transform);
 
     this.offset = new Point(0, 0);
@@ -177,9 +171,7 @@ export default class EditDesignComponent implements OnInit {
   }
 
   selectTexture(texture: Texture): void {
-    this.currentTexture.set(
-      this.textures.findIndex((x: Texture): boolean => x.id == texture.id)
-    );
+    this.currentTexture.set(this.textures.findIndex((x: Texture): boolean => x.id == texture.id));
     this.openTextures();
   }
 
@@ -212,21 +204,16 @@ export default class EditDesignComponent implements OnInit {
               idDesign: this.design.id,
               name: urlencode(result[0].value),
             };
-            this.as
-              .addNewLevel(newLevel)
-              .subscribe((result: LevelResult): void => {
-                if (result.status == 'ok') {
-                  this.dialog.alert({
-                    title: 'Success',
-                    content:
-                      'New level "' +
-                      urldecode(newLevel.name) +
-                      '" has been added.',
-                    ok: 'Continue',
-                  });
-                  this.design.levels.push(this.cms.getLevel(result.level));
-                }
-              });
+            this.as.addNewLevel(newLevel).subscribe((result: LevelResult): void => {
+              if (result.status == 'ok') {
+                this.dialog.alert({
+                  title: 'Success',
+                  content: 'New level "' + urldecode(newLevel.name) + '" has been added.',
+                  ok: 'Continue',
+                });
+                this.design.levels.push(this.cms.getLevel(result.level));
+              }
+            });
           }
         }
       });
@@ -237,9 +224,7 @@ export default class EditDesignComponent implements OnInit {
   }
 
   selectLevel(level: Level): void {
-    this.currentLevel.set(
-      this.design.levels.findIndex((x: Level): boolean => x.id == level.id)
-    );
+    this.currentLevel.set(this.design.levels.findIndex((x: Level): boolean => x.id == level.id));
     this.deployLevels();
   }
 
@@ -272,29 +257,26 @@ export default class EditDesignComponent implements OnInit {
               idDesign: this.design.id,
               name: result[0].value,
             };
-            this.as
-              .renameLevel(levelData)
-              .subscribe((result: StatusResult): void => {
-                if (result.status == 'ok') {
-                  this.dialog.alert({
-                    title: 'Success',
-                    content:
-                      'Level has been renamed to "' + levelData.name + '"',
-                    ok: 'Continue',
-                  });
-                  const ind: number = this.design.levels.findIndex(
-                    (x: Level): boolean => x.id == level.id
-                  );
-                  this.design.levels[ind].name = levelData.name;
-                } else {
-                  this.dialog.alert({
-                    title: 'Error',
-                    content:
-                      'There was an error attempting to change the name of the level. Please try again.',
-                    ok: 'Continue',
-                  });
-                }
-              });
+            this.as.renameLevel(levelData).subscribe((result: StatusResult): void => {
+              if (result.status == 'ok') {
+                this.dialog.alert({
+                  title: 'Success',
+                  content: 'Level has been renamed to "' + levelData.name + '"',
+                  ok: 'Continue',
+                });
+                const ind: number = this.design.levels.findIndex(
+                  (x: Level): boolean => x.id == level.id,
+                );
+                this.design.levels[ind].name = levelData.name;
+              } else {
+                this.dialog.alert({
+                  title: 'Error',
+                  content:
+                    'There was an error attempting to change the name of the level. Please try again.',
+                  ok: 'Continue',
+                });
+              }
+            });
           }
         }
       });
@@ -316,15 +298,13 @@ export default class EditDesignComponent implements OnInit {
               this.design.levels.push(newLevelCopied);
               this.dialog.alert({
                 title: 'Success',
-                content:
-                  'New level "' + newLevelCopied.name + '" has been added.',
+                content: 'New level "' + newLevelCopied.name + '" has been added.',
                 ok: 'Continue',
               });
             } else {
               this.dialog.alert({
                 title: 'Error',
-                content:
-                  'There was an error attempting to copy the level. Please try again.',
+                content: 'There was an error attempting to copy the level. Please try again.',
                 ok: 'Continue',
               });
             }
@@ -343,31 +323,28 @@ export default class EditDesignComponent implements OnInit {
       })
       .subscribe((result: boolean): void => {
         if (result === true && level.id !== null) {
-          this.as
-            .deleteLevel(level.id)
-            .subscribe((result: StatusResult): void => {
-              if (result.status == 'ok') {
-                this.dialog.alert({
-                  title: 'Success',
-                  content: 'Level "' + level.name + '" has been deleted.',
-                  ok: 'Continue',
-                });
-                const ind: number = this.design.levels.findIndex(
-                  (x: Level): boolean => x.id == level.id
-                );
-                if (ind == this.currentLevel()) {
-                  this.currentLevel.set(0);
-                }
-                this.design.levels.splice(ind, 1);
-              } else {
-                this.dialog.alert({
-                  title: 'Error',
-                  content:
-                    'There was an error attempting to delete the level. Please try again.',
-                  ok: 'Continue',
-                });
+          this.as.deleteLevel(level.id).subscribe((result: StatusResult): void => {
+            if (result.status == 'ok') {
+              this.dialog.alert({
+                title: 'Success',
+                content: 'Level "' + level.name + '" has been deleted.',
+                ok: 'Continue',
+              });
+              const ind: number = this.design.levels.findIndex(
+                (x: Level): boolean => x.id == level.id,
+              );
+              if (ind == this.currentLevel()) {
+                this.currentLevel.set(0);
               }
-            });
+              this.design.levels.splice(ind, 1);
+            } else {
+              this.dialog.alert({
+                title: 'Error',
+                content: 'There was an error attempting to delete the level. Please try again.',
+                ok: 'Continue',
+              });
+            }
+          });
         }
       });
   }
@@ -381,7 +358,9 @@ export default class EditDesignComponent implements OnInit {
       if (this.zoomLevel() == 10) {
         return;
       }
-      this.zoomLevel.update((value: number): number => (value -= 10));
+      this.zoomLevel.update((value: number): number => {
+        return value - 10;
+      });
     }
     if (mode == 'r') {
       this.zoomLevel.set(100);
@@ -390,7 +369,9 @@ export default class EditDesignComponent implements OnInit {
       if (this.zoomLevel() == 200) {
         return;
       }
-      this.zoomLevel.update((value: number): number => (value += 10));
+      this.zoomLevel.update((value: number): number => {
+        return value + 10;
+      });
     }
     this.updateRowWidth();
   }
@@ -399,10 +380,7 @@ export default class EditDesignComponent implements OnInit {
     switch (this.selectedTool.option) {
       case 'paint':
         {
-          if (
-            this.design.levels[this.currentLevel()].data[i][j] !=
-            this.currentTexture()
-          ) {
+          if (this.design.levels[this.currentLevel()].data[i][j] != this.currentTexture()) {
             const action: UndoAction = {
               x: i,
               y: j,
@@ -410,17 +388,14 @@ export default class EditDesignComponent implements OnInit {
             };
             this.undoList = [action];
 
-            this.design.levels[this.currentLevel()].data[i][j] =
-              this.currentTexture();
+            this.design.levels[this.currentLevel()].data[i][j] = this.currentTexture();
             this.resetAutoSave();
           }
         }
         break;
       case 'picker':
         {
-          this.currentTexture.set(
-            this.design.levels[this.currentLevel()].data[i][j]
-          );
+          this.currentTexture.set(this.design.levels[this.currentLevel()].data[i][j]);
         }
         break;
       case 'line':
@@ -473,16 +448,10 @@ export default class EditDesignComponent implements OnInit {
   }
 
   drawLine(): void {
-    const coordinates: Point[] = this.generatePath(
-      this.line.start,
-      this.line.end
-    );
+    const coordinates: Point[] = this.generatePath(this.line.start, this.line.end);
     this.undoList = [];
     for (const p of coordinates) {
-      if (
-        this.design.levels[this.currentLevel()].data[p.x][p.y] !=
-        this.currentTexture()
-      ) {
+      if (this.design.levels[this.currentLevel()].data[p.x][p.y] != this.currentTexture()) {
         const action: UndoAction = {
           x: p.x,
           y: p.y,
@@ -490,8 +459,7 @@ export default class EditDesignComponent implements OnInit {
         };
         this.undoList.push(action);
 
-        this.design.levels[this.currentLevel()].data[p.x][p.y] =
-          this.currentTexture();
+        this.design.levels[this.currentLevel()].data[p.x][p.y] = this.currentTexture();
       }
     }
   }
@@ -520,12 +488,9 @@ export default class EditDesignComponent implements OnInit {
 
     const surrounding: Point[] = this.getSurroundingCells(p);
     for (const newP of surrounding) {
-      if (
-        this.design.levels[this.currentLevel()].data[newP.x][newP.y] ==
-        this.fillTexture
-      ) {
+      if (this.design.levels[this.currentLevel()].data[newP.x][newP.y] == this.fillTexture) {
         const ind: number = this.fillToBePainted.findIndex(
-          (e: Point): boolean => e.x == newP.x && e.y == newP.y
+          (e: Point): boolean => e.x == newP.x && e.y == newP.y,
         );
         if (ind == -1) {
           this.fillAddCell(newP);
@@ -543,8 +508,7 @@ export default class EditDesignComponent implements OnInit {
       };
       this.undoList.push(action);
 
-      this.design.levels[this.currentLevel()].data[p.x][p.y] =
-        this.currentTexture();
+      this.design.levels[this.currentLevel()].data[p.x][p.y] = this.currentTexture();
     }
   }
 
@@ -553,8 +517,7 @@ export default class EditDesignComponent implements OnInit {
       return;
     }
     for (const action of this.undoList) {
-      this.design.levels[this.currentLevel()].data[action.x][action.y] =
-        action.previous;
+      this.design.levels[this.currentLevel()].data[action.x][action.y] = action.previous;
     }
     this.undoList = [];
     this.resetAutoSave();
@@ -570,22 +533,19 @@ export default class EditDesignComponent implements OnInit {
   saveDesign(): void {
     window.clearTimeout(this.saveTimer);
     this.savingDesign.set(true);
-    this.as
-      .updateDesign(this.design.toInterface())
-      .subscribe((result: StatusResult): void => {
-        this.savingDesign.set(false);
-        if (result.status == 'error') {
-          this.dialog.alert({
-            title: 'Error',
-            content:
-              'There was an error when saving the design. Please try again later.',
-            ok: 'Continue',
-          });
-        } else {
-          this.snack.open('Design saved', '', {
-            duration: 3000,
-          });
-        }
-      });
+    this.as.updateDesign(this.design.toInterface()).subscribe((result: StatusResult): void => {
+      this.savingDesign.set(false);
+      if (result.status == 'error') {
+        this.dialog.alert({
+          title: 'Error',
+          content: 'There was an error when saving the design. Please try again later.',
+          ok: 'Continue',
+        });
+      } else {
+        this.snack.open('Design saved', '', {
+          duration: 3000,
+        });
+      }
+    });
   }
 }

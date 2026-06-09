@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import isLoggedGuardFn from '@app/guard/auth.guard.fn';
+import isLoggedGuardFn from '@guard/auth.guard.fn';
 import LoginComponent from '@pages/login/login.component';
 
 const routes: Routes = [
@@ -25,8 +25,7 @@ const routes: Routes = [
   },
   {
     path: 'design-settings/:id/:slug',
-    loadComponent: () =>
-      import('@pages/design-settings/design-settings.component'),
+    loadComponent: () => import('@pages/design-settings/design-settings.component'),
     canActivate: [isLoggedGuardFn],
   },
   {

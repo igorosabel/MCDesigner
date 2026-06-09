@@ -39,29 +39,25 @@ export default class NewDesignComponent {
   saveDesign(ev: MouseEvent): void {
     ev.preventDefault();
     this.saveSending.set(true);
-    this.as
-      .newDesign(this.newDesign.toInterface())
-      .subscribe((result: StatusResult): void => {
-        this.saveSending.set(false);
-        if (result.status == 'ok') {
-          this.dialog
-            .alert({
-              title: 'OK',
-              content:
-                'New design "' + this.newDesign.name + '" has been saved.',
-              ok: 'Continue',
-            })
-            .subscribe((): void => {
-              this.router.navigate(['/main']);
-            });
-        } else {
-          this.dialog.alert({
-            title: 'Error',
-            content:
-              'There was an error when saving the new design. Please try again later.',
+    this.as.newDesign(this.newDesign.toInterface()).subscribe((result: StatusResult): void => {
+      this.saveSending.set(false);
+      if (result.status == 'ok') {
+        this.dialog
+          .alert({
+            title: 'OK',
+            content: 'New design "' + this.newDesign.name + '" has been saved.',
             ok: 'Continue',
+          })
+          .subscribe((): void => {
+            this.router.navigate(['/main']);
           });
-        }
-      });
+      } else {
+        this.dialog.alert({
+          title: 'Error',
+          content: 'There was an error when saving the new design. Please try again later.',
+          ok: 'Continue',
+        });
+      }
+    });
   }
 }

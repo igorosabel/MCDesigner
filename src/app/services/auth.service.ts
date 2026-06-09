@@ -1,9 +1,9 @@
-import { Injectable, inject } from '@angular/core';
+import { Service, inject } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import UserService from '@services/user.service';
 import { Observable, of } from 'rxjs';
 
-@Injectable()
+@Service()
 export default class AuthService {
   private us: UserService = inject(UserService);
 
@@ -14,9 +14,7 @@ export default class AuthService {
     }
     const helper = new JwtHelperService();
     return of(
-      this.us.logged() &&
-        this.us.user !== null &&
-        !helper.isTokenExpired(this.us.user.token)
+      this.us.logged() && this.us.user !== null && !helper.isTokenExpired(this.us.user.token),
     );
   }
 }

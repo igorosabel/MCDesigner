@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  WritableSignal,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, OnInit, WritableSignal, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -64,16 +58,11 @@ export default class ProfileComponent implements OnInit {
       });
       return;
     }
-    if (
-      this.profile.oldPass != '' ||
-      this.profile.newPass != '' ||
-      this.profile.confPass != ''
-    ) {
+    if (this.profile.oldPass != '' || this.profile.newPass != '' || this.profile.confPass != '') {
       if (this.profile.oldPass == '') {
         this.dialog.alert({
           title: 'Error',
-          content:
-            'If you want to change your password, the current password is required.',
+          content: 'If you want to change your password, the current password is required.',
           ok: 'Continue',
         });
         return;
@@ -81,8 +70,7 @@ export default class ProfileComponent implements OnInit {
       if (this.profile.newPass == '') {
         this.dialog.alert({
           title: 'Error',
-          content:
-            'If you want to change your password, the new password is required.',
+          content: 'If you want to change your password, the new password is required.',
           ok: 'Continue',
         });
         return;
@@ -90,8 +78,7 @@ export default class ProfileComponent implements OnInit {
       if (this.profile.confPass == '') {
         this.dialog.alert({
           title: 'Error',
-          content:
-            'If you want to change your password, you have to confirm the new password.',
+          content: 'If you want to change your password, you have to confirm the new password.',
           ok: 'Continue',
         });
         return;
@@ -107,40 +94,37 @@ export default class ProfileComponent implements OnInit {
     }
 
     this.saveSending.set(true);
-    this.as
-      .updateProfile(this.profile)
-      .subscribe((result: StatusResult): void => {
-        this.saveSending.set(false);
-        if (result.status == 'ok') {
-          if (this.us.user !== null) {
-            this.us.user.email = this.profile.email;
-            this.us.saveLogin();
-          }
-          this.profile.oldPass = '';
-          this.profile.newPass = '';
-          this.profile.confPass = '';
+    this.as.updateProfile(this.profile).subscribe((result: StatusResult): void => {
+      this.saveSending.set(false);
+      if (result.status == 'ok') {
+        if (this.us.user !== null) {
+          this.us.user.email = this.profile.email;
+          this.us.saveLogin();
+        }
+        this.profile.oldPass = '';
+        this.profile.newPass = '';
+        this.profile.confPass = '';
 
-          this.dialog.alert({
-            title: 'Success',
-            content: 'Profile information was successfully updated.',
-            ok: 'Continue',
-          });
-        }
-        if (result.status == 'pass-error') {
-          this.dialog.alert({
-            title: 'Error',
-            content: 'Current password is wrong.',
-            ok: 'Continue',
-          });
-        }
-        if (result.status == 'error') {
-          this.dialog.alert({
-            title: 'Error',
-            content:
-              'There was an error updating your user profile. Please try again later.',
-            ok: 'Continue',
-          });
-        }
-      });
+        this.dialog.alert({
+          title: 'Success',
+          content: 'Profile information was successfully updated.',
+          ok: 'Continue',
+        });
+      }
+      if (result.status == 'pass-error') {
+        this.dialog.alert({
+          title: 'Error',
+          content: 'Current password is wrong.',
+          ok: 'Continue',
+        });
+      }
+      if (result.status == 'error') {
+        this.dialog.alert({
+          title: 'Error',
+          content: 'There was an error updating your user profile. Please try again later.',
+          ok: 'Continue',
+        });
+      }
+    });
   }
 }

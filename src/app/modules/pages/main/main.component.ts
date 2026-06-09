@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  WritableSignal,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, OnInit, WritableSignal, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -69,29 +63,24 @@ export default class MainComponent implements OnInit {
       })
       .subscribe((result: boolean): void => {
         if (result === true) {
-          this.as
-            .deleteDesign(design.id)
-            .subscribe((result: StatusResult): void => {
-              if (result.status == 'ok') {
-                this.dialog.alert({
-                  title: 'Success',
-                  content: 'Design "' + design.name + '" has been deleted.',
-                  ok: 'Continue',
-                });
-                this.designList.update((designs: Design[]): Design[] => {
-                  return designs.filter(
-                    (d: Design): boolean => d.id !== design.id
-                  );
-                });
-              } else {
-                this.dialog.alert({
-                  title: 'Error',
-                  content:
-                    'There was an error attempting to delete the design. Please try again.',
-                  ok: 'Continue',
-                });
-              }
-            });
+          this.as.deleteDesign(design.id).subscribe((result: StatusResult): void => {
+            if (result.status == 'ok') {
+              this.dialog.alert({
+                title: 'Success',
+                content: 'Design "' + design.name + '" has been deleted.',
+                ok: 'Continue',
+              });
+              this.designList.update((designs: Design[]): Design[] => {
+                return designs.filter((d: Design): boolean => d.id !== design.id);
+              });
+            } else {
+              this.dialog.alert({
+                title: 'Error',
+                content: 'There was an error attempting to delete the design. Please try again.',
+                ok: 'Continue',
+              });
+            }
+          });
         }
       });
   }

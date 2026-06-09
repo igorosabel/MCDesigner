@@ -5,5 +5,5 @@ import ClassMapperService from '@services/class-mapper.service';
 import UserService from '@services/user.service';
 
 export default function provideCore(): Provider[] {
-  return [ApiService, UserService, AuthService, ClassMapperService];
+  return [ApiService, AuthService, ClassMapperService, UserService];
 }

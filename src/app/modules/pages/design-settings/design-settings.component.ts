@@ -74,8 +74,7 @@ export default class DesignSettingsComponent implements OnInit {
         this.dialog
           .alert({
             title: 'Error',
-            content:
-              'There was an error when loading the required design. Please try again later.',
+            content: 'There was an error when loading the required design. Please try again later.',
             ok: 'Continue',
           })
           .subscribe((): void => {
@@ -108,10 +107,7 @@ export default class DesignSettingsComponent implements OnInit {
       });
       return;
     }
-    if (
-      this.design.sizeX < this.initialSizeX ||
-      this.design.sizeY < this.initialSizeY
-    ) {
+    if (this.design.sizeX < this.initialSizeX || this.design.sizeY < this.initialSizeY) {
       this.dialog
         .confirm({
           title: 'Confirm',
@@ -145,8 +141,7 @@ export default class DesignSettingsComponent implements OnInit {
         } else {
           this.dialog.alert({
             title: 'Error',
-            content:
-              'There was an error updating the design. Please try again later.',
+            content: 'There was an error updating the design. Please try again later.',
             ok: 'Continue',
           });
         }

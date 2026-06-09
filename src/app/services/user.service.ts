@@ -1,9 +1,9 @@
-import { Injectable, WritableSignal, inject, signal } from '@angular/core';
+import { Service, WritableSignal, inject, signal } from '@angular/core';
 import { UserInterface } from '@interfaces/interfaces';
 import User from '@model/user.model';
 import ClassMapperService from '@services/class-mapper.service';
 
-@Injectable()
+@Service()
 export default class UserService {
   private cms: ClassMapperService = inject(ClassMapperService);
 
